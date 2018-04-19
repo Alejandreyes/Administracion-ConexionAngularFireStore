@@ -1,0 +1,35 @@
+<h3>Proyectos</h3>
+<br>
+<br>
+<br>
+<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+  <li *ngFor="let proyecto of proyectos">
+    <div *ngIf="esImportante(proyecto.cliente)" class="collapsible-header red-text">
+      <i class="material-icons">assignment_late</i>{{proyecto.nombre}}</div>
+    <div *ngIf="!esImportante(proyecto.cliente)" class="collapsible-header green-text">
+      <i class="material-icons">assignment_turned_in</i>{{proyecto.nombre}}</div>
+    <div class="collapsible-body row">
+      <span style="font-size: 18px; font-weight: bold;">Nombre del Proyecto : {{proyecto.nombre}}</span>
+      <p>
+        <span style="font-weight: bold;">Descripcion :</span> {{proyecto.Descripcion}}</p>
+      <p>
+        <span style="font-weight: bold;">Nombre del cliente:</span> {{proyecto.cliente}}</p>
+      <a class="btn btn-secondary blue darken-2 col s4 offset-s1" (click)="onEdit(product)">
+        <i class="material-icons">create</i>
+      </a>
+      <a class="btn btn-danger red darken-2  col s4 offset-s2" (click)="onDelete(product.$key)">
+        <i class="material-icons ">delete</i>
+      </a>
+    </div>
+  </li>
+</ul>
+<div class="row" style="margin-top:7%;">
+  <div class="col s6">
+      <a class="waves-effect waves-light btn-large"><i class="material-icons left">find_in_page</i>Buscar</a>
+  </div>
+  <div class="col s2 offset-s4">
+    <a class="btn-floating btn-large waves-effect waves-light red ">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+</div>

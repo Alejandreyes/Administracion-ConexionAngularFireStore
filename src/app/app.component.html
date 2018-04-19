@@ -1,0 +1,22 @@
+<nav>
+  <div class="nav-wrapper  teal darken-1">
+    <a routerLink="/" class="brand-logo truncate" tru>
+      Administracion de Proyectos de Software</a>
+    <ul class="right hide-on-med-and-down">
+      <li *ngIf="usuarioLogueado.nombre != null">
+        <span style='padding-right: 3em'>
+          <i class="material-icons left">supervisor_account</i>
+          {{usuarioLogueado.nombre}}</span>
+      </li>
+
+      <li *ngIf="usuarioLogueado.nombre != null">
+        <a>
+          <i class="material-icons left">power_settings_new</i>Salir</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="contenidoBody">
+  <router-outlet></router-outlet>
+</div>

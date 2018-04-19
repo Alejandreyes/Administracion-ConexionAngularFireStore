@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col s12 m12 l7">
+    <h5>Links</h5>
+    <p> Sistema de manejo de Proyectos de Software que permite facilitar el uso de herramientas utiles para el desarrollo de
+      un seguimiento de un proyecto de software más sencillo y mucho mas rapido.
+    </p>
+  </div>
+  <div class="center col s12 m12 l4">
+    <div class="card ">
+      <div class="card-content">
+        <span class="card-title">LOGIN</span>
+        <div class="row">
+          <form class="col s12" [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="material-icons prefix">account_circle</i>
+                <input formControlName="correo" id="correo" type="text" placeholder="example@example.com" class="validate">
+                <label for="correo">Nombre de usuario</label>
+                <p class="red-text" *ngIf="usuarioForm.controls.correo.invalid">
+                    El campo es obligatorio.
+                </p>
+              </div>
+              <div class="input-field col s12">
+                <i class="material-icons prefix">vpn_key</i>
+                <input formControlName="contrasenia" id="contrasenia" type="password" class="validate">
+                <label for="contrasenia">Contraseña</label>
+                <p class="red-text" *ngIf="usuarioForm.controls.contrasenia.invalid">
+                    El campo es obligatorio.
+                </p>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="section">
+              <button class="btn " type="submit">ENVIAR</button>
+              <button class="btn " type="reset">CANCELAR</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

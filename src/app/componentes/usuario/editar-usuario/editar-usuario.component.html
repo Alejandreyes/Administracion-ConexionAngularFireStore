@@ -1,0 +1,34 @@
+<div class="card ">
+  <div class="card-content">
+    <span class="card-title">Editar Usuario Selecionado</span>
+    <div class="row">
+      <form class="col s12" [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="input-field col s12">
+            <label for="nombre">Nombre</label>
+            <input formControlName="nombre" id="nombre" type="text"  class="validate">
+            
+            <p class="red-text" *ngIf="usuarioForm.controls.nombre.invalid">
+              El campo es obligatorio.
+            </p>
+          </div>
+          <label>Seleciona el rol</label>
+          <select formControlName="opcion" class="browser-default">
+            <option value="" disabled selected>Choose your option</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Analista">Analista</option>
+          </select>
+        </div>
+        <div class="divider"></div>
+        <div class="section">
+          <button class="btn " *ngIf="usuarioForm.invalid" disabled type="submit">ENVIAR</button>
+          <button class="btn " *ngIf="!usuarioForm.invalid" type="submit">ENVIAR</button>
+          <button class="btn "  (click)="onCancel()" type="reset">CANCELAR</button>
+        </div>
+
+      </form>
+      
+
+    </div>
+  </div>
+</div>

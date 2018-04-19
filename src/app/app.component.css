@@ -1,0 +1,11 @@
+.contenidoBody{
+    margin-top:2%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.btn{
+    background-color: #4dd0e1
+  }
+  .btn:hover {
+    background-color: #01579b
+  }
