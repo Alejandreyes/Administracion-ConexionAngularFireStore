@@ -4,9 +4,9 @@
 <br>
 <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
   <li *ngFor="let proyecto of proyectos">
-    <div *ngIf="esImportante(proyecto.cliente)" class="collapsible-header red-text">
+    <div *ngIf="esImportante(proyecto)" class="collapsible-header red-text">
       <i class="material-icons">assignment_late</i>{{proyecto.nombre}}</div>
-    <div *ngIf="!esImportante(proyecto.cliente)" class="collapsible-header green-text">
+    <div *ngIf="!esImportante(proyecto)" class="collapsible-header green-text">
       <i class="material-icons">assignment_turned_in</i>{{proyecto.nombre}}</div>
     <div class="collapsible-body row">
       <span style="font-size: 18px; font-weight: bold;">Nombre del Proyecto : {{proyecto.nombre}}</span>
@@ -14,10 +14,13 @@
         <span style="font-weight: bold;">Descripcion :</span> {{proyecto.Descripcion}}</p>
       <p>
         <span style="font-weight: bold;">Nombre del cliente:</span> {{proyecto.cliente}}</p>
-      <a class="btn btn-secondary blue darken-2 col s4 offset-s1" (click)="onEdit(product)">
+
+        <p>
+          <span style="font-weight: bold;">Fecha de Inicio:</span> {{proyecto.fechaInicio}}</p>
+      <a class="btn btn-secondary blue darken-2 col s4 offset-s1" (click)="onEdit(proyecto)">
         <i class="material-icons">create</i>
       </a>
-      <a class="btn btn-danger red darken-2  col s4 offset-s2" (click)="onDelete(product.$key)">
+      <a class="btn btn-danger red darken-2  col s4 offset-s2" (click)="openModal(proyecto)">
         <i class="material-icons ">delete</i>
       </a>
     </div>
@@ -29,7 +32,21 @@
   </div>
   <div class="col s2 offset-s4">
     <a class="btn-floating btn-large waves-effect waves-light red ">
-      <i class="material-icons">add</i>
+      <i class="material-icons" (click) = " onCreate()" >add</i>
     </a>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+
+
+<div id="modal1" class="modal bottom-sheet" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h4>ALERTA</h4>
+    <p>Seguro que deseas eliminar el proyecto</p>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Cancelar</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click) = "onDelete()" >Aceptar</a>
   </div>
 </div>

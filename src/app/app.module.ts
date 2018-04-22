@@ -4,6 +4,7 @@ import { LoginComponent } from './componentes/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule , ReactiveFormsModule } from '@angular/forms'; // Servivio que ayuda la validacion de formularios de angular
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // Componentes creados por el usuario
 import { AppComponent } from './app.component';
 import { UsuarioComponent } from './componentes/usuario/usuario.component';
@@ -25,8 +26,11 @@ import { CasosUsoComponent } from './componentes/casos-uso/casos-uso.component';
 import { AccionComponent } from './componentes/accion/accion.component';
 
 // Libreria de materialize 
-import { MaterializeModule } from 'angular2-materialize'; 
+import {MatButtonModule, MatCheckboxModule,MatNativeDateModule,
+  MatToolbarModule,MatInputModule, MatDatepickerModule,
+  MatFormFieldModule, MatExpansionModule, MatGridListModule} from '@angular/material';
 
+import {MaterializeModule} from "angular2-materialize";  
 import {environment} from '../environments/environment';
 // Importar Servicios de Firebase
 import { AngularFireModule } from 'angularfire2';
@@ -88,9 +92,11 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    MaterializeModule,
     ReactiveFormsModule,
+    MaterializeModule,
     AngularFireDatabaseModule,
+    BrowserAnimationsModule,MatToolbarModule,MatFormFieldModule, MatExpansionModule,
+    MatButtonModule, MatCheckboxModule,MatDatepickerModule, MatInputModule,MatNativeDateModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     RouterModule.forRoot(routes)

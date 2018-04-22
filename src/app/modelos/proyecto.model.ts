@@ -4,8 +4,8 @@ export class Proyecto {
   public nombre: string;
   public Descripcion : string ;
   public cliente : string ;
-  public fechaInicio : Date ;
-  public fechaFin : Date ;
+  public fechaInicio : string ;
+  public fechaFin : string ;
   public casos : CasoUso[] ; 
 
   constructor (){}
