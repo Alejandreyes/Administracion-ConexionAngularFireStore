@@ -37,7 +37,7 @@ export class ProyectosService {
     let r: AngularFireList<Proyecto> = this.firebase.list('proyectos', ref => ref.orderByChild('nombre').equalTo(nombre));
     return r.valueChanges();
   } */
-  getUsuarioCampo(campo: string, criterio : string): Observable<Proyecto[]> {
+  getProyectoCampo(campo: string, criterio : string): Observable<Proyecto[]> {
     let r: AngularFireList<Proyecto> = this.firebase.list('proyectos', ref => ref.orderByChild(campo).equalTo(criterio));
     return r.valueChanges();
   }
