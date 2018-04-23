@@ -10,7 +10,7 @@
       </li>
 
       <li *ngIf="usuarioLogueado.nombre != null">
-        <a>
+        <a (click) = "logout()">
           <i class="material-icons left">power_settings_new</i>Salir</a>
       </li>
     </ul>

@@ -25,4 +25,9 @@ export class AppComponent implements OnInit {
     console.log(this.usuarioLogueado); 
     console.log(this.lgServ.usuarioLogueado); 
   }
+  logout(){
+    this.lgServ.logout();
+    this.usuarioLogueado$ = null;
+  this.usuarioLogueado = new Usuario();
+  }
 }

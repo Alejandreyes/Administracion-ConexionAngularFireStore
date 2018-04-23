@@ -63,7 +63,16 @@ https://github.com/InfomediaLtd/angular2-materialize/tree/master/sample/src/app/
 </div>
 
 <!-- Modal Structure -->
-
+<div id="modal1" class="modal bottom-sheet" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h4>ALERTA</h4>
+    <p>Seguro que deseas eliminar al usuario {{usuServ.usuarioSelecionado.nombre}}</p>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Cancelar</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click) = "onDelete()" >Aceptar</a>
+  </div>
+</div>
 
 
 <ng-template #noUsuarios>

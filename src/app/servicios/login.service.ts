@@ -53,4 +53,13 @@ export class LoginService {
   getUsuarioLogueado$(): Observable<Usuario> {
     return this.usuarioLogueado$.asObservable();
   }
+  logout(){
+    console.log("Cerrando");
+    //firebase.auth().signOut();
+    this.firebaseAuth.auth.signOut();
+    this.usuarioLogueado = null; 
+    this.usuarioLogueado$ = null;
+    this.user = null;
+    this.router.navigate(['/']);
+  }
 }
