@@ -59,4 +59,9 @@ export class UsuarioService {
     let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild('correo').equalTo(correo));
     return r.valueChanges();
   }
+  getUsuarioCampos(campo: string, valor : string): Observable<Usuario[]> {
+    let usuario: Usuario;
+    let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild(campo).equalTo(valor));
+    return r.valueChanges();
+  }
 }

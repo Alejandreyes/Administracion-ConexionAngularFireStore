@@ -3,8 +3,6 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 declare var Materialize: any;
-/* declare var jQuery: any;
-declare var $: any; */
 import { Proyecto } from '../../../modelos/proyecto.model';
 import { Usuario } from '../../../modelos/usuario.model';
 import { UsuarioService } from '../../../servicios/usuario.service';

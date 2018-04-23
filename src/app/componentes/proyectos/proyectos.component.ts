@@ -3,9 +3,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 //Bibliotecas de Diseño 
 import { toast } from 'angular2-materialize';
 import { MaterializeAction } from 'angular2-materialize';
-/* 
-declare var $: any;
-declare var JQuery: any; */
+
 import { Proyecto } from '../../modelos/proyecto.model';
 import { Usuario } from '../../modelos/usuario.model';
 import { ProyectosService } from '../../servicios/proyectos.service';
@@ -40,12 +38,20 @@ export class ProyectosComponent implements OnInit {
   onCreate(){
     this.router.navigate(['/agregarProyecto']);
   }
+  onEdit(proyecto: Proyecto){
+    this.proyectosSV.proyectoSelecionado =proyecto ; 
+    this.router.navigate(['/editarProyecto']);
+  }
   
   esImportante(proyecto: Proyecto): boolean {
     //let inicio: number = new Date(proyecto.fechaInicio).getTime();
-    let finDia: number = new Date(proyecto.fechaFin).getDate();
-    let finMes: number = new Date(proyecto.fechaFin).getMonth() + 1;
-    let finAnio: number = new Date(proyecto.fechaFin).getFullYear();
+    let fechaDesc:string[] = proyecto.fechaFin.split("/");
+
+    let fechaDescFormat : string =  fechaDesc[1]+"/"+fechaDesc[0]+"/"+fechaDesc[2];
+    let finDia: number = new Date(fechaDescFormat).getDate();
+    
+    let finMes: number = new Date(fechaDescFormat).getMonth() + 1;
+    let finAnio: number = new Date(fechaDescFormat).getFullYear();
     let fechaActualDia: number = (new Date()).getDate();
     let fechaActualMes: number = (new Date()).getMonth() + 1;
     let fechaActualAnio: number = (new Date()).getFullYear();
@@ -53,6 +59,7 @@ export class ProyectosComponent implements OnInit {
     let fechaActual = fechaActualDia + (fechaActualMes * 30) + (fechaActualAnio * 365);
     let diff = fin - fechaActual;
     if (diff < 30) {
+ 
       return true;
     }
     else {

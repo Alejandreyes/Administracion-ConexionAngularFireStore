@@ -1,3 +1,70 @@
-<p>
-  editar-proyecto works!
-</p>
+<div class="row">
+  <div class="card col s12 m6 l6">
+    <div class="card-content">
+      <span class="card-title">Editar Proyecto</span>
+      <div class="row">
+        <form class="col s12" materialize [formGroup]="proyectoForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="input-field col s12">
+              <input formControlName="nombre" id="nombre" type="text" placeholder="nombre del usuario" class="validate">
+              <label for="nombre">Nombre</label>
+              <p class="red-text" *ngIf="proyectoForm.controls.nombre.invalid">
+                El campo es obligatorio.
+                Debe contener por lo menos 10 caracteres.
+              </p>
+            </div>
+            <!-- <div class="input-field col s6">
+              <select formControlName="opcion" materialize="material_select" [materializeSelectOptions]="selectOptions" [disabled]="isDisabled?true:null">
+                <option value="" disabled selected>Choose your option</option>
+                <option *ngFor="let option of selectOptions" [value]="option.value">{{option.name}}</option>
+              </select>
+              <label>Materialize Select</label>
+            </div> -->
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="textarea1" formControlName="Descripcion" class="materialize-textarea" materialize="characterCounter" [attr.length]="maxLength" [disabled]="isDisabled?true:null"></textarea>
+                <label for="textarea1">Textarea</label>
+                <p class="red-text" *ngIf="proyectoForm.controls.Descripcion.invalid">
+                  El campo es obligatorio. 
+                  Debe contener por lo menos 50 Caracteres.
+                </p>
+              </div>
+            </div>
+            <div class="input-field col s12">
+              <input formControlName="cliente" id="cliente" type="text" placeholder="nombre del cliente " class="validate">
+              <label for="cliente">Cliente</label>
+              <p class="red-text" *ngIf="proyectoForm.controls.cliente.invalid">
+                El campo es obligatorio.
+              </p>
+            </div>
+  
+            <div class="col s12 m6 l6">
+  
+              <label for="fechaInicio">Fecha de Inicio</label>
+              <input id="fechaInicio" name="fechaInicio" formControlName="fechaInicio" materialize="pickadate" [materializeParams]="[{format: 'dd/mm/yyyy'}]"
+                type="text" />
+            </div>
+          
+          <div class="col s12 m6 l6">
+  
+            <label for="fechaFin">Fecha de Fin del Proyecto</label>
+            <input id="fechaFin" name="fechaFin" formControlName="fechaFin" materialize="pickadate" [materializeParams]="[{format: 'dd/mm/yyyy'}]"
+              type="text" />
+          </div>
+        </div> 
+          <div class="divider"></div>
+          <div class="section">
+            <button class="btn " *ngIf="proyectoForm.invalid" disabled type="submit">ENVIAR</button>
+            <button class="btn " *ngIf="!proyectoForm.invalid" type="submit">ENVIAR</button>
+            <button class="btn " (click)="onCancel()" type="reset">CANCELAR</button>
+          </div>
+  
+        </form>
+  
+  
+      </div>
+    </div>
+  </div>
+  
+
+</div>

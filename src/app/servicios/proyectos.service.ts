@@ -28,6 +28,7 @@ export class ProyectosService {
   }
   editProyecto(proyecto: Proyecto) {
     this.proyectosLista.set(proyecto.id, proyecto);
+    this.router.navigate(['/usuarios']);
   }
   removeProyecto(proyecto: Proyecto) {
     this.proyectosLista.remove(proyecto.id);

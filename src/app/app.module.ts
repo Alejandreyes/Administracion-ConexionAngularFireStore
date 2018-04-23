@@ -24,6 +24,7 @@ import { AgregarAccionComponent } from './componentes/accion/agregar-accion/agre
 import { GenerarReporteComponent } from './componentes/generar-reporte/generar-reporte.component';
 import { CasosUsoComponent } from './componentes/casos-uso/casos-uso.component';
 import { AccionComponent } from './componentes/accion/accion.component';
+import { BuscarUsuarioComponent } from './componentes/usuario/buscar-usuario/buscar-usuario.component';
 
 // Libreria de materialize 
 import {MatButtonModule, MatCheckboxModule,MatNativeDateModule,
@@ -61,6 +62,7 @@ const routes: Routes = [
   { path : 'agregarAccion' , component : AgregarAccionComponent},
   { path : 'editarAccion' , component : EditarAccionComponent},
   { path : 'eliminarAccion' , component :EliminarAccionComponent },
+  { path : 'buscarUsuario' , component : BuscarUsuarioComponent },
 //  { path : 'proyectos' , component :ProyectosComponent },
 //  { path : 'casosDeUso' , component : CasosUsoComponent},
 //  { path : 'accion' , component : AccionComponent},
@@ -87,7 +89,8 @@ const routes: Routes = [
     AgregarAccionComponent,
     GenerarReporteComponent,
     CasosUsoComponent,
-    AccionComponent
+    AccionComponent,
+    BuscarUsuarioComponent
   ],
   imports: [
     BrowserModule,

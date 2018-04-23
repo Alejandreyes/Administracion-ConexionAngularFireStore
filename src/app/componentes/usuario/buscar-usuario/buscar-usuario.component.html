@@ -1,0 +1,71 @@
+
+      <!-- 
+https://github.com/InfomediaLtd/angular2-materialize/tree/master/sample/src/app/components/model-bindings -->
+
+<div class="row">
+  <form  [formGroup]="busquedaForm"  (ngSubmit)="onSubmit()" class="col s12">
+    <div class="row">
+      <div class="input-field col s12 m7 l7 ">
+        <i class="material-icons prefix">search</i>
+        <input  formControlName="busqueda" id="icon_prefix" type="text" class="validate">
+        <label for="icon_prefix">Busqueda</label>
+      </div>
+      <div class="input-field col s8 m3 l3">
+        <select name="singleSelect" formControlName="opcion" name="selectedOption" materialize="material_select" [materializeSelectOptions]="selectOptions">
+          <option value="" disabled selected>Elige el campo para la busqueda</option>
+          <option *ngFor="let option of selectOptions" [value]="option">{{option}}</option>
+        </select>
+        <label>Campos</label>
+      </div>
+      <div class="input-field col s4 m2 l2">
+        <button  type="submit" class="btn"><i class="material-icons Large"> send</i></button>
+      </div>
+    </div>
+    
+    <div class=""></div>
+  </form>
+</div>
+<div class="row conteiner" *ngIf="usuarios?.length > 0 ; else noUsuarios">
+  <div class="col s12 m12 l12">
+    <h3>Usuarios</h3>
+    <table class="table highlight">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Rol</th>
+          <th>Editar</th>
+          <th>Borrar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{usuario.nombre}}</td>
+          <td>{{usuario.rol}}</td>
+          <td>
+            <a class="btn btn-secondary blue darken-2" (click)="onEdit(usuario)">
+              <i class="material-icons">create</i>
+            </a>
+          </td>
+          <td>
+            <a class="btn btn-danger red darken-2 " (click)="openModal(usuario)">
+              <i class="material-icons ">delete</i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Creo que es demasiado tener a los casos de usos en la pagina principal -->
+  <!-- <div class=" col s12 m12 l4 ">
+    <app-casos-uso></app-casos-uso>
+  </div> -->
+</div>
+
+<!-- Modal Structure -->
+
+
+
+<ng-template #noUsuarios>
+  <h5>No existen usuarios </h5>
+</ng-template>
