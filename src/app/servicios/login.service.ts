@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Usuario } from '../modelos/usuario.model';
 import { UsuarioService } from '../servicios/usuario.service';
 //Bibliotecas de direccionamiento de angular
-import { Router } from '@angular/router';
+import { CanActivate ,Router,RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 //Bibliotecas de Diseño 
 import { toast } from 'angular2-materialize';
 
@@ -14,8 +14,9 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 @Injectable()
-export class LoginService {
-  usuarioLogueado: Usuario = new Usuario();
+export class LoginService implements CanActivate{
+  
+  usuarioLogueado: Usuario ;
   usuarioLogueado$ = new Subject<Usuario>();
   //usuarioL :Observable<Usuario> ;
   user: Observable<firebase.User>; // Usuario propio de firebase 
@@ -54,12 +55,10 @@ export class LoginService {
     return this.usuarioLogueado$.asObservable();
   }
   logout(){
-    console.log("Cerrando");
-    //firebase.auth().signOut();
     this.firebaseAuth.auth.signOut();
-    this.usuarioLogueado = null; 
-    this.usuarioLogueado$ = null;
-    this.user = null;
     this.router.navigate(['/']);
+  }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
+    return this.usuarioLogueado != null ; 
   }
 }

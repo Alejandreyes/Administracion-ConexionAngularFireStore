@@ -1,3 +1,41 @@
-<p>
-  editar-accion works!
-</p>
+<div class="row">
+  <div class="card col s12 m6 l6">
+    <div class="card-content">
+      <span class="card-title">Agregar Accion</span>
+      <div class="row">
+        <form class="col s12" materialize [formGroup]="accionForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="input-field col s12">
+              <input formControlName="nombre" id="nombre" type="text" placeholder="nombre del caso de uso" class="validate">
+              <label for="nombre">Nombre</label>
+              <p class="red-text" *ngIf="accionForm.controls.nombre.invalid">
+                El campo es obligatorio. Debe contener por lo menos 10 caracteres.
+              </p>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="textarea1" formControlName="descripcion" class="materialize-textarea" materialize="characterCounter" [attr.length]="maxLength"></textarea>
+                <label for="textarea1">Descripcion del la Accion</label>
+                <p class="red-text" *ngIf="accionForm.controls.descripcion.invalid">
+                  El campo es obligatorio. Debe contener por lo menos 25 Caracteres.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="section center">
+            <div class="row" style="margin-top:7%;">
+              <div class="col s8">
+                <button class="btn " *ngIf="accionForm.invalid" disabled type="submit">ENVIAR</button>
+                <button class="btn " *ngIf="!accionForm.invalid" type="submit">ENVIAR</button>
+                <button class="btn " (click)="onCancel()" type="reset">CANCELAR</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

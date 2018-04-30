@@ -18,17 +18,12 @@ export class ProyectosComponent implements OnInit {
   proyectos: Proyecto[];
   panelOpenState: boolean = false;
   modalActions = new EventEmitter<string | MaterializeAction>();
-  openModal(proyecto: Proyecto) {
-    this.proyectosSV.proyectoSelecionado = proyecto;
-    this.modalActions.emit({ action: "modal", params: ['open'] });
-  }
-  closeModal() {
-    this.modalActions.emit({ action: "modal", params: ['close'] });
-  }
+  
   constructor(private proyectosSV: ProyectosService,
     public router: Router) {
     this.proyectosSV.getProyectos().valueChanges().subscribe(items => {
       this.proyectos = items;
+      console.log(items);
     });
   }
 
@@ -44,12 +39,9 @@ export class ProyectosComponent implements OnInit {
   }
   
   esImportante(proyecto: Proyecto): boolean {
-    //let inicio: number = new Date(proyecto.fechaInicio).getTime();
     let fechaDesc:string[] = proyecto.fechaFin.split("/");
-
     let fechaDescFormat : string =  fechaDesc[1]+"/"+fechaDesc[0]+"/"+fechaDesc[2];
     let finDia: number = new Date(fechaDescFormat).getDate();
-    
     let finMes: number = new Date(fechaDescFormat).getMonth() + 1;
     let finAnio: number = new Date(fechaDescFormat).getFullYear();
     let fechaActualDia: number = (new Date()).getDate();
@@ -59,12 +51,22 @@ export class ProyectosComponent implements OnInit {
     let fechaActual = fechaActualDia + (fechaActualMes * 30) + (fechaActualAnio * 365);
     let diff = fin - fechaActual;
     if (diff < 30) {
- 
       return true;
     }
     else {
       return false;
     }
+  }
+  crearCasoUso(proyecto: Proyecto){
+    this.proyectosSV.proyectoSelecionado =proyecto ; 
+    this.router.navigate(['/casosDeUso']);
+  }
+  openModal(proyecto: Proyecto) {
+    this.proyectosSV.proyectoSelecionado = proyecto;
+    this.modalActions.emit({ action: "modal", params: ['open'] });
+  }
+  closeModal() {
+    this.modalActions.emit({ action: "modal", params: ['close'] });
   }
 
 }

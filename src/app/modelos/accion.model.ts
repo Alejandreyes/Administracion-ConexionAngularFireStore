@@ -1,7 +1,8 @@
 
 export class Accion{
-  public id:number;
+  public id:string;
   public nombre : string ;
+  public descripcion : string ;
   
 
 }

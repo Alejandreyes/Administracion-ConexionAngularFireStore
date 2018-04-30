@@ -16,6 +16,7 @@ import {MaterializeAction} from 'angular2-materialize';
 export class UsuarioComponent implements OnInit {
   usuarios: Usuario[];
   usuarioLogueado: Usuario;
+  administrador : boolean ; 
   //...
   modalActions = new EventEmitter<string|MaterializeAction>();
   openModal(usuario: Usuario) {
@@ -41,6 +42,7 @@ export class UsuarioComponent implements OnInit {
     });
 
     this.usuarioLogueado = lgServ.usuarioLogueado;
+    this.administrador = (this.usuarioLogueado.rol == "Administrador");
 
   }
   onCreate(){

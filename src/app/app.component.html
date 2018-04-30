@@ -1,6 +1,8 @@
 <nav>
   <div class="nav-wrapper  teal darken-1">
-    <a routerLink="/" class="brand-logo truncate" tru>
+    <a *ngIf="usuarioLogueado.nombre != null" routerLink="/usuarios" class="brand-logo truncate" truncate>
+      Administracion de Proyectos de Software</a>
+    <a *ngIf="usuarioLogueado.nombre == null" routerLink="/" class="brand-logo truncate" truncate>
       Administracion de Proyectos de Software</a>
     <ul class="right hide-on-med-and-down">
       <li *ngIf="usuarioLogueado.nombre != null">
@@ -10,7 +12,7 @@
       </li>
 
       <li *ngIf="usuarioLogueado.nombre != null">
-        <a (click) = "logout()">
+        <a (click)="logout()">
           <i class="material-icons left">power_settings_new</i>Salir</a>
       </li>
     </ul>

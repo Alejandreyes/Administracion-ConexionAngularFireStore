@@ -1,4 +1,4 @@
-<div class="row conteiner" *ngIf="usuarios?.length > 0 ; else noUsuarios">
+<div class="row conteiner" *ngIf="administrador; else analista">
   <div class="col s12 m12 l6">
     <h3>Usuarios</h3>
     <table class="table highlight">
@@ -63,6 +63,6 @@
     <a class="modal-action modal-close waves-effect waves-green btn-flat" (click) = "onDelete()" >Aceptar</a>
   </div>
 </div>
-<ng-template #noUsuarios>
-  <h5>No existen usuarios </h5>
+<ng-template #analista>
+    <app-proyectos></app-proyectos>
 </ng-template>

@@ -13,13 +13,6 @@
                 Debe contener por lo menos 10 caracteres.
               </p>
             </div>
-            <!-- <div class="input-field col s6">
-              <select formControlName="opcion" materialize="material_select" [materializeSelectOptions]="selectOptions" [disabled]="isDisabled?true:null">
-                <option value="" disabled selected>Choose your option</option>
-                <option *ngFor="let option of selectOptions" [value]="option.value">{{option.name}}</option>
-              </select>
-              <label>Materialize Select</label>
-            </div> -->
             <div class="row">
               <div class="input-field col s12">
                 <textarea id="textarea1" formControlName="Descripcion" class="materialize-textarea" materialize="characterCounter" [attr.length]="maxLength" [disabled]="isDisabled?true:null"></textarea>
@@ -53,11 +46,24 @@
           </div>
         </div> 
           <div class="divider"></div>
-          <div class="section">
-            <button class="btn " *ngIf="proyectoForm.invalid" disabled type="submit">ENVIAR</button>
-            <button class="btn " *ngIf="!proyectoForm.invalid" type="submit">ENVIAR</button>
-            <button class="btn " (click)="onCancel()" type="reset">CANCELAR</button>
-          </div>
+          
+          <div class="row" style="margin-top:7%;">
+              <div class="col s8">
+                <button class="btn " *ngIf="proyectoForm.invalid" disabled type="submit">ENVIAR</button>
+                <button class="btn " *ngIf="!proyectoForm.invalid" type="submit">ENVIAR</button>
+                <button class="btn " (click)="onCancel()" type="reset">CANCELAR</button>
+  
+              </div>
+              <div class="col s2 offset-s2">
+                <a materialize="tooltip" class="btn-floating btn-large waves-effect waves-light red tooltipped " data-position="bottom" data-delay="10" data-tooltip="Editar Usuario">
+                  <i class="fas fa-user-plus" (click)="openModal()"></i>
+  
+                </a>
+              </div>
+            </div>
+
+
+
   
         </form>
   
@@ -68,3 +74,23 @@
   
 
 </div>
+
+<div id="modal1" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+    <div class="modal-content">
+      <h4>ALERTA</h4>
+      <span class="card-title">Selecionar Usuarios Encargados del Proyecto</span>
+        <div>
+          <p *ngFor="let opcion of opciones" >
+            
+            <input *ngIf="!opcion.seleccionado" type="checkbox" id="{{opcion.usuario.nombre}}"  (click)="change($event, opcion)"  />
+            <input *ngIf="opcion.seleccionado" checked type="checkbox" id="{{opcion.usuario.nombre}}"  (click)="change($event, opcion)"  />
+            <label for="{{opcion.usuario.nombre}}">{{opcion.usuario.nombre}}</label>
+          </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Cancelar</a>
+      <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="aceptar()">Aceptar</a>
+    </div>
+  </div>
+  

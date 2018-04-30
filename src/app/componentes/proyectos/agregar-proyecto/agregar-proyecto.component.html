@@ -9,24 +9,16 @@
               <input formControlName="nombre" id="nombre" type="text" placeholder="nombre del usuario" class="validate">
               <label for="nombre">Nombre</label>
               <p class="red-text" *ngIf="proyectoForm.controls.nombre.invalid">
-                El campo es obligatorio.
-                Debe contener por lo menos 10 caracteres.
+                El campo es obligatorio. Debe contener por lo menos 10 caracteres.
               </p>
             </div>
-            <!-- <div class="input-field col s6">
-              <select formControlName="opcion" materialize="material_select" [materializeSelectOptions]="selectOptions" [disabled]="isDisabled?true:null">
-                <option value="" disabled selected>Choose your option</option>
-                <option *ngFor="let option of selectOptions" [value]="option.value">{{option.name}}</option>
-              </select>
-              <label>Materialize Select</label>
-            </div> -->
             <div class="row">
               <div class="input-field col s12">
-                <textarea id="textarea1" formControlName="Descripcion" class="materialize-textarea" materialize="characterCounter" [attr.length]="maxLength" [disabled]="isDisabled?true:null"></textarea>
+                <textarea id="textarea1" formControlName="Descripcion" class="materialize-textarea" materialize="characterCounter" [attr.length]="maxLength"
+                  [disabled]="isDisabled?true:null"></textarea>
                 <label for="textarea1">Textarea</label>
                 <p class="red-text" *ngIf="proyectoForm.controls.Descripcion.invalid">
-                  El campo es obligatorio. 
-                  Debe contener por lo menos 50 Caracteres.
+                  El campo es obligatorio. Debe contener por lo menos 50 Caracteres.
                 </p>
               </div>
             </div>
@@ -37,32 +29,66 @@
                 El campo es obligatorio.
               </p>
             </div>
-  
             <div class="col s12 m6 l6">
-  
+
               <label for="fechaInicio">Fecha de Inicio</label>
               <input id="fechaInicio" name="fechaInicio" formControlName="fechaInicio" materialize="pickadate" [materializeParams]="[{format: 'dd/mm/yyyy'}]"
                 type="text" />
             </div>
-          
-          <div class="col s12 m6 l6">
-  
-            <label for="fechaFin">Fecha de Fin del Proyecto</label>
-            <input id="fechaFin" name="fechaFin" formControlName="fechaFin" materialize="pickadate" [materializeParams]="[{format: 'dd/mm/yyyy'}]"
-              type="text" />
+
+            <div class="col s12 m6 l6">
+
+              <label for="fechaFin">Fecha de Fin del Proyecto</label>
+              <input id="fechaFin" name="fechaFin" formControlName="fechaFin" materialize="pickadate" [materializeParams]="[{format: 'dd/mm/yyyy'}]"
+                type="text" />
+            </div>
           </div>
-        </div> 
           <div class="divider"></div>
           <div class="section">
-            <button class="btn " *ngIf="proyectoForm.invalid" disabled type="submit">ENVIAR</button>
-            <button class="btn " *ngIf="!proyectoForm.invalid" type="submit">ENVIAR</button>
-            <button class="btn " (click)="onCancel()" type="reset">CANCELAR</button>
+
           </div>
-        </form>  
+
+          <div class="row" style="margin-top:7%;">
+            <div class="col s8">
+              <button class="btn " *ngIf="proyectoForm.invalid" disabled type="submit">ENVIAR</button>
+              <button class="btn " *ngIf="!proyectoForm.invalid" type="submit">ENVIAR</button>
+              <button class="btn " (click)="onCancel()" type="reset">CANCELAR</button>
+
+            </div>
+            <div class="col s2 offset-s2">
+              <a class="btn-floating btn-large waves-effect waves-light red tooltipped " data-position="bottom" data-delay="10" data-tooltip="Agregar Usuarios">
+                <!--  <i class="material-icons tooltip" (click)="openModal()">add</i> -->
+                <i class="fas fa-user-plus" (click)="openModal()"></i>
+
+              </a>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
-  
 
+</div>
+
+
+<div id="modal1" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h4>ALERTA</h4>
+    <span class="card-title">Selecionar Usuarios Encargados del Proyecto</span>
+      <div>
+        <p *ngFor="let opcion of opciones" >
+          
+          <input type="checkbox" id="{{opcion.usuario.nombre}}"  (click)="change($event, opcion)"  />
+          <label for="{{opcion.usuario.nombre}}">{{opcion.usuario.nombre}}</label>
+        </p>
+
+      </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Cancelar</a>
+    <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="aceptar()">Aceptar</a>
+  </div>
 </div>

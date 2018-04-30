@@ -64,4 +64,7 @@ export class UsuarioService {
     let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild(campo).equalTo(valor));
     return r.valueChanges();
   }
+  getUsuariosProyectos(nombre: string):AngularFireList<Usuario>{
+    return this.firebase.list('usuarios-proyectos/'+nombre); 
+  }
 }
