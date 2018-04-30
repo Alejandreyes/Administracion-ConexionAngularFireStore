@@ -27,6 +27,9 @@ export class EditarAccionComponent implements OnInit {
     accion.descripcion = this.accionForm.value.descripcion;
     this.accionServ.editAccion(accion);
   }
+  onCancel() {
+    this.router.navigate(['/casosDeUso']);
+  }
 
 
 }

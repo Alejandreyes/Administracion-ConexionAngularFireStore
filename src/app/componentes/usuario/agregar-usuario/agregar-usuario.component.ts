@@ -22,7 +22,9 @@ export class AgregarUsuarioComponent implements OnInit {
       nombre: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       opcion: [''],
-      contrasenia: ['', [Validators.required, Validators.minLength(6)]]
+      
+      //contrasenia: ['', Validators.pattern( "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$")]
+      contrasenia: ['', [Validators.required,Validators.pattern( "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+){6,10}$")]]
     });
     toast("Rellena todos los marcados en rojo", 2500);
   }

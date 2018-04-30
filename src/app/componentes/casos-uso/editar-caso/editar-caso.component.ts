@@ -187,4 +187,7 @@ export class EditarCasoComponent implements OnInit {
     casoUso.actores = this.actores;
     this.casoServ.editCasoUso(casoUso);
   }
+  onCancel() {
+    this.router.navigate(['/casosDeUso']);
+  }
 }

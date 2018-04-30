@@ -106,4 +106,7 @@ export class AgregarCasoComponent implements OnInit {
     casoUso.actores = this.actores;
     this.casoServ.addCasoUso(casoUso);
   }
+  onCancel() {
+    this.router.navigate(['/casosDeUso']);
+  }
 }

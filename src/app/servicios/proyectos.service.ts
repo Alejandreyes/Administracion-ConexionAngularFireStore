@@ -12,24 +12,24 @@ import { LoginService } from './login.service';
 @Injectable()
 export class ProyectosService {
 
-  
+
   proyectoSelecionado: Proyecto = new Proyecto();
   proyectosLista: AngularFireList<Proyecto>;
   constructor(private firebase: AngularFireDatabase,
     public logServ: LoginService,
     public router: Router) {
-      let usu = logServ.usuarioLogueado ; 
-      console.log(usu); 
-      if(usu.rol == 'Administrador'){
-        this.proyectosLista = firebase.list('proyectos');
-      }else {
-        this.iniciaLista(usu);   
-      }    
+
   }
-  iniciaLista(usu : Usuario): void {
-    this.proyectosLista= this.firebase.list('usuario-proyectos', ref => ref.orderByChild('nombre').equalTo(usu.nombre));
+  iniciaLista(usu: Usuario): void {
+    this.proyectosLista = this.firebase.list('usuario-proyectos', ref => ref.orderByChild('nombre').equalTo(usu.nombre));
   }
   getProyectos() {
+    let usu = this.logServ.usuarioLogueado;
+    if (usu.rol == 'Administrador') {
+      this.proyectosLista = this.firebase.list('proyectos');
+    } else {
+      this.iniciaLista(usu);
+    }
     return this.proyectosLista;
   }
   addProyecto(proyecto: Proyecto, usuariosSelecionados: Usuario[]) {
@@ -80,5 +80,5 @@ export class ProyectosService {
 
 
   }
-  
+
 }

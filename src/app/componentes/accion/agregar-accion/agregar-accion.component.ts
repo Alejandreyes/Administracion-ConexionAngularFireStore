@@ -28,5 +28,7 @@ export class AgregarAccionComponent implements OnInit {
     accion.descripcion = this.accionForm.value.descripcion;
     this.accionServ.addAccion(accion);
   }
-
+  onCancel() {
+    this.router.navigate(['/casosDeUso']);
+  }
 }
