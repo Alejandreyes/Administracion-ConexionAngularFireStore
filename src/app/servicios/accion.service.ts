@@ -14,8 +14,7 @@ export class AccionService {
     public router: Router) {
   }
   getAcciones(nombre: string) {
-    this.accionLista = this.firebase.list('accion-proyecto/' + nombre);
-    this.nombreProyecto = nombre;
+    this.accionLista = this.firebase.list('acciones');
     return this.accionLista;
   }
   addAccion(accion: Accion) {
@@ -24,11 +23,11 @@ export class AccionService {
       accion.id = key;
       this.accionLista.set(key, accion);
     });;
-    this.router.navigate(['/casosDeUso']);
+    this.router.navigate(['/accion']);
   }
   editAccion(accion: Accion) {
     this.accionLista.set(accion.id,accion);
-    this.router.navigate(['/casosDeUso']);
+    this.router.navigate(['/accion']);
   }
   delete(accion : Accion): void {
     this.accionLista.remove(accion.id);

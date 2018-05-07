@@ -28,7 +28,8 @@ export class EditarAccionComponent implements OnInit {
     this.accionServ.editAccion(accion);
   }
   onCancel() {
-    this.router.navigate(['/casosDeUso']);
+    this.accionServ.accionSeleccionado = new Accion();
+    this.router.navigate(['/accion']);
   }
 
 

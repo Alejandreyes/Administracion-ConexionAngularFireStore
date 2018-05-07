@@ -7,29 +7,18 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../modelos/usuario.model';
 import { UsuarioService } from './usuario.service';
-import { LoginService } from './login.service';
 
 @Injectable()
 export class ProyectosService {
-
-
   proyectoSelecionado: Proyecto = new Proyecto();
   proyectosLista: AngularFireList<Proyecto>;
   constructor(private firebase: AngularFireDatabase,
-    public logServ: LoginService,
+    private usuServ: UsuarioService,    
     public router: Router) {
+    this.proyectosLista = this.firebase.list('proyectos');
+  }
 
-  }
-  iniciaLista(usu: Usuario): void {
-    this.proyectosLista = this.firebase.list('usuario-proyectos', ref => ref.orderByChild('nombre').equalTo(usu.nombre));
-  }
   getProyectos() {
-    let usu = this.logServ.usuarioLogueado;
-    if (usu.rol == 'Administrador') {
-      this.proyectosLista = this.firebase.list('proyectos');
-    } else {
-      this.iniciaLista(usu);
-    }
     return this.proyectosLista;
   }
   addProyecto(proyecto: Proyecto, usuariosSelecionados: Usuario[]) {
@@ -38,13 +27,17 @@ export class ProyectosService {
       proyecto.id = key;
       this.proyectosLista.set(key, proyecto);
     });
-    this.agregarUsuariosProyectos(usuariosSelecionados, proyecto.nombre);
+    this.agregarUsuariosProyectos(usuariosSelecionados, [], proyecto.id);
+    this.proyectoSelecionado = new Proyecto();
     this.router.navigate(['/usuarios']);
 
   }
-  editProyecto(proyecto: Proyecto, usuariosSelecionados: Usuario[]) {
+  editProyecto(proyecto: Proyecto, usuariosSelecionados: Usuario[], usuariosDiff: Usuario[]) {
+    if (proyecto.usuarios == null || proyecto.usuarios == undefined) {
+      proyecto.usuarios = [];
+    }
     this.proyectosLista.set(proyecto.id, proyecto);
-    this.editarUsuariosProyectos(usuariosSelecionados, proyecto.nombre);
+    this.editarUsuariosProyectos(usuariosSelecionados, usuariosDiff, proyecto.id);
     this.router.navigate(['/usuarios']);
   }
   removeProyecto(proyecto: Proyecto) {
@@ -54,31 +47,90 @@ export class ProyectosService {
     let r: AngularFireList<Proyecto> = this.firebase.list('proyectos', ref => ref.orderByChild(campo).equalTo(criterio));
     return r.valueChanges();
   }
-  agregarUsuariosProyectos(usuarios: Usuario[], nombre: string): void {
-    let auxLista = this.firebase.list('usuarios-proyectos/' + nombre);
-    usuarios.forEach(usuario => {
-      auxLista.push({ nombre: usuario.nombre });
+  agregarUsuariosProyectos(usuariosSelecionados: Usuario[], usuariosDiff: Usuario[], id: string): void {
+    usuariosSelecionados.forEach(usuario => {
+      let aux = this.usuServ.getUsuarioCampos('id', usuario.id);
+      aux.subscribe(item => {
+        let usuarioEle = item[0];
+        if (usuarioEle.proyectos == undefined) {
+          usuarioEle.proyectos = [];
+        }
+        if (usuarioEle.proyectos.indexOf(id) < 0) {
+          usuarioEle.proyectos.push(id);
+        }
+        this.usuServ.editUsuario(usuarioEle);
+      });
+    });
+
+  }
+  eliminarUsuarioProyecto(usuariosSelecionados: Usuario[], usuariosDiff: Usuario[], id: string): void {
+    usuariosDiff.forEach(usuario => {
+      let aux = this.usuServ.getUsuarioCampos('id', usuario.id);
+      aux.subscribe(item => {
+        let usuarioEle = item[0];
+        if (!usuariosSelecionados.includes(usuarioEle)) {
+          if (usuarioEle.proyectos == undefined) {
+            usuarioEle.proyectos = [];
+          }
+          let proyectosUsuario = usuarioEle.proyectos.filter(item => {
+            usuariosDiff.forEach(usuarioAux => {
+              if (usuarioAux.id == item) {
+                return true;
+              }
+            });
+          });
+          usuarioEle.proyectos = proyectosUsuario;
+          this.usuServ.editUsuario(usuarioEle);
+        }
+      });
     });
   }
-  editarUsuariosProyectos(usuarios: Usuario[], nombre: string): void {
-    this.firebase.list('usuarios-proyectos').remove(nombre);
-    let auxLista = this.firebase.list('usuarios-proyectos/' + nombre);
-    usuarios.forEach(usuario => {
-      auxLista.push({ nombre: usuario.nombre });
+  editarUsuariosProyectos(usuariosSelecionados: Usuario[], usuariosDiff: Usuario[], id: string): void {
+    usuariosSelecionados.forEach(usuario => {
+      let aux = this.usuServ.getUsuarioCampos('id', usuario.id);
+      let flag = false;
+      let sub = aux.subscribe(item => {
+        let usuarioEle = item[0];
+        let proyectos = [];
+        if (!usuariosDiff.includes(usuarioEle)) {
+          if (usuarioEle.proyectos != undefined) {
+            proyectos = usuarioEle.proyectos;
+          }
+          if (proyectos.indexOf(id) < 0) {
+            proyectos.push(id);
+          }
+          usuario.proyectos = proyectos;
+          this.firebase.list('usuarios').set(usuario.id, usuario)
+            .then(value => {
+              sub.unsubscribe();
+            })
+            .catch(err => {
+
+            });
+        }
+      });
     });
-
-    /* 
-    
-    ----------------------------------------
-    CAMBIAR ANTES DE ALGO "auth != null"
-
-    --------------------------------------------------
-    
-    
-    
-    */
-
-
+    usuariosDiff.forEach(usuario => {
+      let aux = this.usuServ.getUsuarioCampos('id', usuario.id);
+      let sub = aux.subscribe(item => {
+        let usuarioEle = item[0];
+        if (usuarioEle.proyectos == undefined) {
+          usuarioEle.proyectos = [];
+        }
+        let proyectosUsuario = usuarioEle.proyectos.filter(item => {
+          return item!=id; 
+        });
+        usuarioEle.proyectos = proyectosUsuario;
+        this.usuServ.editUsuario(usuarioEle);
+        this.firebase.list('usuarios').set(usuarioEle.id, usuarioEle)
+          .then(value => {
+            sub.unsubscribe();
+          })
+          .catch(err => {
+            console.log("FALLO");
+          });
+      });
+    });
   }
 
 }

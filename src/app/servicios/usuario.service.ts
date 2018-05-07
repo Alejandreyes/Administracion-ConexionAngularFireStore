@@ -25,11 +25,9 @@ export class UsuarioService {
     return this.usuariosLista;
   }
   addUsuario(usuario: Usuario) {
-    //this.loginSV.signup(usuarioNuevo,this.usuariosLista);
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(usuario.correo, usuario.contrasenia).then(value => {
-
         this.usuariosLista.push(usuario).then((response) => {
           const key = response.key;
           usuario.id = key;

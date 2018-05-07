@@ -30,7 +30,6 @@ export class EditarUsuarioComponent implements OnInit {
   }
 
   onSubmit(){
-    //this.usServ.usuarioSelecionado = usuarioSelecionado; 
     const usuario = this.usServ.usuarioSelecionado;
     usuario.nombre = this.usuarioForm.value.nombre;
     usuario.rol = this.usuarioForm.value.opcion;
@@ -38,6 +37,7 @@ export class EditarUsuarioComponent implements OnInit {
     this.router.navigate(['/usuarios']);
   }
   onCancel(){
+    this.usServ.usuarioSelecionado = new Usuario(); 
     this.router.navigate(['/usuarios']);
   }
 }

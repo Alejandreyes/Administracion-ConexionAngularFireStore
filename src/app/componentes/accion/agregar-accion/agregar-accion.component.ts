@@ -18,8 +18,8 @@ export class AgregarAccionComponent implements OnInit {
 
   ngOnInit() {
     this.accionForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(10)]],
-      descripcion: ['', [Validators.required, Validators.minLength(25)]]
+      nombre: ['', [Validators.required, Validators.minLength(5)]],
+      descripcion: ['', [Validators.required, Validators.minLength(15)]]
     });
   }
   onSubmit() {
@@ -29,6 +29,6 @@ export class AgregarAccionComponent implements OnInit {
     this.accionServ.addAccion(accion);
   }
   onCancel() {
-    this.router.navigate(['/casosDeUso']);
+    this.router.navigate(['/accion']);
   }
 }

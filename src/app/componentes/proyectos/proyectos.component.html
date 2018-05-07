@@ -2,7 +2,8 @@
 <br>
 <br>
 <br>
-<ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+<ul materialize="collapsible"  *ngIf="(proyectos.length>0); else sinProyecto "  class="collapsible" data-collapsible="accordion">
+<!-- <ul materialize="collapsible"  class="collapsible" data-collapsible="accordion"> -->
   <li *ngFor="let proyecto of proyectos">
     <div *ngIf="esImportante(proyecto)" class="collapsible-header red-text">
       <i class="material-icons">assignment_late</i>{{proyecto.nombre}}</div>
@@ -14,11 +15,9 @@
         <span style="font-weight: bold;">Descripcion :</span> {{proyecto.Descripcion}}</p>
       <p>
         <span style="font-weight: bold;">Nombre del cliente:</span> {{proyecto.cliente}}</p>
-
       <p>
-        <span  style="font-weight: bold; color: brown;">Fecha de cierre:</span> {{proyecto.fechaFin}}</p>
-
-      <div materialize class="col s2 offset-s9">
+        <span style="font-weight: bold; color: brown;">Fecha de cierre:</span> {{proyecto.fechaFin}}</p>
+       <div materialize class="right-align ">
         <div class="fixed-action-btn horizontal " style="position: relative;">
           <a id="menu" class="btn-floating btn-large brown">
             <i class="material-icons">menu</i>
@@ -44,8 +43,8 @@
             </li>
           </ul>
         </div>
-
-      </div>
+      </div> 
+     
     </div>
   </li>
 </ul>
@@ -63,6 +62,19 @@
 
 </div>
 
+<ng-template #sinProyecto>
+  <div class="row" style="margin-top:7%;">
+   
+    <div materialize class="right-align">
+      <a class="btn-floating btn-large waves-effect waves-light red ">
+        <i class="material-icons" (click)=" onCreate()">add</i>
+      </a>
+  
+    </div>
+  
+  </div>
+  
+</ng-template>
 <!-- Modal Structure -->
 
 

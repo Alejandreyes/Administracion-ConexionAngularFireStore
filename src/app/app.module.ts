@@ -57,16 +57,18 @@ const routes: Routes = [
   { path : 'agregarProyecto' , component : AgregarProyectoComponent, canActivate: [LoginService]},
  { path : 'editarProyecto' , component : EditarProyectoComponent, canActivate: [LoginService]},
   { path : 'eliminarProyecto' , component :EliminarProyectoComponent, canActivate: [LoginService] },
-  { path : 'agregarCasoUso' , component : AgregarCasoComponent, canActivate: [LoginService]},
+  //{ path : 'agregarCasoUso' , component : AgregarCasoComponent, canActivate: [LoginService]},
+  { path : 'agregarCasoUso' , component : AgregarCasoComponent},
   { path : 'editarCasoUso' , component : EditarCasoComponent, canActivate: [LoginService]},
   { path : 'eliminarCasoUso' , component :EliminarCasoComponent, canActivate: [LoginService] },
   { path : 'agregarAccion' , component : AgregarAccionComponent, canActivate: [LoginService]},
   { path : 'editarAccion' , component : EditarAccionComponent, canActivate: [LoginService]},
   { path : 'eliminarAccion' , component :EliminarAccionComponent , canActivate: [LoginService]},
   { path : 'buscarUsuario' , component : BuscarUsuarioComponent, canActivate: [LoginService]},
-//  { path : 'proyectos' , component :ProyectosComponent },
+   { path : 'proyectos' , component :ProyectosComponent },
   { path : 'casosDeUso' , component : CasosUsoComponent, canActivate: [LoginService]},
  { path : 'accion' , component : AccionComponent, canActivate: [LoginService]},
+ //{ path : 'accion' , component : AccionComponent},
   { path : 'generaReporte' , component : GenerarReporteComponent}
 ];
 

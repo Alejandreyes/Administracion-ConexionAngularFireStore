@@ -8,39 +8,45 @@ import { Proyecto } from '../../modelos/proyecto.model';
 import { Usuario } from '../../modelos/usuario.model';
 import { ProyectosService } from '../../servicios/proyectos.service';
 import { Router } from '@angular/router';
+import { LoginService } from '../../servicios/login.service';
 @Component({
   selector: 'app-proyectos',
   templateUrl: './proyectos.component.html',
   styleUrls: ['./proyectos.component.css']
 })
 export class ProyectosComponent implements OnInit {
-  proyectosLista: Proyecto[];
-  proyectos: Proyecto[];
-  panelOpenState: boolean = false;
+  proyectos: Proyecto[] = [];
   modalActions = new EventEmitter<string | MaterializeAction>();
-  
   constructor(private proyectosSV: ProyectosService,
+    public logServ: LoginService,
     public router: Router) {
-    this.proyectosSV.getProyectos().valueChanges().subscribe(items => {
-      this.proyectos = items;
-      console.log(items);
-    });
   }
 
   ngOnInit() {
-
+    this.proyectosSV.getProyectos().valueChanges().subscribe(items => {
+      let usu = this.logServ.usuarioLogueado;
+      if (usu.rol == 'ANALISTA') {
+        items.forEach(item => {
+          if(usu.proyectos != undefined && ((usu.proyectos.indexOf(item.id)) >= 0) ){
+            this.proyectos.push(item);     
+          }
+        });
+      } else {
+        this.proyectos = items;
+      }
+    });     
   }
-  onCreate(){
+  onCreate() {
     this.router.navigate(['/agregarProyecto']);
   }
-  onEdit(proyecto: Proyecto){
-    this.proyectosSV.proyectoSelecionado =proyecto ; 
+  onEdit(proyecto: Proyecto) {
+    this.proyectosSV.proyectoSelecionado = proyecto;
     this.router.navigate(['/editarProyecto']);
   }
-  
+
   esImportante(proyecto: Proyecto): boolean {
-    let fechaDesc:string[] = proyecto.fechaFin.split("/");
-    let fechaDescFormat : string =  fechaDesc[1]+"/"+fechaDesc[0]+"/"+fechaDesc[2];
+    let fechaDesc: string[] = proyecto.fechaFin.split("/");
+    let fechaDescFormat: string = fechaDesc[1] + "/" + fechaDesc[0] + "/" + fechaDesc[2];
     let finDia: number = new Date(fechaDescFormat).getDate();
     let finMes: number = new Date(fechaDescFormat).getMonth() + 1;
     let finAnio: number = new Date(fechaDescFormat).getFullYear();
@@ -57,8 +63,8 @@ export class ProyectosComponent implements OnInit {
       return false;
     }
   }
-  crearCasoUso(proyecto: Proyecto){
-    this.proyectosSV.proyectoSelecionado =proyecto ; 
+  crearCasoUso(proyecto: Proyecto) {
+    this.proyectosSV.proyectoSelecionado = proyecto;
     this.router.navigate(['/casosDeUso']);
   }
   openModal(proyecto: Proyecto) {
@@ -68,5 +74,4 @@ export class ProyectosComponent implements OnInit {
   closeModal() {
     this.modalActions.emit({ action: "modal", params: ['close'] });
   }
-
 }

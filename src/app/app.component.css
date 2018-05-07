@@ -4,8 +4,13 @@
     margin-right: 5%;
 }
 .btn{
-    background-color: #4dd0e1
+    background-color: #4dd0e1;
   }
   .btn:hover {
-    background-color: #01579b
+    background-color: #01579b;
   }
+
+img{
+  height: 30%;
+  width: 100%;
+}

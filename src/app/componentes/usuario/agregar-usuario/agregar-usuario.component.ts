@@ -31,14 +31,14 @@ export class AgregarUsuarioComponent implements OnInit {
 
   onSubmit() {
     const usuario = new Usuario();
-    usuario.nombre = this.usuarioForm.value.nombre;
+    usuario.nombre = (this.usuarioForm.value.nombre).toUpperCase();
     usuario.correo = this.usuarioForm.value.correo; 
     usuario.contrasenia = this.usuarioForm.value.contrasenia;
     usuario.rol = this.usuarioForm.value.opcion;
+    usuario.proyectos = [] ; 
     this.usServ.addUsuario(usuario);
   }
   onCancel() {
-    
     this.router.navigate(['/usuarios']);
   }
 }

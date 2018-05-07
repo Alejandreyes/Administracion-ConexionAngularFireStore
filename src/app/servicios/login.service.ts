@@ -16,9 +16,8 @@ import { Subject } from "rxjs/Subject";
 @Injectable()
 export class LoginService implements CanActivate{
   
-  usuarioLogueado: Usuario ;
-  usuarioLogueado$ = new Subject<Usuario>();
-  //usuarioL :Observable<Usuario> ;
+  usuarioLogueado: Usuario;
+  usuarioObservable = new Subject<Usuario>();
   user: Observable<firebase.User>; // Usuario propio de firebase 
   
   
@@ -32,17 +31,16 @@ export class LoginService implements CanActivate{
       .auth
       .signInWithEmailAndPassword(usuario.correo, usuario.contrasenia)
       .then(value => {
-        this.usrServ.getUsuarioCorreo(usuario.correo)
+        let subscripcion = this.usrServ.getUsuarioCorreo(usuario.correo)
           .subscribe(item => {
             if (item.length > 0) {
               let usuarioAut = item[0]; // Obtengo el usuario con el nombre de usuario 
               this.usuarioLogueado = usuarioAut;
-              this.usuarioLogueado$.next(this.usuarioLogueado);
+              this.usuarioObservable.next(this.usuarioLogueado);
               this.router.navigate(['/usuarios']);
             }
+            subscripcion.unsubscribe();
           });
-
-        //
       })
       .catch(err => {
          toast("Usuario o contraseña invalidos" , 2000); 
@@ -51,11 +49,13 @@ export class LoginService implements CanActivate{
   }
 
 
-  getUsuarioLogueado$(): Observable<Usuario> {
-    return this.usuarioLogueado$.asObservable();
+  getusuarioObservable() {
+    return this.usuarioObservable.asObservable();
   }
   logout(){
     this.firebaseAuth.auth.signOut();
+    this.usuarioLogueado = null ; 
+    //this.usuarioObservable = new Subject<Usuario>();
     this.router.navigate(['/']);
   }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {

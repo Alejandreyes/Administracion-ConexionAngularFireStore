@@ -5,6 +5,7 @@ export class Usuario {
   public rol : string ;
   public contrasenia : string ;
   public correo : string ;
+  public proyectos : string[] ;
   constructor (){}
   
 }

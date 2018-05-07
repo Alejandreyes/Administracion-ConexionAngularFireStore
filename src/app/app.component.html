@@ -1,17 +1,21 @@
 <nav>
   <div class="nav-wrapper  teal darken-1">
-    <a *ngIf="usuarioLogueado.nombre != null" routerLink="/usuarios" class="brand-logo truncate" truncate>
+    <a *ngIf="usuarioLogueado.nombre != null" materialize="sideNav" [materializeParams]="[{edge:'left'}]" href="#" data-activates="slide-out"
+      class="button-collapse show-on-large">
+      <i class="material-icons">menu</i>
+    </a>
+    <a *ngIf="usuarioLogueado.nombre != null" routerLink="/usuarios" class="brand-logo truncate hide-on-med-and-down" truncate>
       Administracion de Proyectos de Software</a>
-    <a *ngIf="usuarioLogueado.nombre == null" routerLink="/" class="brand-logo truncate" truncate>
+    <a *ngIf="usuarioLogueado.nombre == null" routerLink="/" class="brand-logo truncate">
       Administracion de Proyectos de Software</a>
-    <ul class="right hide-on-med-and-down">
+    <ul class="right ">
       <li *ngIf="usuarioLogueado.nombre != null">
         <span style='padding-right: 3em'>
           <i class="material-icons left">supervisor_account</i>
           {{usuarioLogueado.nombre}}</span>
       </li>
 
-      <li *ngIf="usuarioLogueado.nombre != null">
+      <li  *ngIf="usuarioLogueado.nombre != null">
         <a (click)="logout()">
           <i class="material-icons left">power_settings_new</i>Salir</a>
       </li>
@@ -19,6 +23,18 @@
   </div>
 </nav>
 
+
+<ul id="slide-out" class="side-nav brown ">
+  <li>
+    <img src="assets/APS.png">
+
+  </li>
+  
+  
+  <li *ngFor="let routeName of routeNames" routerLinkActive="active">
+    <a [routerLink]="[routeName]">{{routeName}}</a>
+  </li>
+</ul>
 <div class="contenidoBody">
   <router-outlet></router-outlet>
 </div>

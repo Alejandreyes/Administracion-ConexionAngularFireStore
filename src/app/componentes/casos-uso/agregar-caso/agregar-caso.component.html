@@ -15,9 +15,9 @@
             <div class="row">
               <div class="input-field col s12">
                 <textarea id="textarea1" formControlName="descripcion" class="materialize-textarea" materialize="characterCounter" [attr.length]="maxLength"></textarea>
-                <label for="textarea1">Textarea</label>
+                <label for="textarea1">Descripcion del Caso de Uso</label>
                 <p class="red-text" *ngIf="casoUsoForm.controls.descripcion.invalid">
-                  El campo es obligatorio. Debe contener por lo menos 50 Caracteres.
+                  El campo es obligatorio. Debe contener por lo menos 25 Caracteres.
                 </p>
               </div>
             </div>
@@ -27,23 +27,28 @@
             <label for="postcondiciones"> Postcondiciones </label>
             <div id="postcondiciones" class="chips" materialize="material_chip" [materializeParams]="[chipsPlaceholder]" (chip.add)="add($event.detail,'postcondiciones')"
               (chip.delete)="delete($event.detail,'postcondiciones')" [materializeActions]="chipsActions"></div>
-            <label for="flujos"> Flujos </label>
+            <!--  <label for="flujos"> Flujos </label>
             <div id="flujos" class="chips" materialize="material_chip" [materializeParams]="[chipsPlaceholder]" (chip.add)="add($event.detail,'flujos')"
               (chip.delete)="delete($event.detail,'flujos')" [materializeActions]="chipsActions"></div>
             <label for="eventos"> Eventos </label>
             <div id="eventos" class="chips" materialize="material_chip" [materializeParams]="[chipsPlaceholder]" (chip.add)="add($event.detail,'eventos')"
               (chip.delete)="delete($event.detail,'eventos')" [materializeActions]="chipsActions"></div>
+             -->
+            <ul>
+              
+            </ul>
+
+
             <label for="requisitosEspeciales"> Requisitos Especiales </label>
             <div id="requisitosEspeciales" class="chips" materialize="material_chip" [materializeParams]="[chipsPlaceholder]" (chip.add)="add($event.detail,'requisitosEspeciales')"
               (chip.delete)="delete($event.detail,'requisitosEspeciales')" [materializeActions]="chipsActions"></div>
             <label for="actores"> Actores </label>
-            <div id="actores" class="chips" materialize="material_chip" [materializeParams]="[autocompleteInit]" (chip.add)="add($event.detail,'actores')"
+            <div id="actores" class="chips" materialize="material_chip" [materializeParams]="[chipsPlaceholder]" (chip.add)="add($event.detail,'actores')"
               (chip.delete)="delete($event.detail,'actores')" [materializeActions]="chipsActions">
             </div>
-            <p  for= "actores" class="red-text" *ngIf="casoUsoForm.controls.actores.invalid">
-                El campo es obligatorio. Debe por lo menos un actor para el caso de uso: 
-                Sea Analista, Administrador o ambos.  
-              </p>
+            <p for="actores" class="red-text" *ngIf="casoUsoForm.controls.actores.invalid">
+              El campo es obligatorio. Debe por lo menos un actor para el caso de uso: Sea Analista, Administrador o ambos.
+            </p>
           </div>
 
           <div class="divider"></div>

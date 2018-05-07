@@ -7,6 +7,7 @@ export class Proyecto {
   public fechaInicio : string ;
   public fechaFin : string ;
   public casos : CasoUso[] ; 
+  public usuarios : string [] ; 
 
   constructor (){}
 

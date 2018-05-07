@@ -22,15 +22,7 @@ export class AgregarCasoComponent implements OnInit {
     placeholder: '+Ingresa Campo',
     secondaryPlaceholder: 'Ingresa un nuevo campo',
   };
-  autocompleteInit = {
-    autocompleteOptions: {
-      data: {
-        'Administrador': null,
-        'Analista': null,
-      },
-      limit: 2
-    }
-  };
+  
   casoUsoForm: FormGroup;
   constructor(private fb: FormBuilder,
     private casoServ: CasosUsoService,

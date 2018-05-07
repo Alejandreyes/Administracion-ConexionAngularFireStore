@@ -29,20 +29,12 @@ export class UsuarioComponent implements OnInit {
   constructor(public usuarioSV: UsuarioService, 
     public lgServ: LoginService,
     public router: Router) {
-    /* Cargamos la vista de todos los usuarios 
-     * lo primero que se debe hacer es cargar el objeto AngularFireList<Usuario> que es conseguido en 
-     * El servicio de usuario 
-     * Despues una captura instantanea en el momento de los datos Esto se debe hacer porque Firebase es una base de datos en tiempo real
-     * el metodo subscribe sirve para agregar un observador para capturar el momento en el que los datos se modifiquen
-     *  
-     *  
-     */
     this.usuarioSV.getUsuarios().valueChanges().subscribe(items=> {
       this.usuarios = items;
     });
 
     this.usuarioLogueado = lgServ.usuarioLogueado;
-    this.administrador = (this.usuarioLogueado.rol == "Administrador");
+    this.administrador = (this.usuarioLogueado.rol == "ADMINISTRADOR");
 
   }
   onCreate(){
