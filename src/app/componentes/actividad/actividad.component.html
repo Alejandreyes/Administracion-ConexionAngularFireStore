@@ -1,0 +1,170 @@
+<div class="row" *ngIf="listaActividadesPrincipales?.length > 0 ; else noHayActividadesPrincipales">
+    <div class="col s12 m6 l6">
+        <ul materialize="collapsible" class="collapsible" 
+            data-collapsible="accordion">
+            <li *ngFor="let actividad of listaActividades">
+                <div class="collapsible-header red-text">
+                    <i class="material-icons">assignment_late</i>
+                    {{actividad.nombre}}
+                </div>
+                <div class="collapsible-body row">
+                    <span style="font-size: 18px; font-weight: bold;">
+                        Nombre
+                    </span>
+
+                    <div materialize class="right-align">
+                        <div class="fixed-action-btn horizontal"
+                            style="position: relative;">
+                            <a id="menu" class="btn-floating btn-large brown">
+                                <i class="material-icons">menu</i>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a materialize="tooltip" 
+                                        class="btn-floating waves-effect waves-light black tooltipped"
+                                        data-position="top" 
+                                        data-delay="10"
+                                        data-tooltip="Editar actividad principal">
+                                        <i class="fas fa-pencil-alt"
+                                            (click)="onEditPrincipal(actividad)">
+                                        </i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a materialize="tooltip"
+                                        class="btn-floating waves-effect waves-light red tooltipped"
+                                        data-position="top"
+                                        data-delay="10"
+                                        data-tooltip="Eliminar actividad principal">
+                                        <i class="fas fa-trash"
+                                            (click)="onDeletePrincipal(actividad)">
+                                        </i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="col s12 m12 l12" style="margin-top:7%;">
+            <div materialize class="col s2 offset-s11">
+                <a class="btn-floating btn-large waves-effect waves-light red">
+                    <i class="material-icons" 
+                        (click)="onCreatePrincipal()">add</i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col s12 m6 l6">
+        <div class="row" *ngIf="listaActividadesAlternativas?.length > 0 ; else noHayActividadesAlternativas">
+            <ul materialize="collapsible" class="collapsible" 
+                data-collapsible="accordion">
+                <li *ngFor="let actividad of listaActividadesPrincipales">
+                    <div class="collapsible-header red-text">
+                        <i class="material-icons">assignment_late</i>
+                        {{actividad.nombre}}
+                    </div>
+                    <div class="collapsible-body row">
+                        <span style="font-size: 18px; font-weight: bold;">
+                            Nombre
+                        </span>
+    
+                        <div materialize class="right-align">
+                            <div class="fixed-action-btn horizontal"
+                                style="position: relative;">
+                                <a id="menu" class="btn-floating btn-large brown">
+                                    <i class="material-icons">menu</i>
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a materialize="tooltip" 
+                                            class="btn-floating waves-effect waves-light black tooltipped"
+                                            data-position="top" 
+                                            data-delay="10"
+                                            data-tooltip="Editar actividad principal">
+                                            <i class="fas fa-pencil-alt"
+                                                (click)="onEditAlternativa(actividad)">
+                                            </i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a materialize="tooltip"
+                                            class="btn-floating waves-effect waves-light red tooltipped"
+                                            data-position="top"
+                                            data-delay="10"
+                                            data-tooltip="Eliminar actividad principal">
+                                            <i class="fas fa-trash"
+                                                (click)="onDeleteAlternativa(actividad)">
+                                            </i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="col s12 m12 l12" style="margin-top:7%;">
+                <div materialize class="col s2 offset-s11">
+                    <a class="btn-floating btn-large waves-effect waves-light red">
+                        <i class="material-icons" 
+                            (click)="onCreateAlternativa()">add</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal1" class="modal bottom-sheet" materialize="modal"
+    [materializeParams]="[{dismissible: false}]" 
+    [materializeActions]="modalActionsPrincipal">
+    <div class="modal-content">
+        <h4>Alerta</h4>
+        <p>¿Seguro que deseas eliminar esta actividad?</p>
+    </div>
+    <div class="modal-footer">
+        <a class="waves-effect waves-green btn-flat" 
+            (click)="closeModalPrincipal()">Cancelar</a>
+        <a class="modal-action modal-close waves-effect waves-green btn-flat"
+            (click)="eliminarPrincipal()">Aceptar</a>
+    </div>
+</div>
+
+<div id="modal2" class="modal bottom-sheet" materialize="modal"
+    [materializeParams]="[{dismissible: false}]" 
+    [materializeActions]="modalActionsAlternativa">
+    <div class="modal-content">
+        <h4>Alerta</h4>
+        <p>¿Seguro que deseas eliminar esta actividad?</p>
+    </div>
+    <div class="modal-footer">
+        <a class="waves-effect waves-green btn-flat" 
+            (click)="closeModalAlternativa()">Cancelar</a>
+        <a class="modal-action modal-close waves-effect waves-green btn-flat"
+            (click)="eliminarAlternativa()">Aceptar</a>
+    </div>
+</div>
+
+<ng-template #noHayActividadesPrincipales>
+    <div class="row">
+        <div class="col s12 m6 l6">
+            <h5>No existen actividades principales</h5>
+            <div materialize style="margin-top:7%;" class="col s2 offset-s10">
+                <a class="btn-floating btn-large waves-effect waves-light red">
+                    <i class="material-icons" (click)="onCreatePrincipal()">add</i>
+                </a>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <h5>No existen actividades alternativas</h5>
+            <div materialize style="margin-top:7%;" class="col s2 offset-s10">
+                 <a class="btn-floating btn-large waves-effect waves-light red">
+                    <i class="material-icons" (click)="onCreateAlternativa()">add</i>
+                </a>
+            </div>
+        </div>
+    </div>
+</ng-template>

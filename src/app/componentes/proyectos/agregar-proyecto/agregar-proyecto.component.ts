@@ -48,7 +48,6 @@ export class AgregarProyectoComponent implements OnInit {
 
   }
   onSubmit() {
-
     const proyecto = new Proyecto();
     proyecto.nombre = this.proyectoForm.value.nombre;
     proyecto.Descripcion = this.proyectoForm.value.Descripcion;

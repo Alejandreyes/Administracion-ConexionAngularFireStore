@@ -17,6 +17,12 @@
               </a>
               <ul>
                 <li>
+                  <a materialize="tooltip" class="btn-floating waves-effect waves-light deep-purple tooltipped " data-position="top" data-delay="10"
+                    data-tooltip="Ver flujos">
+                    <i class="far fa-address-card" (click)="crearActividad(casos)"> </i>
+                  </a>
+                </li>
+                <li>
                   <a materialize="tooltip" class="btn-floating waves-effect waves-light black tooltipped " data-position="top" data-delay="10"
                     data-tooltip="Editar Caso de Uso">
                     <i class="fas fa-pencil-alt" (click)="onEdit(casos)"></i>
@@ -74,7 +80,7 @@
     <div class="col s12 m6 l6">
       <div materialize style="margin-top:7%;" class="col s2  offset-s10">
         <a class="btn-floating btn-large waves-effect waves-light red ">
-          <i class="material-icons" (click)=" onCreate()">add</i>
+          <i class="material-icons" (click)="onCreate()">add</i>
         </a>
       </div>
     </div>

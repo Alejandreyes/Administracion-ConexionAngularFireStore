@@ -25,6 +25,9 @@ import { GenerarReporteComponent } from './componentes/generar-reporte/generar-r
 import { CasosUsoComponent } from './componentes/casos-uso/casos-uso.component';
 import { AccionComponent } from './componentes/accion/accion.component';
 import { BuscarUsuarioComponent } from './componentes/usuario/buscar-usuario/buscar-usuario.component';
+import { ActividadComponent } from './componentes/actividad/actividad.component';
+import { AgregarActividadPrincipalComponent} from './componentes/actividad/agregar-actividad-principal/agregar-actividad-principal.component';
+import { AgregarActividadAlternativaComponent } from './componentes/actividad/agregar-actividad-alternativa/agregar-actividad-alternativa.component';
 
 // Libreria de materialize 
 import {MatButtonModule, MatCheckboxModule,MatNativeDateModule,
@@ -44,6 +47,8 @@ import {CasosUsoService}  from './servicios/casos-uso.service';
 import {LoginService} from './servicios/login.service';
 import {ProyectosService} from './servicios/proyectos.service';
 import {UsuarioService} from './servicios/usuario.service';
+import {ActividadService} from './servicios/actividad.service';
+import {EventoService} from'./servicios/evento.service';
 
 
 // las vistas con sus respectivas rutas 
@@ -68,6 +73,9 @@ const routes: Routes = [
    { path : 'proyectos' , component :ProyectosComponent },
   { path : 'casosDeUso' , component : CasosUsoComponent, canActivate: [LoginService]},
  { path : 'accion' , component : AccionComponent, canActivate: [LoginService]},
+  { path: 'flujos', component: ActividadComponent, canActivate: [LoginService]},
+  { path: 'agregarActividadPrincipal', component: AgregarActividadPrincipalComponent, canActivate: [LoginService]},
+  { path: 'agregarActividadAlternativa', component: AgregarActividadAlternativaComponent, canActivate: [LoginService]},
  //{ path : 'accion' , component : AccionComponent},
   { path : 'generaReporte' , component : GenerarReporteComponent}
 ];
@@ -93,7 +101,10 @@ const routes: Routes = [
     GenerarReporteComponent,
     CasosUsoComponent,
     AccionComponent,
-    BuscarUsuarioComponent
+    BuscarUsuarioComponent,
+    AgregarActividadAlternativaComponent,
+    AgregarActividadPrincipalComponent,
+    ActividadComponent
   ],
   imports: [
     BrowserModule,
@@ -112,7 +123,8 @@ const routes: Routes = [
     CasosUsoService,
     LoginService,
     ProyectosService,
-    UsuarioService
+    UsuarioService,
+    ActividadService
   ],
   bootstrap: [AppComponent]
 })

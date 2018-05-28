@@ -14,8 +14,8 @@ export class AgregarCasoComponent implements OnInit {
   chipsActions = new EventEmitter<string | MaterializeAction>();
   precondiciones: string[] = [];
   postcondiciones: string[] = [];
-  flujos: string[] = [];
-  eventos: string[] = [];
+  //flujos: string[] = [];
+  //eventos: string[] = [];
   requisitosEspeciales: string[] = [];
   actores: string[] = [];
   chipsPlaceholder = {
@@ -44,12 +44,16 @@ export class AgregarCasoComponent implements OnInit {
       case 'postcondiciones':
         this.postcondiciones.push(chip.tag);
         break;
+      /*
       case 'flujos':
         this.flujos.push(chip.tag);
         break;
+      */
+      /*
       case 'eventos':
         this.eventos.push(chip.tag);
         break;
+      */
       case 'requisitosEspeciales':
         this.requisitosEspeciales.push(chip.tag);
         break;
@@ -69,12 +73,16 @@ export class AgregarCasoComponent implements OnInit {
       case 'postcondiciones':
         this.postcondiciones = this.precondiciones.filter(item => { return item != chip.tag });
         break;
+      /*
       case 'flujos':
         this.flujos = this.flujos.filter(item => { return item != chip.tag });
         break;
+      */
+      /*
       case 'eventos':
         this.eventos = this.eventos.filter(item => { return item != chip.tag });
         break;
+      */
       case 'requisitosEspeciales':
         this.requisitosEspeciales = this.requisitosEspeciales.filter(item => { return item != chip.tag });
         break;
@@ -92,8 +100,10 @@ export class AgregarCasoComponent implements OnInit {
     casoUso.descripcion = this.casoUsoForm.value.descripcion;
     casoUso.precondiciones = this.precondiciones; 
     casoUso.postcondiciones  = this.postcondiciones;
-    casoUso.eventos = this.eventos ; 
-    casoUso.flujos = this.flujos; 
+    //casoUso.eventos = this.eventos ; 
+    //casoUso.flujos = this.flujos; 
+    casoUso.actividadesAlternativas = [];
+    casoUso.actividadesPrincipales = [];
     casoUso.requisitosEspeciales = this.requisitosEspeciales; 
     casoUso.actores = this.actores;
     this.casoServ.addCasoUso(casoUso);

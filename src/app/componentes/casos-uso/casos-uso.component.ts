@@ -41,4 +41,8 @@ export class CasosUsoComponent implements OnInit {
   eliminar(){
     this.casosSev.delete(this.casosSev.casoSeleccionado);
   }
+  crearActividad(casoUso: CasoUso) {
+    this.casosSev.casoSeleccionado = casoUso;
+    this.router.navigate(['/flujos']);
+  }
 }
