@@ -3,7 +3,7 @@ import { Actividad } from '../../modelos/actividad.model';
 import { CasosUsoService } from '../../servicios/casos-uso.service';
 import { Router } from '@angular/router';
 import { ProyectosService } from '../../servicios/proyectos.service';
-import { MaterializeAction } from 'angular2-materialize';
+import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
 import { ActividadService } from '../../servicios/actividad.service';
 
 @Component({
@@ -15,8 +15,8 @@ import { ActividadService } from '../../servicios/actividad.service';
 export class ActividadComponent implements OnInit {
     listaActividadesPrincipales: Actividad[];
     listaActividadesAlternativas: Actividad[];
-    modalActionsPrincipal = new EventEmitter<string | MaterializeAction>();
-    modalActionsAlternativo = new EventEmitter<string | MaterializeAction>();
+    modalActions1 = new EventEmitter<string | MaterializeAction>();
+    modalActions2 = new EventEmitter<string | MaterializeAction>();
 
     constructor(private casoServ: CasosUsoService,
         private actividadSV: ActividadService,
@@ -40,11 +40,11 @@ export class ActividadComponent implements OnInit {
 
     onDeletePrincipal(actividad: Actividad){
         this.actividadSV.actividadPrincipalSeleccionada = actividad;
-        this.modalActionsPrincipal.emit({ action: 'modal', params: ['open'] });
+        this.modalActions1.emit({ action: 'modal', params: ['open'] });
     }
 
     closeModalPrincipal(){
-        this.modalActionsPrincipal.emit({ action: 'modal', params: ['close'] });
+        this.modalActions1.emit({ action: 'modal', params: ['close'] });
     }
 
     eliminarPrincipal(){
@@ -62,7 +62,7 @@ export class ActividadComponent implements OnInit {
 
     onDeleteAlternativa(actividad: Actividad){
         this.actividadSV.actividadAlternativaSeleccionada = actividad;
-        this.modalActionsAlternativo.emit({ action: 'modal', params: ['open'] });
+        this.modalActions2.emit({ action: 'modal', params: ['open'] });
     }
 
     eliminarAlternativa(){
@@ -70,7 +70,7 @@ export class ActividadComponent implements OnInit {
     }
 
     closeModalAlternativa(){
-        this.modalActionsAlternativo.emit({ action: 'modal', params: ['close'] });
+        this.modalActions2.emit({ action: 'modal', params: ['close'] });
     }
 
 

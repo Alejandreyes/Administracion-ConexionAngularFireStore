@@ -11,14 +11,17 @@ import { Actividad } from '../modelos/actividad.model';
 export class ActividadService {
     actividadPrincipalSeleccionada: Actividad = new Actividad();
     actividadAlternativaSeleccionada: Actividad = new Actividad();
-    listaActividadesPrincipales: Actividad[];
-    listaActividadesAlternativas: Actividad[];
+    listaActividadesPrincipales: Actividad[] = [];
+    listaActividadesAlternativas: Actividad[] = [];
 
     constructor(public router: Router){
     }
 
     getActividadesAlternativas(casoUso: CasoUso){
+        console.log("Caso de uso pasado por parámetro: " + casoUso.nombre);
+        console.log("Lista de actividades:" + casoUso.actividadesAlternativas)
         this.listaActividadesAlternativas = casoUso.actividadesAlternativas;
+        console.log(this.listaActividadesAlternativas);
         return this.listaActividadesAlternativas;
     }
 
