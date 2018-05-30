@@ -42,6 +42,11 @@ export class CasosUsoService {
     this.casosLista.set(caso1.id, caso1);
     this.router.navigate(['/casosDeUso']);
   }
+
+  editCasoUsoActividad(caso2: CasoUso) {
+    this.casosLista.set(caso2.id, caso2);
+  }
+
   delete(caso : CasoUso): void {
     this.casosLista.remove(caso.id);
   }

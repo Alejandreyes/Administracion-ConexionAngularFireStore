@@ -5,33 +5,33 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CasosUsoService } from '../../../servicios/casos-uso.service';
 import { Router } from '@angular/router';
 import { MaterializeAction } from 'angular2-materialize';
-import { ActividadService } from '../../../servicios/actividad.service';
+import { ActividadPrincipalService } from '../../../servicios/actividad-principal.service';
 import { Actividad } from '../../../modelos/actividad.model';
 
 @Component({
-    selector: 'app-agregar-actividad',
-    templateUrl: '/agregar-actividad-alternativa.component.html',
-    styleUrls: ['./agregar-actividad-alternativa.component.css']
+    selector: 'app-agregar-actividad-principal',
+    templateUrl: '/agregar-actividad-principal.component.html',
+    styleUrls: ['./agregar-actividad-principal.component.css']
 })
-export class AgregarActividadAlternativaComponent implements OnInit {
+export class AgregarActividadPrincipalComponent implements OnInit {
     modalActions = new EventEmitter<string | MaterializeAction>();
     actividadForm: FormGroup;
 
     constructor(private fb: FormBuilder,
-        private actividadServ: ActividadService,
+        private actividadServ: ActividadPrincipalService,
         public router: Router){
         }
     
     ngOnInit(){
         this.actividadForm = this.fb.group({
-            nombre: ['']
+            nombre: ['', [Validators.required, Validators.minLength(1)]]
         });
     }
 
     onSubmit() {
         const actividad = new Actividad();
         actividad.nombre = this.actividadForm.value.nombre;
-        this.actividadServ.addActividadAlternativa(actividad);
+        this.actividadServ.addActividad(actividad);
     }
 
     onCancel() {

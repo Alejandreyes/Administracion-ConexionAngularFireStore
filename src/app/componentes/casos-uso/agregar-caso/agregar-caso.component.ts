@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CasosUsoService } from '../../../servicios/casos-uso.service';
 import { Router } from '@angular/router';
 import { MaterializeAction } from 'angular2-materialize';
+import { Actividad } from '../../../modelos/actividad.model';
 @Component({
   selector: 'app-agregar-caso',
   templateUrl: './agregar-caso.component.html',
@@ -102,8 +103,6 @@ export class AgregarCasoComponent implements OnInit {
     casoUso.postcondiciones  = this.postcondiciones;
     //casoUso.eventos = this.eventos ; 
     //casoUso.flujos = this.flujos; 
-    casoUso.actividadesAlternativas = [];
-    casoUso.actividadesPrincipales = [];
     casoUso.requisitosEspeciales = this.requisitosEspeciales; 
     casoUso.actores = this.actores;
     this.casoServ.addCasoUso(casoUso);

@@ -20,7 +20,7 @@ export class EventoService {
     }
 
     addEvento(evento: Evento){
-        this.listaEventos.concat(evento);
+        this.listaEventos.push(evento);
     }
 
     editActividad(eventoAReemplazar: Evento, nuevoEvento: Evento){

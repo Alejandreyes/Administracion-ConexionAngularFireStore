@@ -25,10 +25,11 @@ import { GenerarReporteComponent } from './componentes/generar-reporte/generar-r
 import { CasosUsoComponent } from './componentes/casos-uso/casos-uso.component';
 import { AccionComponent } from './componentes/accion/accion.component';
 import { BuscarUsuarioComponent } from './componentes/usuario/buscar-usuario/buscar-usuario.component';
-import { ActividadComponent } from './componentes/actividad/actividad.component';
-import { AgregarActividadPrincipalComponent} from './componentes/actividad/agregar-actividad-principal/agregar-actividad-principal.component';
-import { AgregarActividadAlternativaComponent } from './componentes/actividad/agregar-actividad-alternativa/agregar-actividad-alternativa.component';
-
+import { ActividadPrincipalComponent } from './componentes/actividad-principal/actividad-principal.component';
+import { ActividadAlternativaComponent } from './componentes/actividad-alternativa/actividad-alternativa.component';
+import { AgregarActividadPrincipalComponent} from './componentes/actividad-principal/agregar-actividad-principal/agregar-actividad-principal.component';
+import { AgregarActividadAlternativaComponent } from './componentes/actividad-alternativa/agregar-actividad-alternativa/agregar-actividad-alternativa.component';
+import { EditarActividadPrincipalComponent } from './componentes/actividad-principal/editar-actividad-principal/editar-actividad-principal.component';
 // Libreria de materialize 
 import {MatButtonModule, MatCheckboxModule,MatNativeDateModule,
   MatToolbarModule,MatInputModule, MatDatepickerModule,
@@ -47,7 +48,8 @@ import {CasosUsoService}  from './servicios/casos-uso.service';
 import {LoginService} from './servicios/login.service';
 import {ProyectosService} from './servicios/proyectos.service';
 import {UsuarioService} from './servicios/usuario.service';
-import {ActividadService} from './servicios/actividad.service';
+import {ActividadPrincipalService} from './servicios/actividad-principal.service';
+import {ActividadAlternativaService} from './servicios/actividad-alternativa.service';
 import {EventoService} from'./servicios/evento.service';
 
 
@@ -73,9 +75,10 @@ const routes: Routes = [
    { path : 'proyectos' , component :ProyectosComponent },
   { path : 'casosDeUso' , component : CasosUsoComponent, canActivate: [LoginService]},
  { path : 'accion' , component : AccionComponent, canActivate: [LoginService]},
-  { path: 'flujos', component: ActividadComponent, canActivate: [LoginService]},
+  { path: 'flujos', component: ActividadPrincipalComponent, canActivate: [LoginService]},
   { path: 'agregarActividadPrincipal', component: AgregarActividadPrincipalComponent, canActivate: [LoginService]},
   { path: 'agregarActividadAlternativa', component: AgregarActividadAlternativaComponent, canActivate: [LoginService]},
+  { path: 'editarActividadPrincipal', component: EditarActividadPrincipalComponent, canActivate: [LoginService]},
  //{ path : 'accion' , component : AccionComponent},
   { path : 'generaReporte' , component : GenerarReporteComponent}
 ];
@@ -104,7 +107,9 @@ const routes: Routes = [
     BuscarUsuarioComponent,
     AgregarActividadAlternativaComponent,
     AgregarActividadPrincipalComponent,
-    ActividadComponent
+    ActividadPrincipalComponent,
+    ActividadAlternativaComponent,
+    EditarActividadPrincipalComponent
   ],
   imports: [
     BrowserModule,
@@ -124,7 +129,8 @@ const routes: Routes = [
     LoginService,
     ProyectosService,
     UsuarioService,
-    ActividadService
+    ActividadPrincipalService,
+    ActividadAlternativaService
   ],
   bootstrap: [AppComponent]
 })
