@@ -19,7 +19,7 @@ export class AccionComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit() {
-    this.accionServ.getAcciones(this.proyectosSV.proyectoSelecionado.nombre).valueChanges().subscribe(item=>{
+    this.accionServ.getAcciones().valueChanges().subscribe(item=>{
       this.acciones = item;
     });
   }

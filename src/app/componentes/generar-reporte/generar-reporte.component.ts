@@ -431,7 +431,7 @@ export class GenerarReporteComponent implements OnInit {
     // Nueva hoja para las Precondiciones, postcondiciones y condiciones Iniciales 
     if (this.respuesta) {
       doc.text("Diagrama de Actividad del Flujo Alternativo de Eventos", 14, y);
-      doc.addImage(this.diagramaImg, 'JPEG', 10, y, 300, 300);
+      doc.addImage(this.diagramaImg2, 'JPEG', 10, y, 300, 300);
       y += 300;
       columns = ["Indice", "Actor", "Actividad", "Descripcion", "Grupo de Datos"];
       rows = [];
