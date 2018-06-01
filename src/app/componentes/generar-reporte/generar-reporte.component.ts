@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as go from 'gojs';
 import { CasosUsoService } from '../../servicios/casos-uso.service';
 import { Router } from '@angular/router';
+
+import { toast } from 'angular2-materialize';
 import { CasoUso } from '../../modelos/casouso.model';
 declare var jsPDF;
 @Component({
@@ -90,81 +92,100 @@ export class GenerarReporteComponent implements OnInit {
     // add nodes, including groups, and links to the model
     let aristas = [  // link data
     ];
-    
-    
-    
-    //-----------------------------------------------------------------------------------------------
-    
-    let Datos =  ["Selecionar la Vista de Editar", "El Sistema Regresa la vista", "Guardar"];
-    
-    //-----------------------------------------------------------------------------------------------
 
+    let listaAux = [];
+    let listaActores = [];
 
-    
-    
-    let inicioA: number = 35;
-    let inicioS: number = 35;
-    let sistema = false;
-    let posXA = 50;
-    let posXS = 250;
-    let i: number = 0;
-    let vertices = [ // node data
-      { key: "Start", group: "Actor", loc: new go.Point(posXA, inicioA) },
-      { key: "Diagrama de Actividad", isGroup: true },
-      { key: "Actor", isGroup: true, group: "Diagrama de Actividad" },
-      { key: "Sistema", isGroup: true, group: "Diagrama de Actividad" }
-    ];
-    let ultimoAgregado: string;
-    Datos.forEach(element => {
-      let aux = { key: "", group: "", loc: null };
-      aux.key = element;
-      if (sistema == false) {
-        if (i == 0) {
-          inicioA += 75;
-          inicioS += 75;
-          i++;
-          ultimoAgregado = "Start";
+    if (this.casoUso.actividadesPrincipales == undefined) {
+      toast("El caso de uso Selecionado no tiene ningun Flujo de Eventos Definido", 2500);
+      toast("Llene un flujo de Eventos Principal", 2500);
+      toast("Seleccione otro caso de uso", 2500);
+      this.router.navigate(['/casosDeUso']);
+    } else {
+      this.casoUso.actividadesPrincipales.forEach(element => {
+        listaAux.push(element.nombre);
+        if (element.eventos != undefined) {
+          if (element.eventos[0].actor == "Actor" || element.eventos[0].actor == "Sistema") {
+            listaActores.push(element.eventos[0].actor.trim());
+          } else {
+            listaActores.push("Actor");
+          }
+        } else {
+          listaActores.push("Actor");
         }
-        aux.group = "Actor";
-        aux.loc = new go.Point(posXA, inicioA);
-        inicioA += 75;
-      } else {
-        if (i == 0) {
+
+      });
+      let Datos = listaAux;
+      let inicioA: number = 35;
+      let inicioS: number = 35;
+      let sistema = false;
+      let posXA = 50;
+      let posXS = 250;
+      let i: number = 0;
+      let indiceActores = 0;
+      let vertices = [ // node data
+        { key: "Start", group: "Actor", loc: new go.Point(posXA, inicioA) },
+        { key: "Diagrama de Flujo de Eventos Principal", isGroup: true },
+        { key: "Actor", isGroup: true, group: "Diagrama de Flujo de Eventos Principal" },
+        { key: "Sistema", isGroup: true, group: "Diagrama de Flujo de Eventos Principal" }
+      ];
+      let ultimoAgregado: string;
+      Datos.forEach(element => {
+        let aux = { key: "", group: "", loc: null };
+        aux.key = element;
+        sistema = (listaActores[indiceActores] == "Sistema");
+        if (sistema == false) {
+          if (i == 0) {
+            inicioA += 75;
+            inicioS += 75;
+            i++;
+            ultimoAgregado = "Start";
+          }
+          aux.group = "Actor";
+          aux.loc = new go.Point(posXA, inicioA);
           inicioA += 75;
+        } else {
+          if (i == 0) {
+            inicioA += 75;
+            inicioS += 75;
+            i++;
+            ultimoAgregado = "Start";
+          }
+          aux.group = "Sistema";
+          aux.loc = new go.Point(posXS, inicioS);
           inicioS += 75;
-          i++;
-          ultimoAgregado = "Start";
         }
-        aux.group = "Sistema";
-        aux.loc = new go.Point(posXS, inicioS);
-        inicioS += 75;
-      }
-      vertices.push(aux);
-      aristas.push({ from: ultimoAgregado, to: element });
-      ultimoAgregado = element;
-      if (i == Datos.length) {
-        let final = { key: "Final", group: (sistema) ? "Sistema" : "Actor", loc: null };
-        final.loc = new go.Point((sistema) ? posXS : posXA, (sistema) ? inicioS : inicioA);
-        vertices.push(final);
-        aristas.push({ from: element, to: "Final" });
-      }
-      sistema = !(sistema);
-      i++;
-    });
-    this.diagram.model = new go.GraphLinksModel(
-      vertices, aristas
-    );
-    this.diagramaImg = this.diagram.makeImage();
-    let src = document.getElementById("myD");
-    src.appendChild(this.diagramaImg);
-    document.getElementById("myDiagramDiv").style.display = "none";
+        vertices.push(aux);
+        aristas.push({ from: ultimoAgregado, to: element });
+        ultimoAgregado = element;
+        if (i == Datos.length) {
+          let final = { key: "Finish", group: (sistema) ? "Sistema" : "Actor", loc: null };
+          final.loc = new go.Point((sistema) ? posXS : posXA, (sistema) ? inicioS : inicioA);
+          vertices.push(final);
+          aristas.push({ from: element, to: "Finish" });
+        }
+        i++;
+        indiceActores++;
+      });
+      this.diagram.model = new go.GraphLinksModel(
+        vertices, aristas
+      );
+      this.diagramaImg = this.diagram.makeImage();
+      let src = document.getElementById("myD");
+      src.appendChild(this.diagramaImg);
+      document.getElementById("myDiagramDiv").style.display = "none";
+    }
+
   }
 
   iniciaCasoUso() {
     this.casoUso = this.casoServ.casoSeleccionado;
   }
+
+
+
   descargar() {
-    var columns = ["Indice", "Precondiciones"];
+    var columns = ["Indice", "Eventos"];
     var rows = [];
 
     var auxRows = this.casoUso.precondiciones;
@@ -202,11 +223,10 @@ export class GenerarReporteComponent implements OnInit {
         y = 20;
       }
     });
-
     ctx.font = '16px Verdana';
     texto = "Actores: " + this.casoServ.casoSeleccionado.actores.toString();
     doc.text(texto, 14, y);
-    y+= 16 ; 
+    y += 16;
     doc.text("Diagrama de Actividad del Flujo Principal de Eventos", 14, y);
     if (y + 300 > height) {
       doc.addPage();
@@ -218,24 +238,98 @@ export class GenerarReporteComponent implements OnInit {
       doc.addPage();
       y = 20;
     }
+    //
+
+
+
+    columns = ["Indice", "Actor", "Actividad", "Descripcion", "Grupo de Datos"];
+    rows = [];
+
+    let auxActividades = this.casoUso.actividadesPrincipales;
+    if (auxActividades == undefined || auxRows.length == 0) {
+      auxRows.push("N/A");
+    }
+    indice = 0;
+    auxActividades.forEach(item => {
+      let eventos = item.eventos;
+      eventos.forEach(element => {
+        let aux = [indice.toString()];
+        aux.push(element.actor);
+        aux.push(item.nombre);
+        aux.push(element.descripcion);
+        aux.push(element.grupoDeDatos);
+        //Agregamos a la columna de la fila 
+        rows.push(aux);
+        indice++;
+      });
+    });
+    doc.text("Tabla de Flujo de Actividades Pricipales", 14, y);
+    y += 16;
+    doc.autoTable(columns, rows, {
+      startY: y,
+      columnStyles: { text: { columnWidth: 'auto' } }
+    });
+
+    // Nueva hoja para las Precondiciones, postcondiciones y condiciones Iniciales 
+    doc.addPage();
+    y = 20;
+    ctx.font = '16px Verdana';
+    
     doc.text("Tabla de Precondiciones", 14, y);
-    y+=16;
+    y += 16;
+    columns = ["Indice", "Precondiciones"];
+    rows = [];
+
+    auxRows = this.casoUso.precondiciones;
+    if (auxRows == undefined || auxRows.length == 0) {
+      auxRows.push("N/A");
+    }
+    indice = 0;
+    auxRows.forEach(item => {
+      let aux = [indice.toString()];
+      aux.push(item);
+      rows.push(aux);
+      indice++;
+    });
     doc.autoTable(columns, rows, {
       startY: y,
       columnStyles: { text: { columnWidth: 'auto' } }
     });
     y = doc.autoTable.previous.finalY + 10;
     ctx.font = '16px Verdana';
-    if (y + 24 > height) {
+    if (y + 50 > height) {
       doc.addPage();
       y = 20;
     }
+
     doc.text("Tabla de PostCondiciones", 14, y);
-    y+=16;
+    y += 16;
     columns = ["Indice", "PostCondiciones"];
     rows = [];
 
     auxRows = this.casoUso.postcondiciones;
+    if (auxRows == undefined || auxRows.length == 0) {
+      auxRows.push("N/A");
+    }
+    indice = 0;
+    auxRows.forEach(item => {
+      let aux = [indice.toString()];
+      aux.push(item);
+      rows.push(aux);
+      indice++;
+    });
+    doc.autoTable(columns, rows, {
+      startY: y,
+      columnStyles: { text: { columnWidth: 'auto' } }
+    });
+    y = doc.autoTable.previous.finalY + 10;
+    ctx.font = '16px Verdana';
+    doc.text("Tabla de Requisistos Especiales", 14, y);
+    y += 16;
+    columns = ["Indice", "Requisistos Especiales"];
+    rows = [];
+
+    auxRows = this.casoUso.requisitosEspeciales;
     if (auxRows == undefined || auxRows.length == 0) {
       auxRows.push("N/A");
     }

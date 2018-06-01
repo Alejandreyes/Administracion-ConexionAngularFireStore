@@ -6,6 +6,8 @@ import { MaterializeAction } from 'angular2-materialize';
 import { ActividadPrincipalService } from '../../../servicios/actividad-principal.service';
 import { Actividad } from '../../../modelos/actividad.model';
 
+import { AccionService } from '../../../servicios/accion.service';
+
 @Component({
     selector: 'app-agregar-actividad-principal',
     templateUrl: '/agregar-actividad-principal.component.html',
@@ -14,13 +16,13 @@ import { Actividad } from '../../../modelos/actividad.model';
 export class AgregarActividadPrincipalComponent implements OnInit {
     modalActions = new EventEmitter<string | MaterializeAction>();
     actividadForm: FormGroup;
-
+    selecionado: string;
     constructor(private fb: FormBuilder,
         private actividadServ: ActividadPrincipalService,
-        public router: Router){
-        }
-    
-    ngOnInit(){
+        public router: Router) {
+    }
+
+    ngOnInit() {
         this.actividadForm = this.fb.group({
             nombre: ['', [Validators.required, Validators.minLength(1)]]
         });

@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import {FlujoEvento} from '../../../modelos/FlujoEventos';
+//import {FlujoEvento} from '../../../modelos/FlujoEventos';
 import { CasoUso } from '../../../modelos/casouso.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CasosUsoService } from '../../../servicios/casos-uso.service';
+import { AccionService } from '../../../servicios/accion.service';
 import { Router } from '@angular/router';
 import { MaterializeAction } from 'angular2-materialize';
 import { Actividad } from '../../../modelos/actividad.model';
@@ -15,17 +16,10 @@ export class AgregarCasoComponent implements OnInit {
   chipsActions = new EventEmitter<string | MaterializeAction>();
   precondiciones: string[] = [];
   postcondiciones: string[] = [];
-<<<<<<< HEAD
-  //flujos: string[] = [];
-  //eventos: string[] = [];
-=======
+
 
   modalActions = new EventEmitter<string | MaterializeAction>();
 
-
-  //acciones = ["Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada","Mexico", "Canada"];
-  //acciones: string[];
->>>>>>> master
   requisitosEspeciales: string[] = [];
   actores: string[] = [];
   chipsPlaceholder = {
@@ -33,24 +27,16 @@ export class AgregarCasoComponent implements OnInit {
     secondaryPlaceholder: 'Ingresa un nuevo campo',
   };
 
+ // acciones =[ {accion:"Gato", eventos : this.provincias},  {accion:"Perro", eventos : this.provincias},  {accion:"Pollo", eventos : this.provincias}];
+  acciones = []; 
 
-  provincias: string[] = [
-    'Álava', 'Albacete', 'Alicante', 'Almería', 'Asturias', 'Ávila', 'Badajoz', 'Barcelona',
-    'Burgos', 'Cáceres', 'Cádiz', 'Cantabria', 'Castellón', 'Ciudad Real', 'Córdoba',
-    'La Coruña', 'Cuenca', 'Gerona', 'Granada', 'Guadalajara',
-    'Guipúzcoa', 'Huelva', 'Huesca', 'IslasBaleares', 'Jaén', 'León', 'Lérida', 'Lugo',
-    'Madrid', 'Málaga', 'Murcia', 'Navarra', 'Orense', 'Palencia', 'Las Palmas',
-    'Pontevedra', 'La Rioja', 'Salamanca', 'Segovia', 'Sevilla', 'Soria', 'Tarragona',
-    'Santa Cruz de Tenerife', 'Teruel', 'Toledo', 'Valencia', 'Valladolid', 'Vizcaya',
-    'Zamora', 'Zaragoza'];
-
-  acciones =[ {accion:"Gato", eventos : this.provincias},  {accion:"Perro", eventos : this.provincias},  {accion:"Pollo", eventos : this.provincias}];
-  a  = new FlujoEvento() ;
+ //a  = new FlujoEvento() ;
 
   selecionado: string;
   casoUsoForm: FormGroup;
   constructor(private fb: FormBuilder,
     private casoServ: CasosUsoService,
+    private accionServ: AccionService,
     public router: Router) {
   }
 
@@ -60,10 +46,14 @@ export class AgregarCasoComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
       actores: [[], Validators.required]
     });
+    this.accionServ.getAcciones().valueChanges().subscribe(item =>{
+      item.forEach(valores =>{
+        this.acciones.push(valores.nombre);
 
-    this.a.accion = "Pokemon";     
-    this.a.eventos = this.provincias ; 
-    this.acciones.push(this.a); 
+      }); 
+       
+    });
+     
   }
   add(chip, nombreLista: string) {
     switch (nombreLista) {
@@ -73,19 +63,7 @@ export class AgregarCasoComponent implements OnInit {
       case 'postcondiciones':
         this.postcondiciones.push(chip.tag);
         break;
-<<<<<<< HEAD
-      /*
-      case 'flujos':
-        this.flujos.push(chip.tag);
-        break;
-      */
-      /*
-      case 'eventos':
-        this.eventos.push(chip.tag);
-        break;
-      */
-=======
->>>>>>> master
+
       case 'requisitosEspeciales':
         this.requisitosEspeciales.push(chip.tag);
         break;
@@ -105,19 +83,7 @@ export class AgregarCasoComponent implements OnInit {
       case 'postcondiciones':
         this.postcondiciones = this.precondiciones.filter(item => { return item != chip.tag });
         break;
-<<<<<<< HEAD
-      /*
-      case 'flujos':
-        this.flujos = this.flujos.filter(item => { return item != chip.tag });
-        break;
-      */
-      /*
-      case 'eventos':
-        this.eventos = this.eventos.filter(item => { return item != chip.tag });
-        break;
-      */
-=======
->>>>>>> master
+
       case 'requisitosEspeciales':
         this.requisitosEspeciales = this.requisitosEspeciales.filter(item => { return item != chip.tag });
         break;
@@ -133,17 +99,17 @@ export class AgregarCasoComponent implements OnInit {
     const casoUso = new CasoUso();
     casoUso.nombre = this.casoUsoForm.value.nombre;
     casoUso.descripcion = this.casoUsoForm.value.descripcion;
-<<<<<<< HEAD
+//<<<<<<< HEAD
     casoUso.precondiciones = this.precondiciones; 
     casoUso.postcondiciones  = this.postcondiciones;
     //casoUso.eventos = this.eventos ; 
     //casoUso.flujos = this.flujos; 
     casoUso.requisitosEspeciales = this.requisitosEspeciales; 
-=======
-    casoUso.precondiciones = this.precondiciones;
-    casoUso.postcondiciones = this.postcondiciones;
-    casoUso.requisitosEspeciales = this.requisitosEspeciales;
->>>>>>> master
+//=======
+    // casoUso.precondiciones = this.precondiciones;
+    // casoUso.postcondiciones = this.postcondiciones;
+    // casoUso.requisitosEspeciales = this.requisitosEspeciales;
+//>>>>>>> master
     casoUso.actores = this.actores;
     this.casoServ.addCasoUso(casoUso);
   }

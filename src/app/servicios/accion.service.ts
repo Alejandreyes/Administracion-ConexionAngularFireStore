@@ -13,7 +13,7 @@ export class AccionService {
   constructor(private firebase: AngularFireDatabase,
     public router: Router) {
   }
-  getAcciones(nombre: string) {
+  getAcciones() {
     this.accionLista = this.firebase.list('acciones');
     return this.accionLista;
   }

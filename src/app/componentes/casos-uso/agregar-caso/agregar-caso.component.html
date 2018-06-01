@@ -30,24 +30,10 @@
             <label for="postcondiciones"> Postcondiciones </label>
             <div id="postcondiciones" class="chips" materialize="material_chip" [materializeParams]="[chipsPlaceholder]" (chip.add)="add($event.detail,'postcondiciones')"
               (chip.delete)="delete($event.detail,'postcondiciones')" [materializeActions]="chipsActions"></div>
-            <!-- Lista de Eventos -->
-            <label for="flujo Eventos">Flujo de Eventos Principal</label>
-            <ul id="flujo Eventos" *ngFor="let accion of acciones">
-              <div>
-                <li>
-                  <span style="color:blue">{{accion.accion}}</span>
-                  <div class="container">
+            
 
-                    <ul *ngFor="let evento of accion.eventos">
-                      <li>
-                        {{evento}}
-                      </li>
-                    </ul>
-                  </div>
-                </li>
-              </div>
-            </ul>
-            <a class="waves-effect waves-light btn modal-trigger" (click)="openModal()">Modal</a>
+              <!-- Tienes que eliminar esta linea PosteriorMente -->
+            <a class="waves-effect waves-light btn modal-trigger" (click)="openModal()">Modal</a>  
             <br/>
             <label for="requisitosEspeciales"> Requisitos Especiales </label>
             <div id="requisitosEspeciales" class="chips" materialize="material_chip" [materializeParams]="[chipsPlaceholder]" (chip.add)="add($event.detail,'requisitosEspeciales')"

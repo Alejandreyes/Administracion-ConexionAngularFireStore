@@ -3,18 +3,13 @@
         <div class="card-content">
             <span class="card-title">Agregar actividad principal</span>
             <div class="row">
-                <form class="col s12" materialize [formGroup]="actividadForm"
-                    (ngSubmit)="onSubmit()">
+                <form class="col s12" materialize [formGroup]="actividadForm" (ngSubmit)="onSubmit()">
                     <div class="row">
                         <div class="input-field col s12">
-                            <input formControlName="nombre" id="nombre" 
-                                type="text" 
-                                placeholder="Nombre de la actividad">
+                            <input formControlName="nombre" id="nombre" type="text" placeholder="Nombre de la actividad">
                             <label for="nombre">Nombre</label>
-                            <p class="red-text" 
-                            *ngIf="actividadForm.controls.nombre.invalid">
-                                El campo es obligatorio. 
-                                Debe contener por lo menos 1 carácter.
+                            <p class="red-text" *ngIf="actividadForm.controls.nombre.invalid">
+                                El campo es obligatorio. Debe contener por lo menos 1 carácter.
                             </p>
                         </div>
                     </div>
@@ -23,20 +18,13 @@
                     <div class="section center">
                         <div class="row" style="margin-top:7%;">
                             <div class="col s8">
-                                <button class="btn"
-                                    *ngIf="actividadForm.invalid" 
-                                    disabled
-                                    type="submit">
+                                <button class="btn" *ngIf="actividadForm.invalid" disabled type="submit">
                                     ENVIAR
                                 </button>
-                                <button class="btn" 
-                                    *ngIf="!actividadForm.invalid"
-                                    type="submit">
+                                <button class="btn" *ngIf="!actividadForm.invalid" type="submit">
                                     ENVIAR
                                 </button>
-                                <button class="btn"
-                                    (click)="onCancel()"
-                                    type="reset">
+                                <button class="btn" (click)="onCancel()" type="reset">
                                     CANCELAR
                                 </button>
                             </div>
