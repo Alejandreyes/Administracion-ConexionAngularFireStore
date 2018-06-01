@@ -12,8 +12,11 @@ declare var jsPDF;
   styleUrls: ['./generar-reporte.component.css']
 })
 export class GenerarReporteComponent implements OnInit {
+  respuesta: boolean;
   diagramaImg: any;
+  diagramaImg2: any;
   diagram;
+  diagram2;
   casoUso: CasoUso;
   constructor(private casoServ: CasosUsoService,
     public router: Router) {
@@ -176,12 +179,165 @@ export class GenerarReporteComponent implements OnInit {
       document.getElementById("myDiagramDiv").style.display = "none";
     }
 
+    this.respuesta = this.agregarGraficaFlujoAlterno();
   }
 
   iniciaCasoUso() {
     this.casoUso = this.casoServ.casoSeleccionado;
   }
 
+
+  agregarGraficaFlujoAlterno(): boolean {
+    let $ = go.GraphObject.make;
+    // Configuracion mas basica para que funcione el diagramador
+    // this.diagram = //new go.Diagram("myDiagramDiv");
+    // Funcion avanzada para colocar el diagrama en el centro. Ya teniendo esto entonces podemos continuar
+    this.diagram2 =
+      $(go.Diagram, "myDiagramDiv2",  // create a Diagram for the DIV HTML element
+        {
+          initialContentAlignment: go.Spot.Center,  // center the content
+          "undoManager.isEnabled": false  // enable undo & redo
+        });
+    // define the node template
+    this.diagram2.nodeTemplate =
+      $(go.Node, "Auto",
+        new go.Binding("location", "loc"),
+        {
+          locationSpot: go.Spot.Center,
+        },
+        $(go.Shape, "RoundedRectangle",
+          {
+            name: "OBJSHAPE",
+            fill: "white"
+          }),
+        $(go.TextBlock,
+          {
+            maxSize: new go.Size(100, NaN),
+            wrap: go.TextBlock.WrapFit,
+            margin: 10
+          },
+          new go.Binding("text", "key"))
+      );
+    this.diagram2.groupTemplate =
+      $(go.Group, "Spot",
+        {
+          selectionAdornmentTemplate: // adornment when a group is selected
+            $(go.Adornment, "Auto",
+              $(go.Shape, "Rectangle",
+                { fill: null, stroke: "dodgerblue", strokeWidth: 3 }),
+              $(go.Placeholder)
+            ),
+          toSpot: go.Spot.AllSides, // links coming into groups at any side
+          toEndSegmentLength: 100, fromEndSegmentLength: 30
+        },
+        $(go.Panel, "Auto",
+          $(go.Shape, "Rectangle",
+            {
+              name: "OBJSHAPE",
+              parameter1: 14,
+              fill: "rgba(0,255,0,0.3)"
+            },
+            new go.Binding("desiredSize", "ds")),
+          $(go.Placeholder,
+            { padding: 16 })
+        ),
+        $(go.TextBlock,
+          {
+            name: "GROUPTEXT",
+            alignment: go.Spot.TopLeft,
+            alignmentFocus: new go.Spot(0, 0, 4, 4),
+            font: "Bold 10pt Sans-Serif"
+          },
+          new go.Binding("text", "key")),
+      );
+    // add nodes, including groups, and links to the model
+    let aristas = [  // link data
+    ];
+
+    let listaAux = [];
+    let listaActores = [];
+
+    if (this.casoUso.actividadesAlternativas == undefined) {
+      return false;
+    } else {
+      this.casoUso.actividadesAlternativas.forEach(element => {
+        listaAux.push(element.nombre);
+        if (element.eventos != undefined) {
+          if (element.eventos[0].actor == "Actor" || element.eventos[0].actor == "Sistema") {
+            listaActores.push(element.eventos[0].actor.trim());
+          } else {
+            listaActores.push("Actor");
+          }
+        } else {
+          listaActores.push("Actor");
+        }
+
+      });
+      let Datos = listaAux;
+      let inicioA: number = 35;
+      let inicioS: number = 35;
+      let sistema = false;
+      let posXA = 50;
+      let posXS = 250;
+      let i: number = 0;
+      let indiceActores = 0;
+      let vertices = [ // node data
+        { key: "Start", group: "Actor", loc: new go.Point(posXA, inicioA) },
+        { key: "Diagrama de Flujo de Eventos Alternativos", isGroup: true },
+        { key: "Actor", isGroup: true, group: "Diagrama de Flujo de Eventos Alternativos" },
+        { key: "Sistema", isGroup: true, group: "Diagrama de Flujo de Eventos Alternativos" }
+      ];
+      let ultimoAgregado: string;
+      Datos.forEach(element => {
+        let aux = { key: "", group: "", loc: null };
+        aux.key = element;
+        sistema = (listaActores[indiceActores] == "Sistema");
+        if (sistema == false) {
+          if (i == 0) {
+            inicioA += 75;
+            inicioS += 75;
+            i++;
+            ultimoAgregado = "Start";
+          }
+          aux.group = "Actor";
+          aux.loc = new go.Point(posXA, inicioA);
+          inicioA += 75;
+        } else {
+          if (i == 0) {
+            inicioA += 75;
+            inicioS += 75;
+            i++;
+            ultimoAgregado = "Start";
+          }
+          aux.group = "Sistema";
+          aux.loc = new go.Point(posXS, inicioS);
+          inicioS += 75;
+        }
+        vertices.push(aux);
+        aristas.push({ from: ultimoAgregado, to: element });
+        ultimoAgregado = element;
+        if (i == Datos.length) {
+          let final = { key: "Finish", group: (sistema) ? "Sistema" : "Actor", loc: null };
+          final.loc = new go.Point((sistema) ? posXS : posXA, (sistema) ? inicioS : inicioA);
+          vertices.push(final);
+          aristas.push({ from: element, to: "Finish" });
+        }
+        i++;
+        indiceActores++;
+      });
+      this.diagram2.model = new go.GraphLinksModel(
+        vertices, aristas
+      );
+      this.diagramaImg2 = this.diagram2.makeImage();
+      let src = document.getElementById("myD2");
+      src.appendChild(this.diagramaImg2);
+      document.getElementById("myDiagramDiv2").style.display = "none";
+
+    }
+
+    return true;
+
+  }
 
 
   descargar() {
@@ -263,18 +419,53 @@ export class GenerarReporteComponent implements OnInit {
         indice++;
       });
     });
-    doc.text("Tabla de Flujo de Actividades Pricipales", 14, y);
+    doc.text("Tabla de Flujo de Actividades Principales", 14, y);
     y += 16;
     doc.autoTable(columns, rows, {
       startY: y,
       columnStyles: { text: { columnWidth: 'auto' } }
     });
 
-    // Nueva hoja para las Precondiciones, postcondiciones y condiciones Iniciales 
     doc.addPage();
     y = 20;
+    // Nueva hoja para las Precondiciones, postcondiciones y condiciones Iniciales 
+    if (this.respuesta) {
+      doc.text("Diagrama de Actividad del Flujo Alternativo de Eventos", 14, y);
+      doc.addImage(this.diagramaImg, 'JPEG', 10, y, 300, 300);
+      y += 300;
+      columns = ["Indice", "Actor", "Actividad", "Descripcion", "Grupo de Datos"];
+      rows = [];
+
+      let auxActividades = this.casoUso.actividadesAlternativas;
+      if (auxActividades == undefined || auxRows.length == 0) {
+        auxRows.push("N/A");
+      }
+      indice = 0;
+      auxActividades.forEach(item => {
+        let eventos = item.eventos;
+        eventos.forEach(element => {
+          let aux = [indice.toString()];
+          aux.push(element.actor);
+          aux.push(item.nombre);
+          aux.push(element.descripcion);
+          aux.push(element.grupoDeDatos);
+          //Agregamos a la columna de la fila 
+          rows.push(aux);
+          indice++;
+        });
+      });
+      doc.text("Tabla de Flujo de Actividades Alternativas", 14, y);
+      y += 16;
+      doc.autoTable(columns, rows, {
+        startY: y,
+        columnStyles: { text: { columnWidth: 'auto' } }
+      });
+      y = doc.autoTable.previous.finalY + 20;
+    }
+
+
     ctx.font = '16px Verdana';
-    
+
     doc.text("Tabla de Precondiciones", 14, y);
     y += 16;
     columns = ["Indice", "Precondiciones"];
