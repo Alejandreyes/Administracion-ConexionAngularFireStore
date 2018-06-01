@@ -12,6 +12,7 @@ import { MaterializeAction } from 'angular2-materialize';
 export class EditarCasoComponent implements OnInit {
   chipsActions = new EventEmitter<string | MaterializeAction>();
 
+
   precondiciones: string[] = [];
   postcondiciones: string[] = [];
   flujos: string[] = [];

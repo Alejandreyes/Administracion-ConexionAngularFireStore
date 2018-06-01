@@ -30,6 +30,10 @@ export class CasosUsoComponent implements OnInit {
     this.casosSev.casoSeleccionado = caso ; 
     this.router.navigate(['/editarCasoUso']);
   }
+  generarReporte(caso: CasoUso){
+    this.casosSev.casoSeleccionado = caso ; 
+    this.router.navigate(['/generaReporte']);
+  }
   onDelete(caso: CasoUso){
     this.casosSev.casoSeleccionado = caso;
     this.modalActions.emit({ action: "modal", params: ['open'] });

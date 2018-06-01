@@ -24,6 +24,12 @@
                 </li>
                 <li>
                   <a materialize="tooltip" class="btn-floating waves-effect waves-light black tooltipped " data-position="top" data-delay="10"
+                    data-tooltip="Generar Reporte">
+                    <i class="fas fa-pencil-alt" (click)="generarReporte(casos)"></i>
+                  </a>
+                </li>
+                <li>
+                  <a materialize="tooltip" class="btn-floating waves-effect waves-light black tooltipped " data-position="top" data-delay="10"
                     data-tooltip="Editar Caso de Uso">
                     <i class="fas fa-pencil-alt" (click)="onEdit(casos)"></i>
                   </a>
@@ -53,16 +59,8 @@
 
   </div>
 
-  <div class="col s12 m6 l6">
-    <app-accion></app-accion>
-  </div>
 </div>
-
-
-
-
 <!-- Modal Structure -->
-
 <div id="modal1" class="modal bottom-sheet" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
   <div class="modal-content">
     <h4>ALERTA</h4>
@@ -83,9 +81,6 @@
           <i class="material-icons" (click)="onCreate()">add</i>
         </a>
       </div>
-    </div>
-    <div class="col s12 m6 l6">
-      <app-accion></app-accion>
     </div>
   </div>
 
