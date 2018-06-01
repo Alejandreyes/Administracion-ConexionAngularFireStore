@@ -38,7 +38,7 @@ export class AgregarEventoPrincipalComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(['/flujos']);
+        this.router.navigate(['/eventosPrincipales']);
     }
 
 }

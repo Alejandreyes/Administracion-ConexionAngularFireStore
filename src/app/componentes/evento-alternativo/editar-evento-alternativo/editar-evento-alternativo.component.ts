@@ -50,6 +50,6 @@ export class EditarEventoAlternativoComponent implements OnInit {
 
     onCancel(){
         this.eventoServ.eventoSeleccionado = new Evento();
-        this.router.navigate(['/eventosPrincipales']);
+        this.router.navigate(['/eventosAlternativos']);
     }
 }

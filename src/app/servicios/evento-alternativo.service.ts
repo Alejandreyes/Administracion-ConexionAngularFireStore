@@ -30,7 +30,7 @@ export class EventoAlternativoService {
         const actividadNueva = JSON.parse(JSON.stringify(this.actividadMadre)); 
         actividadNueva.eventos = this.listaEventos;
         this.actividadServ.editActividad(this.actividadMadre, actividadNueva);
-        this.router.navigate(['/flujos']);
+        this.router.navigate(['/eventosAlternativos']);
 
     }
 
@@ -84,7 +84,7 @@ export class EventoAlternativoService {
 
         actividadNueva.eventos = eventosAux;
         this.actividadServ.editActividad(this.actividadMadre, actividadNueva);
-        this.router.navigate(['/flujos']);
+        this.router.navigate(['/eventosAlternativos']);
     }
 
    

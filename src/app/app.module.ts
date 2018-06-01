@@ -91,7 +91,7 @@ const routes: Routes = [
   { path: 'agregarEventoPrincipal', component: AgregarEventoPrincipalComponent, canActivate: [LoginService]},
   { path: 'editarEventoPrincipal', component: EditarEventoPrincipalComponent, canActivate: [LoginService]},
   { path: 'agregarEventoAlternativo', component: AgregarEventoAlternativoComponent, canActivate: [LoginService]},
-  { path: 'editarEventoPrincipal', component: EditarEventoAlternativoComponent, canActivate: [LoginService]},
+  { path: 'editarEventoAlternativo', component: EditarEventoAlternativoComponent, canActivate: [LoginService]},
   { path: 'eventosAlternativos', component: EventoAlternativoComponent, canActivate: [LoginService]},
 
  //{ path : 'accion' , component : AccionComponent},

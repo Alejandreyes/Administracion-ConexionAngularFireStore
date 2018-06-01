@@ -3,7 +3,7 @@ import { Evento } from '../../modelos/evento.model';
 import { EventoAlternativoService } from '../../servicios/evento-alternativo.service';
 import { Router } from '@angular/router';
 import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
-import { ActividadPrincipalService } from '../../servicios/actividad-principal.service';
+import { ActividadAlternativaService } from '../../servicios/actividad-alternativa.service';
 
 @Component({
     selector:'app-evento-alternativo',
@@ -15,7 +15,7 @@ export class EventoAlternativoComponent implements OnInit {
     listaEventos: Evento[];
     modalActions = new EventEmitter<string | MaterializeAction>();
 
-    constructor(private actividadServ: ActividadPrincipalService,
+    constructor(private actividadServ: ActividadAlternativaService,
         private eventoServ: EventoAlternativoService,
         public router: Router){}
 

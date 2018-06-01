@@ -38,7 +38,7 @@ export class AgregarEventoAlternativoComponent implements OnInit {
     }
 
     onCancel() {
-        this.router.navigate(['/flujos']);
+        this.router.navigate(['/eventosAlternativos']);
     }
 
 }
