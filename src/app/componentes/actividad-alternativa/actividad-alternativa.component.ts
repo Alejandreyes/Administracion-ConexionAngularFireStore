@@ -37,6 +37,11 @@ export class ActividadAlternativaComponent implements OnInit {
         this.router.navigate(['/editarActividadAlternativa']);
     }
 
+    verEventos(actividad: Actividad){
+        this.actividadSV.actividadSeleccionada = actividad;
+        this.router.navigate(['/eventosAlternativos']);
+    }
+
     onDelete(actividad: Actividad){
         this.actividadSV.actividadSeleccionada = actividad;
         this.modalActions.emit({ action: 'modal', params: ['open'] });

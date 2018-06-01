@@ -4,6 +4,7 @@ import { CasosUsoService } from '../../servicios/casos-uso.service';
 import { Router } from '@angular/router';
 import { MaterializeAction, MaterializeDirective } from 'angular2-materialize';
 import { ActividadPrincipalService } from '../../servicios/actividad-principal.service';
+import { EventoPrincipalComponent } from '../evento-principal/evento-principal.component';
 
 @Component({
     selector:'app-actividades',
@@ -22,10 +23,6 @@ export class ActividadPrincipalComponent implements OnInit {
     ngOnInit(): void {
         this.listaActividadesPrincipales  
             = this.actividadSV.getActividades(this.casoServ.casoSeleccionado);
-
-        for(var i = 0; i < this.listaActividadesPrincipales.length; i++){
-            this.listaActividadesPrincipales[i].posicion = i;
-        }
     }
 
     onCreate(){
@@ -35,6 +32,11 @@ export class ActividadPrincipalComponent implements OnInit {
     onEdit(actividad: Actividad){
         this.actividadSV.actividadSeleccionada = actividad;
         this.router.navigate(['/editarActividadPrincipal']);
+    }
+
+    verEventos(actividad: Actividad){
+        this.actividadSV.actividadSeleccionada = actividad;
+        this.router.navigate(['/eventosPrincipales']);
     }
 
     onDelete(actividad: Actividad){
@@ -50,7 +52,4 @@ export class ActividadPrincipalComponent implements OnInit {
         this.actividadSV.delete(this.actividadSV.actividadSeleccionada);
         
     }
-
-    
-
 }

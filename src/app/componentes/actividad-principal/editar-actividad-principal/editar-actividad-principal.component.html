@@ -16,7 +16,7 @@
                         <input formControlName="posicion" id="posicion" type="text" placeholder="Posicion" class="validate">
                         <label for="posicion">Posicion</label>
                         <p class="red-text" *ngIf="actividadForm.controls.posicion.invalid">
-                          El campo es obligatorio. Debe ser entre cero y la longitud de la lista.
+                          El campo es obligatorio. Debe ser entre 0 y {{actividadServ.listaActividades.length}}
                         </p>
                       </div>
                 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { CasoUso } from '../../../modelos/casouso.model';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActividadPrincipalService } from '../../../servicios/actividad-principal.service';
+import { ActividadAlternativaService } from '../../../servicios/actividad-alternativa.service';
 import { Router } from '@angular/router';
 import { MaterializeAction } from 'angular2-materialize';
 import { Actividad } from '../../../modelos/actividad.model';
@@ -9,15 +9,17 @@ import { CasosUsoService } from '../../../servicios/casos-uso.service';
 
 @Component({
   selector: 'app-editar-actividad-principal',
-  templateUrl: './editar-actividad-principal.component.html',
-  styleUrls: ['./editar-actividad-principal.component.css']
+  templateUrl: './editar-actividad-alternativa.component.html',
+  styleUrls: ['./editar-actividad-alternativa.component.css']
 })
 
-export class EditarActividadPrincipalComponent implements OnInit {
+export class EditarActividadAlternativaComponent implements OnInit {
     actividadForm: FormGroup;
+    listaActividadesAlternativas: Actividad[];
     
     constructor(private fb: FormBuilder,
-        private actividadServ: ActividadPrincipalService,
+        private casoServ: CasosUsoService,
+        private actividadServ: ActividadAlternativaService,
         public router: Router) {
         }
     
@@ -33,7 +35,7 @@ export class EditarActividadPrincipalComponent implements OnInit {
     }
 
     onSubmit() {
-        const actividad = JSON.parse(JSON.stringify(this.actividadServ.actividadSeleccionada));
+        const actividad = JSON.parse(JSON.stringify(this.actividadServ.actividadSeleccionada)); 
         actividad.nombre = this.actividadForm.value.nombre;
         actividad.posicion = this.actividadForm.value.posicion;
         this.actividadServ.editActividad(this.actividadServ.actividadSeleccionada, actividad);

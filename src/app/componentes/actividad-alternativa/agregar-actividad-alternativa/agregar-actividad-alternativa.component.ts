@@ -32,6 +32,7 @@ export class AgregarActividadAlternativaComponent implements OnInit {
     onSubmit() {
         const actividad = new Actividad();
         actividad.nombre = this.actividadForm.value.nombre;
+        actividad.posicion = this.actividadServ.listaActividades.length;
         this.actividadServ.addActividad(actividad);
     }
 

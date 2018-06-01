@@ -2,20 +2,25 @@
     <div class="col s12 m6 l6">
       <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
         <li *ngFor="let actividad of listaActividadesPrincipales">
-          <div class="collapsible-header red-text">
-            <i class="material-icons">assignment_late</i>{{actividad.nombre}}</div>
-  
+          <div class="collapsible-header">
+            {{actividad.nombre}}
+          </div>
           <div class="collapsible-body row">
             <span style="font-size: 18px; font-weight: bold;">
                 Posición : {{actividad.posicion}}
             </span>
-  
             <div materialize class="right-align">
               <div class="fixed-action-btn horizontal" style="position: relative;">
                 <a id="menu" class="btn-floating btn-large brown">
                   <i class="material-icons">menu</i>
                 </a>
                 <ul>
+                  <li>
+                    <a materialize="tooltip" class="btn-floating waves-effect waves-light deep-purple tooltipped " data-position="top" data-delay="10"
+                      data-tooltip="Ver eventos">
+                      <i class="far fa-address-card" (click)="verEventos(actividad)"> </i>
+                    </a>
+                  </li>
                   <li>
                     <a materialize="tooltip" class="btn-floating waves-effect waves-light black tooltipped " data-position="top" data-delay="10"
                       data-tooltip="Editar actividad principal">
@@ -79,7 +84,7 @@
         </div>
       </div>
       <div class="col s12 m6 l6">
-        <app-accion></app-accion>
+        <app-actividad-alternativa></app-actividad-alternativa>
       </div>
     </div>
   </ng-template>

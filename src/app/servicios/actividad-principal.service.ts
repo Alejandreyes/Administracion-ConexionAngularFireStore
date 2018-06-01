@@ -33,21 +33,110 @@ export class ActividadPrincipalService {
     }
 
     editActividad(actividadAReemplazar: Actividad, nuevaActividad: Actividad){
-        var posicion = this.listaActividades.indexOf(actividadAReemplazar);
-        this.listaActividades.splice(posicion, 1, nuevaActividad);
+        let posicionAnterior = actividadAReemplazar.posicion;
+        let posicionNueva = nuevaActividad.posicion;
+        const casoUsoNuevo = this.casoUsoPadre;
+        let actividadesAux = [];
 
-        const casoUsoActividad = this.casoUsoPadre;
-        casoUsoActividad.actividadesPrincipales = this.listaActividades;
-        this.casoServ.editCasoUsoActividad(casoUsoActividad);
+        if(posicionNueva <= posicionAnterior){
+            for(var i = 0; i < posicionNueva; i++){
+                actividadesAux.push(this.listaActividades[i]);
+            }
+            actividadesAux.push(nuevaActividad);
+            for(var j = posicionNueva; j < this.listaActividades.length; j++){
+                if(j != posicionAnterior){
+                    actividadesAux.push(this.listaActividades[j]);
+                }
+            }   
+        }
+        else if(posicionNueva > posicionAnterior){
+            if(posicionNueva < this.listaActividades.length){
+                for(var i = 0; i < posicionNueva; i++){
+                    if(i != posicionAnterior){
+                        actividadesAux.push(this.listaActividades[i]);
+                    }
+                }
+                actividadesAux.push(nuevaActividad);
+                for(var j = posicionNueva; j < this.listaActividades.length; j++){
+                    actividadesAux.push(this.listaActividades[j]);
+                }
+            }
+            else{
+                for(var i = 0; i < posicionNueva; i++){
+                    if(i != posicionAnterior){
+                        actividadesAux.push(this.listaActividades[i]);
+                    }
+                }
+                actividadesAux.push(nuevaActividad);
+            }  
+        }
+
+        for(var i = 0; i < actividadesAux.length; i++){
+            actividadesAux[i].posicion = i;
+        }
+
+        casoUsoNuevo.actividadesPrincipales = actividadesAux;
+        this.casoServ.editCasoUsoActividad(casoUsoNuevo);
         this.router.navigate(['/flujos']);
     }
-    
+
+    editActividadEvento(actividadAReemplazar: Actividad, nuevaActividad: Actividad){
+        let posicionAnterior = actividadAReemplazar.posicion;
+        let posicionNueva = nuevaActividad.posicion;
+        const casoUsoNuevo = this.casoUsoPadre;
+        let actividadesAux = [];
+
+        if(posicionNueva <= posicionAnterior){
+            for(var i = 0; i < posicionNueva; i++){
+                actividadesAux.push(this.listaActividades[i]);
+            }
+            actividadesAux.push(nuevaActividad);
+            for(var j = posicionNueva; j < this.listaActividades.length; j++){
+                if(j != posicionAnterior){
+                    actividadesAux.push(this.listaActividades[j]);
+                }
+            }   
+        }
+        else if(posicionNueva > posicionAnterior){
+            if(posicionNueva < this.listaActividades.length){
+                for(var i = 0; i < posicionNueva; i++){
+                    if(i != posicionAnterior){
+                        actividadesAux.push(this.listaActividades[i]);
+                    }
+                }
+                actividadesAux.push(nuevaActividad);
+                for(var j = posicionNueva; j < this.listaActividades.length; j++){
+                    actividadesAux.push(this.listaActividades[j]);
+                }
+            }
+            else{
+                for(var i = 0; i < posicionNueva; i++){
+                    if(i != posicionAnterior){
+                        actividadesAux.push(this.listaActividades[i]);
+                    }
+                }
+                actividadesAux.push(nuevaActividad);
+            }  
+        }
+
+        for(var i = 0; i < actividadesAux.length; i++){
+            actividadesAux[i].posicion = i;
+        }
+
+        casoUsoNuevo.actividadesPrincipales = actividadesAux;
+        this.casoServ.editCasoUsoActividad(casoUsoNuevo);
+    }
+
     delete(actividadAEliminar: Actividad){
-        var posicion = this.listaActividades.indexOf(actividadAEliminar);
+        var posicion = actividadAEliminar.posicion;
         this.listaActividades.splice(posicion, 1);
 
-        const casoUsoActividad = this.casoUsoPadre;
-        casoUsoActividad.actividadesPrincipales = this.listaActividades;
-        this.casoServ.editCasoUsoActividad(casoUsoActividad);
+        for(var i = 0; i < this.listaActividades.length; i++){
+            this.listaActividades[i].posicion = i;
+        }
+
+        const casoUsoNuevo = this.casoUsoPadre;
+        casoUsoNuevo.actividadesPrincipales = this.listaActividades;
+        this.casoServ.editCasoUsoActividad(casoUsoNuevo);
     }
 }

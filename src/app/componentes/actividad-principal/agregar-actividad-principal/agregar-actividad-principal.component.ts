@@ -1,6 +1,4 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
-
-import { CasoUso } from '../../../modelos/casouso.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CasosUsoService } from '../../../servicios/casos-uso.service';
 import { Router } from '@angular/router';
@@ -31,6 +29,7 @@ export class AgregarActividadPrincipalComponent implements OnInit {
     onSubmit() {
         const actividad = new Actividad();
         actividad.nombre = this.actividadForm.value.nombre;
+        actividad.posicion = this.actividadServ.listaActividades.length;
         this.actividadServ.addActividad(actividad);
     }
 

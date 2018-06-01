@@ -33,17 +33,66 @@ export class ActividadAlternativaService {
     }
 
     editActividad(actividadAReemplazar: Actividad, nuevaActividad: Actividad){
-        var posicion = this.listaActividades.indexOf(actividadAReemplazar);
-        this.listaActividades.splice(posicion, 1, nuevaActividad);
-
+        let posicionAnterior = actividadAReemplazar.posicion;
+        let posicionNueva = nuevaActividad.posicion;
+        console.log("Posicion anterior: " + posicionAnterior);
+        console.log("Posicion actual: " + posicionNueva);
+        console.log("Longitud de la lista: " + this.listaActividades.length);
         const casoUsoNuevo = this.casoUsoPadre;
-        casoUsoNuevo.actividadesAlternativas = this.listaActividades;
+        let actividadesAux = [];
+
+        if(posicionNueva <= posicionAnterior){
+            for(var i = 0; i < posicionNueva; i++){
+                actividadesAux.push(this.listaActividades[i]);
+            }
+            actividadesAux.push(nuevaActividad);
+            for(var j = posicionNueva; j < this.listaActividades.length; j++){
+                if(j != posicionAnterior){
+                    actividadesAux.push(this.listaActividades[j]);
+                }
+            }   
+        }
+        else if(posicionNueva > posicionAnterior){
+            if(posicionNueva < this.listaActividades.length){
+                for(var i = 0; i < posicionNueva; i++){
+                    if(i != posicionAnterior){
+                        actividadesAux.push(this.listaActividades[i]);
+                    }
+                }
+                actividadesAux.push(nuevaActividad);
+                for(var j = posicionNueva; j < this.listaActividades.length; j++){
+                    actividadesAux.push(this.listaActividades[j]);
+                }
+            }
+            else{
+                for(var i = 0; i < posicionNueva; i++){
+                    if(i != posicionAnterior){
+                        actividadesAux.push(this.listaActividades[i]);
+                    }
+                }
+                actividadesAux.push(nuevaActividad);
+            }  
+        }
+
+        for(var i = 0; i < actividadesAux.length; i++){
+            actividadesAux[i].posicion = i;
+        }
+        console.log(this.listaActividades);
+        console.log(actividadesAux);
+
+        casoUsoNuevo.actividadesAlternativas = actividadesAux;
         this.casoServ.editCasoUsoActividad(casoUsoNuevo);
+        this.router.navigate(['/flujos']);
     }
+    
     
     delete(actividadAEliminar: Actividad){
         var posicion = this.listaActividades.indexOf(actividadAEliminar);
         this.listaActividades.splice(posicion, 1);
+
+        for(var i = 0; i < this.listaActividades.length; i++){
+            this.listaActividades[i].posicion = i;
+        }
 
         const casoUsoNuevo = this.casoUsoPadre;
         casoUsoNuevo.actividadesAlternativas = this.listaActividades;

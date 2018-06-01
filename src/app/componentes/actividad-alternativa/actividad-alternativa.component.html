@@ -15,9 +15,15 @@
                         </a>
                         <ul>
                           <li>
+                            <a materialize="tooltip" class="btn-floating waves-effect waves-light deep-purple tooltipped " data-position="top" data-delay="10"
+                              data-tooltip="Ver eventos">
+                              <i class="far fa-address-card" (click)="verEventos(actividad)"> </i>
+                            </a>
+                          </li>
+                          <li>
                             <a materialize="tooltip" class="btn-floating waves-effect waves-light black tooltipped " data-position="top" data-delay="10"
                               data-tooltip="Editar actividad alternativa">
-                              <i class="fas fa-pencil-alt" (click)="onEdit(accion)"></i>
+                              <i class="fas fa-pencil-alt" (click)="onEdit(actividad)"></i>
                             </a>
                           </li>
                           <li>

@@ -11,8 +11,10 @@
                                 type="text" 
                                 placeholder="Nombre de la actividad">
                             <label for="nombre">Nombre</label>
-                            <p class="red-text" *ngIf="actividadForm.controls.nombre.invalid">
-                                El campo es obligatorio. Debe contener por lo menos 1 carácter.
+                            <p class="red-text" 
+                            *ngIf="actividadForm.controls.nombre.invalid">
+                                El campo es obligatorio. 
+                                Debe contener por lo menos 1 carácter.
                             </p>
                         </div>
                     </div>

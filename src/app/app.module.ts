@@ -30,6 +30,13 @@ import { ActividadAlternativaComponent } from './componentes/actividad-alternati
 import { AgregarActividadPrincipalComponent} from './componentes/actividad-principal/agregar-actividad-principal/agregar-actividad-principal.component';
 import { AgregarActividadAlternativaComponent } from './componentes/actividad-alternativa/agregar-actividad-alternativa/agregar-actividad-alternativa.component';
 import { EditarActividadPrincipalComponent } from './componentes/actividad-principal/editar-actividad-principal/editar-actividad-principal.component';
+import { EditarActividadAlternativaComponent} from './componentes/actividad-alternativa/editar-actividad-alternativa/editar-actividad-alternativa.component';
+import { EventoPrincipalComponent} from './componentes/evento-principal/evento-principal.component';
+import { AgregarEventoPrincipalComponent} from './componentes/evento-principal/agregar-evento-principal/agregar-evento-principal.component';
+import { EditarEventoPrincipalComponent} from './componentes/evento-principal/editar-evento-principal/editar-evento-principal.component';
+import { EventoAlternativoComponent } from './componentes/evento-alternativo/evento-alternativo.component';
+import { AgregarEventoAlternativoComponent } from './componentes/evento-alternativo/agregar-evento-alternativo/agregar-evento-alternativo.component';
+import { EditarEventoAlternativoComponent} from './componentes/evento-alternativo/editar-evento-alternativo/editar-evento-alternativo.component';
 // Libreria de materialize 
 import {MatButtonModule, MatCheckboxModule,MatNativeDateModule,
   MatToolbarModule,MatInputModule, MatDatepickerModule,
@@ -50,8 +57,8 @@ import {ProyectosService} from './servicios/proyectos.service';
 import {UsuarioService} from './servicios/usuario.service';
 import {ActividadPrincipalService} from './servicios/actividad-principal.service';
 import {ActividadAlternativaService} from './servicios/actividad-alternativa.service';
-import {EventoService} from'./servicios/evento.service';
-
+import {EventoPrincipalService} from'./servicios/evento-principal.service';
+import {EventoAlternativoService} from './servicios/evento-alternativo.service';
 
 // las vistas con sus respectivas rutas 
 const routes: Routes = [
@@ -76,9 +83,17 @@ const routes: Routes = [
   { path : 'casosDeUso' , component : CasosUsoComponent, canActivate: [LoginService]},
  { path : 'accion' , component : AccionComponent, canActivate: [LoginService]},
   { path: 'flujos', component: ActividadPrincipalComponent, canActivate: [LoginService]},
+  { path: 'eventosPrincipales', component: EventoPrincipalComponent, canActivate: [LoginService]},
   { path: 'agregarActividadPrincipal', component: AgregarActividadPrincipalComponent, canActivate: [LoginService]},
   { path: 'agregarActividadAlternativa', component: AgregarActividadAlternativaComponent, canActivate: [LoginService]},
   { path: 'editarActividadPrincipal', component: EditarActividadPrincipalComponent, canActivate: [LoginService]},
+  { path: 'editarActividadAlternativa', component: EditarActividadAlternativaComponent, canActivate: [LoginService]},
+  { path: 'agregarEventoPrincipal', component: AgregarEventoPrincipalComponent, canActivate: [LoginService]},
+  { path: 'editarEventoPrincipal', component: EditarEventoPrincipalComponent, canActivate: [LoginService]},
+  { path: 'agregarEventoAlternativo', component: AgregarEventoAlternativoComponent, canActivate: [LoginService]},
+  { path: 'editarEventoPrincipal', component: EditarEventoAlternativoComponent, canActivate: [LoginService]},
+  { path: 'eventosAlternativos', component: EventoAlternativoComponent, canActivate: [LoginService]},
+
  //{ path : 'accion' , component : AccionComponent},
   { path : 'generaReporte' , component : GenerarReporteComponent}
 ];
@@ -109,7 +124,14 @@ const routes: Routes = [
     AgregarActividadPrincipalComponent,
     ActividadPrincipalComponent,
     ActividadAlternativaComponent,
-    EditarActividadPrincipalComponent
+    EditarActividadPrincipalComponent,
+    EditarActividadAlternativaComponent,
+    EventoPrincipalComponent,
+    AgregarEventoPrincipalComponent,
+    EditarEventoPrincipalComponent,
+    EventoAlternativoComponent,
+    AgregarEventoAlternativoComponent,
+    EditarEventoAlternativoComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +152,9 @@ const routes: Routes = [
     ProyectosService,
     UsuarioService,
     ActividadPrincipalService,
-    ActividadAlternativaService
+    ActividadAlternativaService,
+    EventoPrincipalService,
+    EventoAlternativoService
   ],
   bootstrap: [AppComponent]
 })
