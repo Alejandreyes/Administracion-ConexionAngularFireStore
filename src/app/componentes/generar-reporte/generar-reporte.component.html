@@ -1,3 +1,9 @@
-<p>
-  generar-reporte works!
-</p>
+<div>
+  <h4>Reporte del Caso de Uso  {{casoUso.nombre}}  </h4>
+  <div id="myDiagramDiv" style="border: solid 1px black; width:400px; height:400px;"></div>
+  <div id="myD" ></div>
+  <p> Descricion del Proyecto  {{casoUso.descripcion}} </p>
+
+  <button (click) = "descargar()"> Descargar PDF</button>
+</div>
+
