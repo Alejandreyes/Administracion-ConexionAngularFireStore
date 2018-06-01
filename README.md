@@ -15,6 +15,9 @@ sudo apt-get install npm
 3.- Instalar typescript 
 npm install -g typescript
 
+3.5 .- Instalar Angular cli
+npm i angular-cli
+
 4.- descargar el repositorio y entrar a la carpeta del archivo en terminal
 
 5.- Instalar las dependencias (npm install)
