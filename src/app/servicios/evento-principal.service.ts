@@ -20,6 +20,10 @@ export class EventoPrincipalService {
         if(this.listaEventos == null){
             this.listaEventos = [];
         }
+        console.log("Actividad madre:");
+        console.log(this.actividadMadre);
+        console.log("Lista de eventos:");
+        console.log(this.listaEventos);
         return this.listaEventos;
     }
 
@@ -29,10 +33,10 @@ export class EventoPrincipalService {
         const actividadNueva = JSON.parse(JSON.stringify(this.actividadMadre));
         console.log("Actividad madre:");
         console.log(this.actividadMadre);
+        actividadNueva.eventos = this.listaEventos;
         console.log("Actividad nueva:");
         console.log(actividadNueva);
-        actividadNueva.eventos = this.listaEventos;
-        this.actividadServ.editActividadEvento(this.actividadMadre, actividadNueva);
+        this.actividadServ.editActividad(this.actividadMadre, actividadNueva);
         this.router.navigate(['/eventosPrincipales']);
 
     }
@@ -92,7 +96,7 @@ export class EventoPrincipalService {
         console.log(eventosAux);
 
         actividadNueva.eventos = eventosAux;
-        this.actividadServ.editActividadEvento(this.actividadMadre, actividadNueva);
+        this.actividadServ.editActividad(this.actividadMadre, actividadNueva);
         this.router.navigate(['/eventosPrincipales']);
     }
 
@@ -107,6 +111,6 @@ export class EventoPrincipalService {
 
         const actividadNueva = JSON.parse(JSON.stringify(this.actividadMadre));
         actividadNueva.eventos = this.listaEventos;
-        this.actividadServ.editActividadEvento(this.actividadMadre, actividadNueva);
+        this.actividadServ.editActividad(this.actividadMadre, actividadNueva);
     }
 }

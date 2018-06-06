@@ -39,6 +39,7 @@ export class ActividadPrincipalComponent implements OnInit {
         this.router.navigate(['/eventosPrincipales']);
     }
 
+
     onDelete(actividad: Actividad){
         this.actividadSV.actividadSeleccionada = actividad;
         this.modalActions.emit({ action: 'modal', params: ['open'] });
@@ -51,5 +52,9 @@ export class ActividadPrincipalComponent implements OnInit {
     eliminar(){
         this.actividadSV.delete(this.actividadSV.actividadSeleccionada);
         
+    }
+
+    regresar(){
+        this.router.navigate(['/casosDeUso']);
     }
 }

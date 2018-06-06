@@ -70,8 +70,13 @@ export class ProyectosComponent implements OnInit {
   openModal(proyecto: Proyecto) {
     this.proyectosSV.proyectoSelecionado = proyecto;
     this.modalActions.emit({ action: "modal", params: ['open'] });
+
   }
   closeModal() {
     this.modalActions.emit({ action: "modal", params: ['close'] });
+  }
+  onDelete(){
+    let proyecto = this.proyectosSV.proyectoSelecionado; 
+    this.proyectosSV.removeProyecto(proyecto);
   }
 }

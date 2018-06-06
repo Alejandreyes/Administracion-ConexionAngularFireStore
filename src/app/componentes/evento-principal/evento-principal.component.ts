@@ -50,4 +50,8 @@ export class EventoPrincipalComponent implements OnInit {
         this.eventoServ.delete(this.eventoServ.eventoSeleccionado);
         
     }
+
+    regresar(){
+        this.router.navigate(['/flujos'])
+    }
 }

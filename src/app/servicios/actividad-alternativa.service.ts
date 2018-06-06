@@ -28,7 +28,7 @@ export class ActividadAlternativaService {
 
         const casoUsoNuevo = this.casoUsoPadre;
         casoUsoNuevo.actividadesAlternativas = this.listaActividades;
-        this.casoServ.editCasoUsoActividad(casoUsoNuevo);
+        this.casoServ.editCasoUso(casoUsoNuevo);
         this.router.navigate(['/flujos'])
     }
 
@@ -81,7 +81,7 @@ export class ActividadAlternativaService {
         console.log(actividadesAux);
 
         casoUsoNuevo.actividadesAlternativas = actividadesAux;
-        this.casoServ.editCasoUsoActividad(casoUsoNuevo);
+        this.casoServ.editCasoUso(casoUsoNuevo);
         this.router.navigate(['/flujos']);
     }
     
@@ -96,7 +96,7 @@ export class ActividadAlternativaService {
 
         const casoUsoNuevo = this.casoUsoPadre;
         casoUsoNuevo.actividadesAlternativas = this.listaActividades;
-        this.casoServ.editCasoUsoActividad(casoUsoNuevo)
+        this.casoServ.editCasoUso(casoUsoNuevo)
     }
 
 }

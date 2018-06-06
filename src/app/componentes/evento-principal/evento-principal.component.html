@@ -1,7 +1,10 @@
+<a class="btn btn-secondary blue darken-2" (click)="regresar()">
+    Ver actividades
+</a>
 <div class="row" *ngIf="listaEventos?.length > 0 ; else noHayEventos">
-        <div class="col s12 m6 l6">
-          <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-            <li *ngFor="let evento of listaEventos">
+  <div class="col s12 m12 l12">   
+    <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+      <li *ngFor="let evento of listaEventos">
               <div class="collapsible-header">
                   Evento {{evento.posicion}}
               </div>
@@ -77,6 +80,9 @@
       </div>
       
       <ng-template #noHayEventos>
+        <a class="btn btn-secondary blue darken-2" (click)="regresar()">
+            Ver actividades
+        </a> 
         <h5>No existen eventos </h5>
         <div class="row">
           <div class="col s12 m6 l6">

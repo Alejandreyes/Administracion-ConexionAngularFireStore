@@ -345,7 +345,8 @@ export class GenerarReporteComponent implements OnInit {
     var rows = [];
 
     var auxRows = this.casoUso.precondiciones;
-    if (auxRows == undefined || auxRows.length == 0) {
+    if (auxRows == undefined ) {
+      auxRows= []; 
       auxRows.push("N/A");
     }
     let indice = 0;
@@ -402,7 +403,8 @@ export class GenerarReporteComponent implements OnInit {
     rows = [];
 
     let auxActividades = this.casoUso.actividadesPrincipales;
-    if (auxActividades == undefined || auxRows.length == 0) {
+    if (auxActividades == undefined ) {
+      auxRows= []; 
       auxRows.push("N/A");
     }
     indice = 0;
@@ -472,7 +474,8 @@ export class GenerarReporteComponent implements OnInit {
     rows = [];
 
     auxRows = this.casoUso.precondiciones;
-    if (auxRows == undefined || auxRows.length == 0) {
+    if (auxRows == undefined) {
+      auxRows= []; 
       auxRows.push("N/A");
     }
     indice = 0;
@@ -499,7 +502,8 @@ export class GenerarReporteComponent implements OnInit {
     rows = [];
 
     auxRows = this.casoUso.postcondiciones;
-    if (auxRows == undefined || auxRows.length == 0) {
+    if (auxRows == undefined) {
+      auxRows =[];
       auxRows.push("N/A");
     }
     indice = 0;
@@ -521,7 +525,8 @@ export class GenerarReporteComponent implements OnInit {
     rows = [];
 
     auxRows = this.casoUso.requisitosEspeciales;
-    if (auxRows == undefined || auxRows.length == 0) {
+    if (auxRows == undefined ) {
+      auxRows =[];  
       auxRows.push("N/A");
     }
     indice = 0;

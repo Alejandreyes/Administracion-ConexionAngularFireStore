@@ -49,4 +49,8 @@ export class CasosUsoComponent implements OnInit {
     this.casosSev.casoSeleccionado = casoUso;
     this.router.navigate(['/flujos']);
   }
+
+  regresar(){
+    this.router.navigate(['/proyectos']);
+  }
 }

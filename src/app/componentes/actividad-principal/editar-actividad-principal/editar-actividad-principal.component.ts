@@ -37,6 +37,7 @@ export class EditarActividadPrincipalComponent implements OnInit {
         actividad.nombre = this.actividadForm.value.nombre;
         actividad.posicion = this.actividadForm.value.posicion;
         this.actividadServ.editActividad(this.actividadServ.actividadSeleccionada, actividad);
+        this.router.navigate(['/flujos']);        
     }
 
     onCancel(){

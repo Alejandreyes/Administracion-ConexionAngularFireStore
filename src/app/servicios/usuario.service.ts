@@ -49,7 +49,7 @@ export class UsuarioService {
   }
   getUsuario(nombreUsuario: string): Observable<Usuario[]> {
     let usuario: Usuario;
-    let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild('nombre').equalTo(nombreUsuario));
+    let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.startAt(null,nombreUsuario).orderByChild('nombre'));
     return r.valueChanges();
   }
   getUsuarioCorreo(correo: string): Observable<Usuario[]> {

@@ -1,3 +1,6 @@
+<a class="btn btn-secondary blue darken-2" (click)="regresar()">
+    Ver proyectos
+</a>
 <div class="row conteiner" *ngIf="casosLista?.length > 0 ; else noCasosUso">
   <div class="col s12 m6 l6">
     <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
@@ -73,6 +76,9 @@
 </div>
 
 <ng-template #noCasosUso>
+  <a class="btn btn-secondary blue darken-2" (click)="regresar()">
+    Ver proyectos
+  </a>
   <h5>No existen Casos de Uso </h5>
   <div class="row">
     <div class="col s12 m6 l6">
