@@ -54,7 +54,7 @@ export class LoginService implements CanActivate{
   }
   logout(){
     this.firebaseAuth.auth.signOut();
-    this.usuarioLogueado = null ; 
+    this.usuarioLogueado = undefined ; 
     //this.usuarioObservable = new Subject<Usuario>();
     this.router.navigate(['/']);
   }

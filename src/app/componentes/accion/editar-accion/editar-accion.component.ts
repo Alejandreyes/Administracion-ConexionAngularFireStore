@@ -16,6 +16,7 @@ export class EditarAccionComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.history.replaceState({} , "","/accion") ;
     this.accionForm = this.fb.group({
       nombre: new FormControl({ value: this.accionServ.accionSeleccionado.nombre, disabled: false }, [Validators.required, Validators.minLength(10)]),
       descripcion: new FormControl({ value: this.accionServ.accionSeleccionado.descripcion, disabled: false }, [Validators.required, Validators.minLength(25)]),

@@ -23,6 +23,8 @@ export class EditarUsuarioComponent implements OnInit {
       nombre : ['', Validators.required],
       opcion : ['']
     });
+    
+    window.history.replaceState({} , "","/usuarios") ;
     toast("Rellena todos los marcados en rojo", 2500);
     this.usuarioSelecionado = this.usServ.usuarioSelecionado;
     this.usuarioForm.controls['nombre'].patchValue(this.usuarioSelecionado.nombre);

@@ -48,7 +48,11 @@ export class UsuarioComponent implements OnInit {
 
   }
   onDelete(){
+    
     this.usuarioSV.removeUsuario(this.usuarioSV.usuarioSelecionado);
+    if(this.lgServ.usuarioLogueado.id == this.usuarioSV.usuarioSelecionado.id ){
+      this.lgServ.logout();
+    }
     this.usuarioSV.usuarioSelecionado=null;
   }
 

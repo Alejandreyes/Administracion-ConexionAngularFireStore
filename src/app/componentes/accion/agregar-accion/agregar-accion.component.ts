@@ -17,6 +17,7 @@ export class AgregarAccionComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.history.replaceState({} , "","/accion") ;
     this.accionForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(5)]],
       descripcion: ['', [Validators.required, Validators.minLength(15)]]

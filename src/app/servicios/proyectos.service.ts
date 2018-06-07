@@ -41,7 +41,8 @@ export class ProyectosService {
     this.router.navigate(['/usuarios']);
   }
   removeProyecto(proyecto: Proyecto) {
-    this.proyectosLista.remove(proyecto.id);
+    console.log(proyecto); 
+    this.firebase.list('proyectos').remove(proyecto.id);
   }
   getProyectoCampo(campo: string, criterio: string): Observable<Proyecto[]> {
     let r: AngularFireList<Proyecto> = this.firebase.list('proyectos', ref => ref.orderByChild(campo).equalTo(criterio));

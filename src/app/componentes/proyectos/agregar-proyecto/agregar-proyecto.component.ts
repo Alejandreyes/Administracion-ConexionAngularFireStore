@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 
-import { MaterializeAction } from 'angular2-materialize';
+import { MaterializeAction, toast } from 'angular2-materialize';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 declare var Materialize: any;
 import { Proyecto } from '../../../modelos/proyecto.model';
@@ -31,8 +31,8 @@ export class AgregarProyectoComponent implements OnInit {
   }
   ngOnInit() {
     this.proyectoForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(10)]],
-      Descripcion: ['', [Validators.required, Validators.minLength(50)]],
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      Descripcion: ['', [Validators.required, Validators.minLength(10)]],
       cliente: ['', Validators.required],
       fechaInicio: [''],
       fechaFin: ['']
@@ -45,6 +45,8 @@ export class AgregarProyectoComponent implements OnInit {
         this.opciones.push(new Opciones(usuario, false));
       }
     });
+    
+    window.history.replaceState({} , "","/usuarios") ;
 
   }
   onSubmit() {
@@ -54,7 +56,28 @@ export class AgregarProyectoComponent implements OnInit {
     proyecto.cliente = this.proyectoForm.value.cliente;
     proyecto.fechaInicio = this.proyectoForm.value.fechaInicio;
     proyecto.fechaFin = this.proyectoForm.value.fechaFin;
+    let fechaDesc: string[] = proyecto.fechaFin.split("/");
+    let fechaDescFormat: string = fechaDesc[1] + "/" + fechaDesc[0] + "/" + fechaDesc[2];
+    let finDia: number = new Date(fechaDescFormat).getDate();
+    let finMes: number = new Date(fechaDescFormat).getMonth() + 1;
+    let finAnio: number = new Date(fechaDescFormat).getFullYear();
+    let fechaInicio: string[] = proyecto.fechaInicio.split("/");
+    let fechaInicioFormat: string = fechaInicio[1] + "/" + fechaInicio[0] + "/" + fechaInicio[2];
+    let fechaInicioDia: number =new Date(fechaInicioFormat).getDate();
+    let fechaInicioMes: number =new Date(fechaInicioFormat).getMonth() + 1;
+    let fechaInicioAnio: number = new Date(fechaInicioFormat).getFullYear();
+    let fin = finDia + (finMes * 30) + (finAnio * 365);
+    let fechaActual = fechaInicioDia + (fechaInicioMes * 30) + (fechaInicioAnio * 365);
+    let diff = fin - fechaActual;
+    if (diff < 0) {
+      toast("La fecha de Inicio es menor a la fecha de Fin", 2500);
+      toast("Modifica las fechas para que coincidan", 2500);
+    }
+    else {
+      
     this.proyectoServ.addProyecto(proyecto, this.usuariosActivos);
+    }
+
 
   }
   onCancel() {

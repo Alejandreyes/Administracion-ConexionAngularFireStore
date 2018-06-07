@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Usuario } from '../../../modelos/usuario.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../servicios/usuario.service';
@@ -11,7 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./agregar-usuario.component.css']
 })
 export class AgregarUsuarioComponent implements OnInit {
-
+  //location ; 
+  //isRoot; 
   usuarioForm: FormGroup;
   constructor(private pf: FormBuilder,
     private usServ: UsuarioService,
@@ -20,13 +20,13 @@ export class AgregarUsuarioComponent implements OnInit {
   ngOnInit() {
     this.usuarioForm = this.pf.group({
       nombre: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
+      correo: ['', [Validators.required, Validators.pattern( "^([a-zA-Z0-9]+)@([a-z]{4,10}).com$")]],
       opcion: [''],
-      
-      //contrasenia: ['', Validators.pattern( "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+)$")]
-      contrasenia: ['', [Validators.required,Validators.pattern( "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]+){6,10}$")]]
+      contrasenia: ['', [Validators.required,Validators.pattern( "^(?=.*[0-9])(?=.*[a-z])([a-zA-Z0-9!@%#$&()`.+,]+){6,10}$")]]
     });
     toast("Rellena todos los marcados en rojo", 2500);
+    window.history.replaceState({} , "","/usuarios") ;
+    
   }
 
   onSubmit() {

@@ -65,4 +65,5 @@ export class UsuarioService {
   getUsuariosProyectos(nombre: string):AngularFireList<Usuario>{
     return this.firebase.list('usuarios-proyectos/'+nombre); 
   }
+
 }

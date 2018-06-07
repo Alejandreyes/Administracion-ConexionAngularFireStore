@@ -271,7 +271,6 @@ export class GenerarReporteComponent implements OnInit {
         } else {
           listaActores.push("Actor");
         }
-
       });
       let Datos = listaAux;
       let inicioA: number = 35;
@@ -332,21 +331,16 @@ export class GenerarReporteComponent implements OnInit {
       let src = document.getElementById("myD2");
       src.appendChild(this.diagramaImg2);
       document.getElementById("myDiagramDiv2").style.display = "none";
-
     }
-
     return true;
-
   }
-
-
   descargar() {
     var columns = ["Indice", "Eventos"];
     var rows = [];
 
     var auxRows = this.casoUso.precondiciones;
-    if (auxRows == undefined ) {
-      auxRows= []; 
+    if (auxRows == undefined) {
+      auxRows = [];
       auxRows.push("N/A");
     }
     let indice = 0;
@@ -403,8 +397,8 @@ export class GenerarReporteComponent implements OnInit {
     rows = [];
 
     let auxActividades = this.casoUso.actividadesPrincipales;
-    if (auxActividades == undefined ) {
-      auxRows= []; 
+    if (auxActividades == undefined) {
+      auxRows = [];
       auxRows.push("N/A");
     }
     indice = 0;
@@ -425,7 +419,17 @@ export class GenerarReporteComponent implements OnInit {
     y += 16;
     doc.autoTable(columns, rows, {
       startY: y,
-      columnStyles: { text: { columnWidth: 'auto' } }
+      margin: { horizontal: 10 },
+      bodyStyles: { valign: 'top' },
+      styles: { overflow: 'linebreak' },
+      columnStyles: {
+
+        0: { columnWidth: 30 },
+        1: { columnWidth: 40 },
+        2: { columnWidth: 60 },
+
+        text: { columnWidth: 'wrap' }
+      }
     });
 
     doc.addPage();
@@ -460,7 +464,17 @@ export class GenerarReporteComponent implements OnInit {
       y += 16;
       doc.autoTable(columns, rows, {
         startY: y,
-        columnStyles: { text: { columnWidth: 'auto' } }
+        margin: { horizontal: 10 },
+        bodyStyles: { valign: 'top' },
+        styles: { overflow: 'linebreak' },
+        columnStyles: {
+
+          0: { columnWidth: 30 },
+          1: { columnWidth: 40 },
+          2: { columnWidth: 60 },
+
+          text: { columnWidth: 'wrap' }
+        }
       });
       y = doc.autoTable.previous.finalY + 20;
     }
@@ -475,7 +489,7 @@ export class GenerarReporteComponent implements OnInit {
 
     auxRows = this.casoUso.precondiciones;
     if (auxRows == undefined) {
-      auxRows= []; 
+      auxRows = [];
       auxRows.push("N/A");
     }
     indice = 0;
@@ -503,7 +517,7 @@ export class GenerarReporteComponent implements OnInit {
 
     auxRows = this.casoUso.postcondiciones;
     if (auxRows == undefined) {
-      auxRows =[];
+      auxRows = [];
       auxRows.push("N/A");
     }
     indice = 0;
@@ -525,8 +539,8 @@ export class GenerarReporteComponent implements OnInit {
     rows = [];
 
     auxRows = this.casoUso.requisitosEspeciales;
-    if (auxRows == undefined ) {
-      auxRows =[];  
+    if (auxRows == undefined) {
+      auxRows = [];
       auxRows.push("N/A");
     }
     indice = 0;

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 
-import { MaterializeAction } from 'angular2-materialize';
+import { MaterializeAction, toast } from 'angular2-materialize';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Usuario } from '../../../modelos/usuario.model';
 import { UsuarioService } from '../../../servicios/usuario.service';
@@ -18,7 +18,7 @@ import { Opciones } from '../../../modelos/Opciones';
 export class EditarProyectoComponent implements OnInit {
   proyectoForm: FormGroup;
   usuariosActivos: Usuario[];
-  usuariosDesactivados : Usuario[] = []; 
+  usuariosDesactivados: Usuario[] = [];
   opciones: Opciones[];
   modalActions = new EventEmitter<string | MaterializeAction>();
   constructor(private fb: FormBuilder,
@@ -28,20 +28,21 @@ export class EditarProyectoComponent implements OnInit {
   ) {
   }
   ngOnInit() {
+    window.history.replaceState({}, "", "/usuarios");
     this.proyectoForm = this.fb.group({
-      nombre: new FormControl({ value: this.proyectoServ.proyectoSelecionado.nombre, disabled: false }, [Validators.required, Validators.minLength(10)]),
-      Descripcion: new FormControl({ value: this.proyectoServ.proyectoSelecionado.Descripcion, disabled: false }, [Validators.required, Validators.minLength(50)]),
+      nombre: new FormControl({ value: this.proyectoServ.proyectoSelecionado.nombre, disabled: false }, [Validators.required, Validators.minLength(3)]),
+      Descripcion: new FormControl({ value: this.proyectoServ.proyectoSelecionado.Descripcion, disabled: false }, [Validators.required, Validators.minLength(10)]),
       cliente: new FormControl({ value: this.proyectoServ.proyectoSelecionado.cliente, disabled: false }, [Validators.required]),
       fechaInicio: new FormControl({ value: this.proyectoServ.proyectoSelecionado.fechaInicio, disabled: false }, [Validators.required]),
       fechaFin: new FormControl({ value: this.proyectoServ.proyectoSelecionado.fechaFin, disabled: false }, [Validators.required])
     });
     this.usuarioServ.getUsuarios().valueChanges().subscribe(items => {
       this.usuariosActivos = items;
-       
+
       this.opciones = [];
-      let nombres = this.proyectoServ.proyectoSelecionado.usuarios; 
-      if(nombres == null || nombres == undefined){
-        nombres = [] ; 
+      let nombres = this.proyectoServ.proyectoSelecionado.usuarios;
+      if (nombres == null || nombres == undefined) {
+        nombres = [];
       }
       for (let usuario of this.usuariosActivos) {
         let opcion;
@@ -52,9 +53,9 @@ export class EditarProyectoComponent implements OnInit {
         }
         this.opciones.push(opcion);
       }
-        
+
     });
-    
+
   }
   onSubmit() {
     const proyecto = this.proyectoServ.proyectoSelecionado;
@@ -63,13 +64,34 @@ export class EditarProyectoComponent implements OnInit {
     proyecto.cliente = this.proyectoForm.value.cliente;
     proyecto.fechaInicio = this.proyectoForm.value.fechaInicio;
     proyecto.fechaFin = this.proyectoForm.value.fechaFin;
-    let idUsuarios : string[] = [];
-    this.usuariosActivos.forEach(item=>{
-      idUsuarios.push (item.id)
+    let idUsuarios: string[] = [];
+    this.usuariosActivos.forEach(item => {
+      idUsuarios.push(item.id)
     });
     proyecto.usuarios = idUsuarios;
-    this.proyectoServ.editProyecto(proyecto, this.usuariosActivos,this.usuariosDesactivados);
-    this.usuariosDesactivados = [] ;
+    let fechaDesc: string[] = proyecto.fechaFin.split("/");
+    let fechaDescFormat: string = fechaDesc[1] + "/" + fechaDesc[0] + "/" + fechaDesc[2];
+    let finDia: number = new Date(fechaDescFormat).getDate();
+    let finMes: number = new Date(fechaDescFormat).getMonth() + 1;
+    let finAnio: number = new Date(fechaDescFormat).getFullYear();
+    let fechaInicio: string[] = proyecto.fechaInicio.split("/");
+    let fechaInicioFormat: string = fechaInicio[1] + "/" + fechaInicio[0] + "/" + fechaInicio[2];
+    let fechaInicioDia: number =new Date(fechaInicioFormat).getDate();
+    let fechaInicioMes: number =new Date(fechaInicioFormat).getMonth() + 1;
+    let fechaInicioAnio: number = new Date(fechaInicioFormat).getFullYear();
+    let fin = finDia + (finMes * 30) + (finAnio * 365);
+    let fechaActual = fechaInicioDia + (fechaInicioMes * 30) + (fechaInicioAnio * 365);
+    let diff = fin - fechaActual;
+    if (diff < 0) {
+      toast("La fecha de Inicio es menor a la fecha de Fin", 2500);
+
+      toast("Modifica las fechas para que coincidan", 2500);
+    }
+    else {
+      this.proyectoServ.editProyecto(proyecto, this.usuariosActivos, this.usuariosDesactivados);
+
+    }
+    this.usuariosDesactivados = [];
   }
   onCancel() {
     this.proyectoServ.proyectoSelecionado = new Proyecto();
@@ -94,12 +116,12 @@ export class EditarProyectoComponent implements OnInit {
 
   change(newValue, opcion: Opciones) {
     opcion.seleccionado = !opcion.seleccionado;
-    if(opcion.seleccionado!=true){
+    if (opcion.seleccionado != true) {
       this.usuariosDesactivados.push(opcion.usuario);
-    }else{
+    } else {
       let index = this.usuariosDesactivados.indexOf(opcion.usuario);
-      this.usuariosDesactivados = this.usuariosDesactivados.filter(item=>{
-        return item!=opcion.usuario; 
+      this.usuariosDesactivados = this.usuariosDesactivados.filter(item => {
+        return item != opcion.usuario;
       });
     }
   }

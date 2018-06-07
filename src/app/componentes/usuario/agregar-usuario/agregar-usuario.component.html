@@ -16,6 +16,7 @@
             <label for="correo">Correo</label>
             <p class="red-text" *ngIf="usuarioForm.controls.correo.invalid">
               El campo es obligatorio.
+              El correo debe tener la FORMA@DOMINIO.COM
             </p>
           </div>
           <label>Browser Select</label>
@@ -30,6 +31,8 @@
             <label for="contrasenia">Contraseña</label>
             <p class="red-text" *ngIf="usuarioForm.controls.contrasenia.invalid">
               El campo es obligatorio.
+              La contraseña debe contener una Letra MAYUSCULA, una minuscula y un numero.
+              La longitud debe ser de por lo menos 6 caracteres
             </p>
           </div>
         </div>
