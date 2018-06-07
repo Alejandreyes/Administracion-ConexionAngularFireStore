@@ -14,8 +14,7 @@ import { Router } from '@angular/router';
 })
 export class BuscarUsuarioComponent implements OnInit {
   selectOptions  = ["nombre","correo","rol"];
- /*  selectedOption : string;
-  busqueda : string ;  */
+ 
   busquedaForm : FormGroup; 
   usuarios : Usuario[];
 

@@ -258,6 +258,7 @@ export class GenerarReporteComponent implements OnInit {
     let listaActores = [];
 
     if (this.casoUso.actividadesAlternativas == undefined) {
+      document.getElementById("myD2").style.display = "none";
       return false;
     } else {
       this.casoUso.actividadesAlternativas.forEach(element => {
@@ -308,6 +309,7 @@ export class GenerarReporteComponent implements OnInit {
             i++;
             ultimoAgregado = "Start";
           }
+          
           aux.group = "Sistema";
           aux.loc = new go.Point(posXS, inicioS);
           inicioS += 75;
@@ -337,7 +339,6 @@ export class GenerarReporteComponent implements OnInit {
   descargar() {
     var columns = ["Indice", "Eventos"];
     var rows = [];
-
     var auxRows = this.casoUso.precondiciones;
     if (auxRows == undefined) {
       auxRows = [];
@@ -389,10 +390,6 @@ export class GenerarReporteComponent implements OnInit {
       doc.addPage();
       y = 20;
     }
-    //
-
-
-
     columns = ["Indice", "Actor", "Actividad", "Descripcion", "Grupo de Datos"];
     rows = [];
 
@@ -423,15 +420,12 @@ export class GenerarReporteComponent implements OnInit {
       bodyStyles: { valign: 'top' },
       styles: { overflow: 'linebreak' },
       columnStyles: {
-
         0: { columnWidth: 30 },
         1: { columnWidth: 40 },
         2: { columnWidth: 60 },
-
         text: { columnWidth: 'wrap' }
       }
     });
-
     doc.addPage();
     y = 20;
     // Nueva hoja para las Precondiciones, postcondiciones y condiciones Iniciales 
@@ -441,7 +435,6 @@ export class GenerarReporteComponent implements OnInit {
       y += 300;
       columns = ["Indice", "Actor", "Actividad", "Descripcion", "Grupo de Datos"];
       rows = [];
-
       let auxActividades = this.casoUso.actividadesAlternativas;
       if (auxActividades == undefined || auxRows.length == 0) {
         auxRows.push("N/A");
@@ -468,25 +461,19 @@ export class GenerarReporteComponent implements OnInit {
         bodyStyles: { valign: 'top' },
         styles: { overflow: 'linebreak' },
         columnStyles: {
-
           0: { columnWidth: 30 },
           1: { columnWidth: 40 },
           2: { columnWidth: 60 },
-
           text: { columnWidth: 'wrap' }
         }
       });
       y = doc.autoTable.previous.finalY + 20;
     }
-
-
     ctx.font = '16px Verdana';
-
     doc.text("Tabla de Precondiciones", 14, y);
     y += 16;
     columns = ["Indice", "Precondiciones"];
     rows = [];
-
     auxRows = this.casoUso.precondiciones;
     if (auxRows == undefined) {
       auxRows = [];
@@ -509,12 +496,10 @@ export class GenerarReporteComponent implements OnInit {
       doc.addPage();
       y = 20;
     }
-
     doc.text("Tabla de PostCondiciones", 14, y);
     y += 16;
     columns = ["Indice", "PostCondiciones"];
     rows = [];
-
     auxRows = this.casoUso.postcondiciones;
     if (auxRows == undefined) {
       auxRows = [];

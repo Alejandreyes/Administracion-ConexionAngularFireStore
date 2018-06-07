@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter ,OnChanges, SimpleChanges} from '@angular/core';
 
 //Bibliotecas de Diseño 
 import { toast } from 'angular2-materialize';
@@ -14,7 +14,7 @@ import { LoginService } from '../../servicios/login.service';
   templateUrl: './proyectos.component.html',
   styleUrls: ['./proyectos.component.css']
 })
-export class ProyectosComponent implements OnInit {
+export class ProyectosComponent implements OnInit,OnChanges {
   proyectos: Proyecto[] = [];
   modalActions = new EventEmitter<string | MaterializeAction>();
   constructor(private proyectosSV: ProyectosService,
@@ -30,11 +30,26 @@ export class ProyectosComponent implements OnInit {
           if(usu.proyectos != undefined && ((usu.proyectos.indexOf(item.id)) >= 0) ){
             this.proyectos.push(item);     
           }
-        });
+        });        
       } else {
         this.proyectos = items;
       }
     });     
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    // changes.prop contains the old and the new value...
+    this.proyectosSV.getProyectos().valueChanges().subscribe(items => {
+      let usu = this.logServ.usuarioLogueado;
+      if (usu.rol == 'ANALISTA') {
+        items.forEach(item => {
+          if(usu.proyectos != undefined && ((usu.proyectos.indexOf(item.id)) >= 0) ){
+            this.proyectos.push(item);     
+          }
+        });        
+      } else {
+        this.proyectos = items;
+      }
+    });    
   }
   onCreate() {
     this.router.navigate(['/agregarProyecto']);

@@ -33,7 +33,7 @@ export class AgregarUsuarioComponent implements OnInit {
     const usuario = new Usuario();
     usuario.nombre = (this.usuarioForm.value.nombre).toUpperCase();
     usuario.correo = this.usuarioForm.value.correo; 
-    usuario.contrasenia = this.usuarioForm.value.contrasenia;
+    usuario.contrasenia = this.usuarioForm.value.contrasenia.toLowerCase();
     usuario.rol = this.usuarioForm.value.opcion;
     usuario.proyectos = [] ; 
     this.usServ.addUsuario(usuario);

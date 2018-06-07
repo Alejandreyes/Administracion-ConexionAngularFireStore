@@ -47,23 +47,31 @@ export class UsuarioService {
   removeUsuario(usuario: Usuario) {
     this.usuariosLista.remove(usuario.id);
   }
-  getUsuario(nombreUsuario: string): Observable<Usuario[]> {
-    let usuario: Usuario;
-    let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.startAt(null,nombreUsuario).orderByChild('nombre'));
-    return r.valueChanges();
+  getUsuario(nombreUsuario: string) {
+    //let usuario: Usuario;
+    let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild('nombre').startAt(nombreUsuario));
+    return r;
   }
   getUsuarioCorreo(correo: string): Observable<Usuario[]> {
     let usuario: Usuario;
     let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild('correo').equalTo(correo));
     return r.valueChanges();
   }
-  getUsuarioCampos(campo: string, valor : string): Observable<Usuario[]> {
+  getUsuarioCampos(campo: string, valor : string)  : Observable<Usuario[]> {
     let usuario: Usuario;
-    let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild(campo).equalTo(valor));
+    if(campo == 'correo'){
+      valor = valor.toLowerCase();
+    }else{
+      if(campo != 'id'){
+        valor = valor.toUpperCase();
+      }
+      
+    }
+ 
+    let r: AngularFireList<Usuario> = this.firebase.list('usuarios', ref => ref.orderByChild(campo).startAt(valor).endAt(valor+'\uf8ff'));
     return r.valueChanges();
   }
   getUsuariosProyectos(nombre: string):AngularFireList<Usuario>{
     return this.firebase.list('usuarios-proyectos/'+nombre); 
   }
-
 }

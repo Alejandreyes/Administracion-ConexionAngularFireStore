@@ -33,7 +33,7 @@ export class EditarUsuarioComponent implements OnInit {
 
   onSubmit(){
     const usuario = this.usServ.usuarioSelecionado;
-    usuario.nombre = this.usuarioForm.value.nombre;
+    usuario.nombre = this.usuarioForm.value.nombre.toUpperCase();
     usuario.rol = this.usuarioForm.value.opcion;
     this.usServ.editUsuario(usuario) ; 
     this.router.navigate(['/usuarios']);
