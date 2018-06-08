@@ -46,7 +46,7 @@ export class UsuarioService {
   }
   removeUsuario(usuario: Usuario) {
     console.log(usuario);
-    this.usuariosLista.remove(usuario.id);
+    this.firebase.list('/usuarios').remove(usuario.id);
   }
   getUsuario(nombreUsuario: string) {
     //let usuario: Usuario;
