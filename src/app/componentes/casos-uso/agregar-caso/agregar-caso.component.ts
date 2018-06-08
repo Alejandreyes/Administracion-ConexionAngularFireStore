@@ -180,7 +180,7 @@ export class AgregarCasoComponent implements OnInit, OnDestroy {
   modificarEventos() {
     document.getElementById("desbloquear").style.display = "inline";
     document.getElementById("bloqueado").style.display = "none";
-    if (this.eventoForm.value.descripcion != undefined ) {
+    if (this.eventoForm.value.descripcion != undefined && !this.eventoForm.invalid) {
       let eventos = new Evento();
       eventos.descripcion = this.eventoForm.value.descripcion;
       eventos.actor = this.eventoForm.get('actor').value;
@@ -191,8 +191,9 @@ export class AgregarCasoComponent implements OnInit, OnDestroy {
         this.eventosAccionSeleccionada[this.indiceSelecionado] = (eventos);
         this.indiceSelecionado = undefined  ;
       }  
-      this.eventoForm.reset();
     }
+    
+    this.eventoForm.reset();
     this.actividadSelecionada.eventos = this.eventosAccionSeleccionada;
   }
   cancel() {

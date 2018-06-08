@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, group } from '@angular/core';
 import * as go from 'gojs';
 import { CasosUsoService } from '../../servicios/casos-uso.service';
 import { Router } from '@angular/router';
 
 import { toast } from 'angular2-materialize';
 import { CasoUso } from '../../modelos/casouso.model';
+import { AuxiliarGrafica } from '../../modelos/auxiliarGrafica.model';
 declare var jsPDF;
 @Component({
   selector: 'app-generar-reporte',
@@ -100,7 +101,7 @@ export class GenerarReporteComponent implements OnInit {
     let listaActores = [];
 
     if (this.casoUso.actividadesPrincipales == undefined) {
-      toast("El caso de uso Selecionado no tiene ningun Flujo de Eventos Definido", 2500);
+      toast("El caso de uso Selecionado no tiene definido Flujo de Eventos Principal", 2500);
       toast("Llene un flujo de Eventos Principal", 2500);
       toast("Seleccione otro caso de uso", 2500);
       this.router.navigate(['/casosDeUso']);
@@ -126,12 +127,31 @@ export class GenerarReporteComponent implements OnInit {
       let posXS = 250;
       let i: number = 0;
       let indiceActores = 0;
-      let vertices = [ // node data
-        { key: "Start", group: "Actor", loc: new go.Point(posXA, inicioA) },
-        { key: "Diagrama de Flujo de Eventos Principal", isGroup: true },
-        { key: "Actor", isGroup: true, group: "Diagrama de Flujo de Eventos Principal" },
-        { key: "Sistema", isGroup: true, group: "Diagrama de Flujo de Eventos Principal" }
-      ];
+      let vertices: AuxiliarGrafica[] = [];
+
+      let auxG = new AuxiliarGrafica();
+      auxG.key = "Start";
+      auxG.group = "Actor";
+      auxG.loc = new go.Point(posXA, inicioA);
+      vertices.push(auxG);
+      auxG = new AuxiliarGrafica();
+      auxG.key = "Flujo Principal";
+      auxG.isGroup = true;
+      vertices.push(auxG);
+      auxG = new AuxiliarGrafica();
+      auxG.key = "Actor";
+      auxG.isGroup = true;
+      auxG.group = "Flujo Principal";
+      vertices.push(auxG);
+      auxG = new AuxiliarGrafica();
+      auxG.key = "Sistema";
+      auxG.isGroup = true;
+      auxG.group = "Flujo Principal";
+      vertices.push(auxG);
+
+      let numActores: number = 0;
+      let numSistema: number = 0;
+
       let ultimoAgregado: string;
       Datos.forEach(element => {
         let aux = { key: "", group: "", loc: null };
@@ -147,8 +167,14 @@ export class GenerarReporteComponent implements OnInit {
           aux.group = "Actor";
           aux.loc = new go.Point(posXA, inicioA);
           inicioA += 75;
+          
+          numActores++;
         } else {
           if (i == 0) {
+            if (vertices[0].group != undefined || vertices[0].loc != undefined) {
+              vertices[0].group = "Sistema";
+              vertices[0].loc = new go.Point(posXS, inicioS);
+            }
             inicioA += 75;
             inicioS += 75;
             i++;
@@ -157,6 +183,7 @@ export class GenerarReporteComponent implements OnInit {
           aux.group = "Sistema";
           aux.loc = new go.Point(posXS, inicioS);
           inicioS += 75;
+          numSistema++;
         }
         vertices.push(aux);
         aristas.push({ from: ultimoAgregado, to: element });
@@ -170,6 +197,13 @@ export class GenerarReporteComponent implements OnInit {
         i++;
         indiceActores++;
       });
+
+      if (numActores == 0) {
+        vertices.splice(2, 1);
+      }
+      if (numSistema == 0) {
+        vertices.splice(3, 1);
+      }
       this.diagram.model = new go.GraphLinksModel(
         vertices, aristas
       );
@@ -259,6 +293,7 @@ export class GenerarReporteComponent implements OnInit {
 
     if (this.casoUso.actividadesAlternativas == undefined) {
       document.getElementById("myD2").style.display = "none";
+      document.getElementById("myDiagramDiv2").style.display = "none";
       return false;
     } else {
       this.casoUso.actividadesAlternativas.forEach(element => {
@@ -281,15 +316,41 @@ export class GenerarReporteComponent implements OnInit {
       let posXS = 250;
       let i: number = 0;
       let indiceActores = 0;
-      let vertices = [ // node data
+      /* let vertices  = [ // node data
         { key: "Start", group: "Actor", loc: new go.Point(posXA, inicioA) },
         { key: "Diagrama de Flujo de Eventos Alternativos", isGroup: true },
         { key: "Actor", isGroup: true, group: "Diagrama de Flujo de Eventos Alternativos" },
         { key: "Sistema", isGroup: true, group: "Diagrama de Flujo de Eventos Alternativos" }
-      ];
+      ]; */
+      let vertices: AuxiliarGrafica[] = [];
+
+      let auxG = new AuxiliarGrafica();
+      auxG.key = "Start";
+      auxG.group = "Actor";
+      auxG.loc = new go.Point(posXA, inicioA);
+      vertices.push(auxG);
+      auxG = new AuxiliarGrafica();
+      auxG.key = "Flujo Alternativos";
+      auxG.isGroup = true;
+      vertices.push(auxG);
+      auxG = new AuxiliarGrafica();
+      auxG.key = "Actor";
+      auxG.isGroup = true;
+      auxG.group = "Flujo Alternativos";
+      vertices.push(auxG);
+      auxG = new AuxiliarGrafica();
+      auxG.key = "Sistema";
+      auxG.isGroup = true;
+      auxG.group = "Flujo Alternativos";
+      vertices.push(auxG);
+
+      let numActores: number = 0;
+      let numSistema: number = 0;
+
       let ultimoAgregado: string;
       Datos.forEach(element => {
-        let aux = { key: "", group: "", loc: null };
+        //let aux = { key: "", group: "", loc: null };
+        let aux = new AuxiliarGrafica();
         aux.key = element;
         sistema = (listaActores[indiceActores] == "Sistema");
         if (sistema == false) {
@@ -302,17 +363,22 @@ export class GenerarReporteComponent implements OnInit {
           aux.group = "Actor";
           aux.loc = new go.Point(posXA, inicioA);
           inicioA += 75;
+          numActores++;
         } else {
           if (i == 0) {
+            if (vertices[0].group != undefined || vertices[0].loc != undefined) {
+              vertices[0].group = "Sistema";
+              vertices[0].loc = new go.Point(posXS, inicioS);
+            }
             inicioA += 75;
             inicioS += 75;
             i++;
             ultimoAgregado = "Start";
           }
-          
           aux.group = "Sistema";
           aux.loc = new go.Point(posXS, inicioS);
           inicioS += 75;
+          numSistema++;
         }
         vertices.push(aux);
         aristas.push({ from: ultimoAgregado, to: element });
@@ -326,6 +392,12 @@ export class GenerarReporteComponent implements OnInit {
         i++;
         indiceActores++;
       });
+      if (numActores == 0) {
+        vertices.splice(2, 1);
+      }
+      if (numSistema == 0) {
+        vertices.splice(3, 1);
+      }
       this.diagram2.model = new go.GraphLinksModel(
         vertices, aristas
       );
@@ -539,7 +611,6 @@ export class GenerarReporteComponent implements OnInit {
       startY: y,
       columnStyles: { text: { columnWidth: 'auto' } }
     });
-
-    doc.save('Reporte.pdf');
+    doc.save('Reporte del Caso de Uso: '+this.casoUso.nombre+'.pdf');
   }
 }

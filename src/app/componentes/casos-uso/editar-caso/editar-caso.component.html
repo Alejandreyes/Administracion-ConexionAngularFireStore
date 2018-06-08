@@ -27,62 +27,62 @@
             <label for="postcondiciones"> Postcondiciones </label>
             <div id="postcondiciones" class="chips" materialize="material_chip" [materializeParams]="[postcondicionesAux]" (chip.add)="add($event.detail,'postcondiciones')"
               (chip.delete)="delete($event.detail,'postcondiciones')" [materializeActions]="chipsActions"></div>
-              <label for="FlujoEventosPrincipal">Flujo de Eventos Principal</label>
-              <div id="FlujoEventosPrincipal" class="blue-grey lighten-4">
-                <div class="brown-text text-darken-2">
-                  <ol id="principal" [dragula]='"bag-items2"' [dragulaModel]='listaEventosPrincipales'>
-                    <li class="separacion" *ngFor="let lista of listaEventosPrincipales">
-                      <div class=" blue-grey lighten-3">
-                        {{lista.nombre}}
-                        <div id="eventos" class="blue-grey lighten-2">
-                          <ol id="sencundaria">
-                            <li *ngFor="let evento of lista.eventos">
-                              {{evento.descripcion}}
-                            </li>
-                          </ol>
-                        </div>
-                        <div class="row">
-                          <div class="right-align">
-                            <a class="btn-flat brown-text text-darken-1" (click)="eliminar(lista,'actividades')">Eliminar</a>
-                            <a class="btn-flat brown-text text-darken-1" (click)="editar(lista)">Editar</a>
-                          </div>
+            <label for="FlujoEventosPrincipal">Flujo de Eventos Principal</label>
+            <div id="FlujoEventosPrincipal" class="blue-grey lighten-4">
+              <div class="brown-text text-darken-2">
+                <ol id="principal" [dragula]='"bag-items2"' [dragulaModel]='listaEventosPrincipales'>
+                  <li class="separacion" *ngFor="let lista of listaEventosPrincipales">
+                    <div class=" blue-grey lighten-3">
+                      {{lista.nombre}}
+                      <div id="eventos" class="blue-grey lighten-2">
+                        <ol id="sencundaria">
+                          <li *ngFor="let evento of lista.eventos">
+                            {{evento.descripcion}}
+                          </li>
+                        </ol>
+                      </div>
+                      <div class="row">
+                        <div class="right-align">
+                          <a class="btn-flat brown-text text-darken-1" (click)="eliminar(lista,'actividades')">Eliminar</a>
+                          <a class="btn-flat brown-text text-darken-1" (click)="editar(lista)">Editar</a>
                         </div>
                       </div>
-                    </li>
-                  </ol>
-                </div>
-                <div class="right-align ">
-                  <a (click)="openModal('principal')" class="btn-flat brown-text text-darken-2">Agregar Nuevas Acciones</a>
-                </div>
+                    </div>
+                  </li>
+                </ol>
               </div>
-              <label for="FlujoEventosAlternativo">Flujo de Eventos Alternativo</label>
-              <div id="FlujoEventosAlternativo" class="blue-grey lighten-4">
-                <div class="brown-text text-darken-2">
-                  <ol id="principal" [dragula]='"bag-items2"' [dragulaModel]='listaEventosAlternativos'>
-                    <li class="separacion" *ngFor="let lista of listaEventosAlternativos">
-                      <div class=" blue-grey lighten-3">
-                        {{lista.nombre}}
-                        <div id="eventos" class="blue-grey lighten-2">
-                          <ol id="sencundaria">
-                            <li *ngFor="let evento of lista.eventos">
-                              {{evento.descripcion}}
-                            </li>
-                          </ol>
-                        </div>
-                        <div class="row">
-                          <div class="right-align">
-                            <a class="btn-flat brown-text text-darken-1" (click)="eliminar(lista,'alternativo')">Eliminar</a>
-                            <a class="btn-flat brown-text text-darken-1" (click)="editar(lista)">Editar</a>
-                          </div>
+              <div class="right-align ">
+                <a (click)="openModal('principal')" class="btn-flat brown-text text-darken-2">Agregar Nuevas Acciones</a>
+              </div>
+            </div>
+            <label for="FlujoEventosAlternativo">Flujo de Eventos Alternativo</label>
+            <div id="FlujoEventosAlternativo" class="blue-grey lighten-4">
+              <div class="brown-text text-darken-2">
+                <ol id="principal" [dragula]='"bag-items2"' [dragulaModel]='listaEventosAlternativos'>
+                  <li class="separacion" *ngFor="let lista of listaEventosAlternativos">
+                    <div class=" blue-grey lighten-3">
+                      {{lista.nombre}}
+                      <div id="eventos" class="blue-grey lighten-2">
+                        <ol id="sencundaria">
+                          <li *ngFor="let evento of lista.eventos">
+                            {{evento.descripcion}}
+                          </li>
+                        </ol>
+                      </div>
+                      <div class="row">
+                        <div class="right-align">
+                          <a class="btn-flat brown-text text-darken-1" (click)="eliminar(lista,'alternativo')">Eliminar</a>
+                          <a class="btn-flat brown-text text-darken-1" (click)="editar(lista)">Editar</a>
                         </div>
                       </div>
-                    </li>
-                  </ol>
-                </div>
-                <div class="right-align ">
-                  <a (click)="openModal('secundaria')" class="btn-flat brown-text text-darken-2">Agregar Nuevas Acciones</a>
-                </div>
+                    </div>
+                  </li>
+                </ol>
               </div>
+              <div class="right-align ">
+                <a (click)="openModal('secundaria')" class="btn-flat brown-text text-darken-2">Agregar Nuevas Acciones</a>
+              </div>
+            </div>
             <label for="requisitosEspeciales"> Requisitos Especiales </label>
             <div id="requisitosEspeciales" class="chips" materialize="material_chip" [materializeParams]="[requisitosEspecialesAux]"
               (chip.add)="add($event.detail,'requisitosEspeciales')" (chip.delete)="delete($event.detail,'requisitosEspeciales')"
@@ -111,82 +111,83 @@
   </div>
 </div>
 <div id="modal1" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
-    <div class="modal-content">
-      <h4>Agregar Acciones</h4>
-      <div class="row">
-        <div class="input-field col s12 m8 l8">
-          <select [(ngModel)]="selecionado" id="selectExample" materialize="material_select" [materializeSelectOptions]="acciones">
-            <option value="" disabled selected>Select option ..</option>
-            <option *ngFor="let option of acciones" [value]="option.nombre">{{option.nombre}}</option>
-          </select>
-          <label for="selectExample">Actividades</label>
-        </div>
+  <div class="modal-content">
+    <h4>Agregar Acciones</h4>
+    <div class="row">
+      <div class="input-field col s12 m8 l8">
+        <select [(ngModel)]="selecionado" id="selectExample" materialize="material_select" [materializeSelectOptions]="acciones">
+          <option value="" disabled selected>Select option ..</option>
+          <option *ngFor="let option of acciones" [value]="option.nombre">{{option.nombre}}</option>
+        </select>
+        <label for="selectExample">Actividades</label>
       </div>
-    </div>
-    <div class="modal-footer">
-      <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Cancelar</a>
-      <a class="modal-action modal-close  btn-flat" (click)="agregarActividad('principal')">Aceptar</a>
-    </div>
-  </div>  
-  <div id="modal2" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions2">
-    <div class="modal-content grey lighten-3">
-      <h4>Modificar eventos</h4>
-      <div class="row ">
-        <div class="col s4  ">
-          Descripcion del Evento
-        </div>
-        <div class="col s2 ">
-          Actor
-        </div>
-        <div class="col s5 ">
-          Grupo de Datos
-        </div>
-      </div>
-      <ol [dragula]='"bag-items"' [dragulaModel]='eventosAccionSeleccionada' style='list-style:none;padding: 2px; '>
-        <li *ngFor="let evento of eventosAccionSeleccionada">
-          <div class="row grey lighten-2 ">
-            <div class="col s4 ">
-              {{evento.descripcion}}
-            </div>
-            <div class="col s2 ">
-              {{evento.actor}}
-            </div>
-            <div class="col s5 ">
-              {{evento.grupoDeDatos}}
-            </div>
-            <div class="col s1 center-align">
-              <i class="fas fa-edit" (click)="editarEvento(evento)"></i>
-              <i class="fas fa-trash" (click)="eliminarEvento(evento)"></i>
-            </div>
-          </div>
-        </li>
-      </ol>
-      <button id="desbloquear" (click)="desbloquear()">Agregar Eventos</button>
-      <div id="bloqueado" class="row" style="display: none;">
-        <h4>Agregar Nuevos Eventos</h4>
-        <form class="col s12" materialize [formGroup]="eventoForm" (ngSubmit)="agregarEvento()">
-          <div class="col s12 m6 l4">
-            <label class="blue-text text-darken-2" for="EventoDescripcion">Evento Descripcion</label>
-            <input id="EventoDescripcion" formControlName="descripcion">
-          </div>
-  
-          <div materialize class="col s12 m6 l4">
-            <label class="blue-text text-darken-2" for="Actor">Actor</label>
-            <select id="Actor" formControlName="actor" materialize="material_select" [materializeSelectOptions]="actoresSistema">
-              <option value="" disabled selected>Select option ..</option>
-              <option *ngFor="let option of actoresSistema" [value]="option">{{option}}</option>
-            </select>
-          </div>
-          <div class="col s12 m12 l4">
-            <label class="blue-text text-darken-2" for="GrupoDatos">Grupo de datos del Evento</label>
-            <input id="GrupoDatos" formControlName="grupoDatos">
-          </div>
-          <button class="right-align" type="submit">Agregar evento</button>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <a class="waves-effect waves-green btn-flat" (click)="cancel()">Cancelar</a>
-      <a class="modal-action modal-close  btn-flat" (click)="modificarEventos()">Aceptar</a>
     </div>
   </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="closeModal()">Cancelar</a>
+    <a class="modal-action modal-close  btn-flat" (click)="agregarActividad('principal')">Aceptar</a>
+  </div>
+</div>
+<div id="modal2" class="modal modal-fixed-footer" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions2">
+  <div class="modal-content grey lighten-3">
+    <h4>Modificar eventos</h4>
+    <div class="row ">
+      <div class="col s4  ">
+        Descripcion del Evento
+      </div>
+      <div class="col s2 ">
+        Actor
+      </div>
+      <div class="col s5 ">
+        Grupo de Datos
+      </div>
+    </div>
+    <ol [dragula]='"bag-items"' [dragulaModel]='eventosAccionSeleccionada' style='list-style:none;padding: 2px; '>
+      <li *ngFor="let evento of eventosAccionSeleccionada">
+        <div class="row grey lighten-2 ">
+          <div class="col s4 ">
+            {{evento.descripcion}}
+          </div>
+          <div class="col s2 ">
+            {{evento.actor}}
+          </div>
+          <div class="col s5 ">
+            {{evento.grupoDeDatos}}
+          </div>
+          <div class="col s1 center-align">
+            <i class="fas fa-edit" (click)="editarEvento(evento)"></i>
+            <i class="fas fa-trash" (click)="eliminarEvento(evento)"></i>
+          </div>
+        </div>
+      </li>
+    </ol>
+    <button id="desbloquear" (click)="desbloquear()">Agregar Eventos</button>
+    <div id="bloqueado" class="row" style="display: none;">
+      <h4>Agregar Nuevos Eventos</h4>
+      <form class="col s12" materialize [formGroup]="eventoForm" (ngSubmit)="agregarEvento()">
+        <div class="col s12 m6 l4">
+          <label class="blue-text text-darken-2" for="EventoDescripcion">Evento Descripcion</label>
+          <input id="EventoDescripcion" formControlName="descripcion">
+        </div>
+
+        <div materialize class="col s12 m6 l4">
+          <label class="blue-text text-darken-2" for="Actor">Actor</label>
+          <select id="Actor" formControlName="actor" materialize="material_select" [materializeSelectOptions]="actoresSistema">
+            <option value="" disabled selected>Select option ..</option>
+            <option *ngFor="let option of actoresSistema" [value]="option">{{option}}</option>
+          </select>
+        </div>
+        <div class="col s12 m12 l4">
+          <label class="blue-text text-darken-2" for="GrupoDatos">Grupo de datos del Evento</label>
+          <input id="GrupoDatos" formControlName="grupoDatos">
+        </div>
+        <button class="right-align" *ngIf="eventoForm.invalid" disabled type="submit" type="submit">Agregar evento</button>
+        <button class="right-align" *ngIf="!eventoForm.invalid" type="submit" type="submit">Agregar evento</button>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="waves-effect waves-green btn-flat" (click)="cancel()">Cancelar</a>
+    <a class="modal-action modal-close  btn-flat" (click)="modificarEventos()">Aceptar</a>
+  </div>
+</div>

@@ -182,7 +182,8 @@
           <label class="blue-text text-darken-2" for="GrupoDatos">Grupo de datos del Evento</label>
           <input id="GrupoDatos" formControlName="grupoDatos">
         </div>
-        <button class="right-align" type="submit">Agregar evento</button>
+        <button class="right-align" *ngIf="eventoForm.invalid" disabled type="submit" type="submit">Agregar evento</button>
+        <button class="right-align" *ngIf="!eventoForm.invalid" type="submit" type="submit">Agregar evento</button>
       </form>
     </div>
   </div>
