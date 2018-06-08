@@ -43,6 +43,7 @@ export class CasosUsoService {
   }
 
   delete(caso : CasoUso): void {
+    console.log(caso); 
     this.casosLista.remove(caso.id);
   }
 

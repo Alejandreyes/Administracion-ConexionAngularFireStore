@@ -30,6 +30,7 @@ export class AccionService {
     this.router.navigate(['/accion']);
   }
   delete(accion : Accion): void {
+    console.log(accion); 
     this.accionLista.remove(accion.id);
   }
 }

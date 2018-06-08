@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter,DoCheck,AfterContentInit,AfterContentChecked } from '@angular/core';
 
 import { Usuario } from '../../modelos/usuario.model';
 import { UsuarioService } from '../../servicios/usuario.service';
@@ -13,11 +13,21 @@ import {MaterializeAction} from 'angular2-materialize';
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
 })
-export class UsuarioComponent implements OnInit {
+export class UsuarioComponent implements OnInit,DoCheck,AfterContentInit,AfterContentChecked {
+  ngAfterContentChecked(): void {
+    console.log("Entro aqui"); 
+  }
+  ngAfterContentInit(): void {
+    
+    console.log("Entro After Content Iinit"); 
+  }
+  ngDoCheck(): void {
+    console.log("Entro Do Check"); 
+  }
+
   usuarios: Usuario[];
   usuarioLogueado: Usuario;
   administrador : boolean ; 
-  //...
   modalActions = new EventEmitter<string|MaterializeAction>();
   openModal(usuario: Usuario) {
     this.usuarioSV.usuarioSelecionado = usuario ; 

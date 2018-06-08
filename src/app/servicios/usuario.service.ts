@@ -45,6 +45,7 @@ export class UsuarioService {
     this.usuariosLista.set(usuario.id, usuario);
   }
   removeUsuario(usuario: Usuario) {
+    console.log(usuario);
     this.usuariosLista.remove(usuario.id);
   }
   getUsuario(nombreUsuario: string) {
