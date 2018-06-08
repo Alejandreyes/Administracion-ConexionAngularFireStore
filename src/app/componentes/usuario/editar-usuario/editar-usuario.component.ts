@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../../../servicios/usuario.service';
 import { toast } from 'angular2-materialize';
 import { Router } from '@angular/router';
+import { LoginService } from '../../../servicios/login.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -16,6 +17,7 @@ export class EditarUsuarioComponent implements OnInit {
   usuarioForm: FormGroup;
   constructor(private pf: FormBuilder,
     private usServ: UsuarioService,
+    private lgServ :LoginService,
     public router: Router) { }
 
   ngOnInit() {
@@ -34,6 +36,11 @@ export class EditarUsuarioComponent implements OnInit {
     const usuario = this.usServ.usuarioSelecionado;
     usuario.nombre = this.usuarioForm.value.nombre.toUpperCase();
     usuario.rol = this.usuarioForm.value.opcion;
+    console.log(usuario.nombre);
+    console.log(this.lgServ.usuarioLogueado.nombre); 
+    if(usuario.nombre == this.lgServ.usuarioLogueado.nombre){
+      this.lgServ.usuarioLogueado = usuario ;
+    }
     this.usServ.editUsuario(usuario) ; 
     this.router.navigate(['/usuarios']);
   }

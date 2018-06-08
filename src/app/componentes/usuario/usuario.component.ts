@@ -13,16 +13,15 @@ import {MaterializeAction} from 'angular2-materialize';
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
 })
-export class UsuarioComponent implements OnInit,DoCheck,AfterContentInit,AfterContentChecked {
-  ngAfterContentChecked(): void {
-    console.log("Entro aqui"); 
-  }
+export class UsuarioComponent implements OnInit,AfterContentInit {
+
   ngAfterContentInit(): void {
-    
-    console.log("Entro After Content Iinit"); 
-  }
-  ngDoCheck(): void {
-    console.log("Entro Do Check"); 
+    console.log("Entro Por Primera vez"); 
+    this.usuarioSV.getUsuarios().valueChanges().subscribe(items=> {
+      this.usuarios = items;
+    });
+    this.usuarioLogueado = this.lgServ.usuarioLogueado;
+    this.administrador = (this.usuarioLogueado.rol == "ADMINISTRADOR");
   }
 
   usuarios: Usuario[];
@@ -39,13 +38,6 @@ export class UsuarioComponent implements OnInit,DoCheck,AfterContentInit,AfterCo
   constructor(public usuarioSV: UsuarioService, 
     public lgServ: LoginService,
     public router: Router) {
-    this.usuarioSV.getUsuarios().valueChanges().subscribe(items=> {
-      this.usuarios = items;
-    });
-
-    this.usuarioLogueado = lgServ.usuarioLogueado;
-    this.administrador = (this.usuarioLogueado.rol == "ADMINISTRADOR");
-
   }
   onCreate(){
     this.router.navigate(['/agregarUsuario']);
